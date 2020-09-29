@@ -1,0 +1,24 @@
+RewriteEngine On
+Options +FollowSymLinks -MultiViews
+#RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#RewriteRule ^(\w+)/?$ public/index.php?url=$1 [QSA,L]
+
+
+#RewriteRule ^$ public/index.php?url=$1 [QSA,L]
+
+RewriteRule ^(.*)$  public/index.php?url=$1 [QSA,L]
+
+
+#RewriteRule ^$ public/index.php?url=$1 [QSA,L]
+RewriteRule (^)$ public/index.php?url=$1  [QSA,L]
+
+
+
+
+RewriteRule ^$ public/ [L]
+#RewriteRule (.*)$ public/index.php?url=$1 [L]
