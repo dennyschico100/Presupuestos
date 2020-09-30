@@ -18,3 +18,33 @@
     padding: 3px;
     display: none;
   }
+
+  
+.pass-error{
+	visibility: hidden;
+	opacity:0;	
+	
+}
+.email-error{
+	visibility: hidden;
+	opacity:0;		
+}
+
+.pass-error-show{
+	visibility: visible;
+	opacity:1;	
+}
+
+.error-contenedor{
+  width: 80%;
+  margin: 0 auto;
+
+}
+.error-contenedor-esconder{
+  display: none;
+}
+
+.pass-error-show{
+	visibility: visible;
+	opacity:1;	
+}

@@ -16,19 +16,35 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Bienvenido !</h1>
                                 </div>
-                                <form class="user" action="<?php  echo URL_ROOT?>/usuarios/login" >
+                                <form class="user" id="frm-login" action="<?php  echo URL_ROOT?>/usuarios/login">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
-                                            id="exampleInputEmail" aria-describedby="emailHelp"
+                                            id="email" aria-describedby="emailHelp"
                                             placeholder="Enter Email Address...">
+                                        <div style="border:5px solid blue;" class="col-md-12">
+                                            <span>
+                                                <p id="email-error"
+                                                    class="email-error text-center text-danger help-block ">
+                                                    </strong>
+
+                                                </p>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user password "
-                                            id="exampleInputPassword" aria-describedby="password-constraints"
+                                            id="pass" aria-describedby="password-constraints"
                                             placeholder="Password">
                                         <i class="far fa-eye" id="togglePassword"></i>
                                         <label for="" class="label-pass">Mostrar Contraseña</label>
+                                        <div style="border:5px solid blue;" class="col-md-12">
+                                            <span>
+                                                <p id="pass-error"
+                                                    class="pass-error text-center text-danger help-block ">
 
+                                                </p>
+
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -39,9 +55,11 @@
                                         </div>
 
                                     </div>
-                                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                        Login
-                                    </a>
+
+
+                                    <button type="submit" id="enviar"
+                                        class="btn btn-primary btn-user btn-block fadeIn fourth" value="Log In">Iniciar
+                                        Sesion</button>
                                     <hr>
                                     <!-- 
                 <a href="index.html" class="btn btn-google btn-user btn-block">

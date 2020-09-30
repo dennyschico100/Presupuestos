@@ -9,10 +9,11 @@ class Controlador{
             return new $modelo();
             
         }else{
-            echo "<h1>ARCHOV NMOEXITE</h1>";
+            echo "<h1>ARCHIVO  NO EXITE</h1>";
         }
 
     }
+    
 
     public function vista($vista,$data=[]){
         
