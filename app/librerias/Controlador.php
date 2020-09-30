@@ -1,6 +1,6 @@
 <?php
 class Controlador{
-
+   
     public function modelo($modelo){
 
         if(file_exists('../app/modelos/'.$modelo.".php")){
@@ -9,11 +9,10 @@ class Controlador{
             return new $modelo();
             
         }else{
-            echo "<h1>ARCHIVO  NO EXITE</h1>";
+            echo "<h1>ARCHOV NMOEXITE</h1>";
         }
 
     }
-    
 
     public function vista($vista,$data=[]){
         
@@ -26,7 +25,11 @@ class Controlador{
     
     public function isLoggedIn()
     {
-        if (isset($_SESSION['user_rol']) && isset($_SESSION['user_id']) && isset($_SESSION['user_nombres']) && isset($_SESSION['user_email'])) {
+        if (isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) &&
+         isset($_SESSION['user_email_presupuestos'])) {
+            
+            //echo "<br>".$_SESSION['user_email_presupuestos'];
+                
                 return true;
         } else {
                 return false;

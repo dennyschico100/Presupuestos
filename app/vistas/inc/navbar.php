@@ -118,7 +118,7 @@
 <div id="content-wrapper" class="d-flex flex-column">
 
   <!-- Main Content -->
-  <div style="border: 10px solid red;" id="content">
+  <div style="border: 0px solid red;" id="content">
 
     <!-- Topbar -->
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">

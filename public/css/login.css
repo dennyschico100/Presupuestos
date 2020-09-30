@@ -1,15 +1,19 @@
 #togglePassword{
-    position: absolute;
-    top: 41%;
-    right: 17%;
+    position: relative;
+    transform: translateY(-150%); 
+    right: -85%;
     font-size: 20px;
   }
 
-  #togglePassword:hover  ~ .label-pass  {
+#togglePassword:hover  ~ .label-pass  {
     display:inherit ;
     width: auto;
-  }
-
+    cursor: pointer;
+}
+#frm{
+  
+  margin-top: 0px;
+}
   .label-pass{
     position: absolute;
     background-color: #333;
@@ -23,11 +27,15 @@
 .pass-error{
 	visibility: hidden;
 	opacity:0;	
-	
+
 }
 .email-error{
 	visibility: hidden;
 	opacity:0;		
+}
+#div-error{
+  border: 0px solid red;
+  width: 100%;
 }
 
 .pass-error-show{

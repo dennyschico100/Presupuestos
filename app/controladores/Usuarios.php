@@ -22,7 +22,7 @@ class Usuarios  extends Controlador{
         
         if(!$this->isLoggedIn() ) {
             
-            if(isset($_SESSION['user_email'])){
+            if(isset($_SESSION['user_email_presupuestos'])){
                 //echo "".$_SESSION['user_email'];
 
             }
@@ -42,6 +42,8 @@ class Usuarios  extends Controlador{
     public function login(){    
         
          if ($_SERVER['REQUEST_METHOD']=='POST') {
+
+            
             // Process form
             // Sanitize POST Data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -69,7 +71,8 @@ class Usuarios  extends Controlador{
 
 
                 if ( $userAuthenticated['success'] === 1 ) {
-                    echo "crear sesion";
+                    //echo "crear sesion";
+
                     // Create session
                     $this->createUserSession($userAuthenticated);
                     echo "despues de crear sesion";
@@ -97,7 +100,7 @@ class Usuarios  extends Controlador{
 
     public function isLoggedIn()
     {
-        if (  isset($_SESSION['user_rol']) && isset($_SESSION['user_id']) && isset($_SESSION['user_nombres']) && isset($_SESSION['user_email'])) {
+        if (  isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
                 return true;
         } else {
                 return false;
@@ -109,7 +112,7 @@ class Usuarios  extends Controlador{
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $input = json_decode(file_get_contents('php://input'));
         $method = $_SERVER['REQUEST_METHOD'];
-         
+        
         /*
         if ('PUT' === $method) {
         parse_str(file_get_contents('php://input'), $_PUT);
@@ -127,10 +130,10 @@ class Usuarios  extends Controlador{
 
     public function createUserSession($user)
     {
-            $_SESSION['user_id'] = $user['usuario']['id_usuario'];            
-            $_SESSION['user_email'] = $user['usuario']['email'];
-            $_SESSION['user_nombres'] = $user['usuario']['nombres'];
-            $_SESSION['user_rol'] = $user['rol_usuario'];
+            $_SESSION['user_id_presupuestos'] = $user['usuario']['ID_USUARIO'];            
+            $_SESSION['user_email_presupuestos'] = $user['usuario']['EMAIL'];
+            $_SESSION['user_nombres_presupuestos'] = $user['usuario']['NOMBRES'];
+            $_SESSION['user_rol_presupuestos'] = $user['rol_usuario'];
             
            //return $this->editarUsuario();
             
@@ -139,21 +142,18 @@ class Usuarios  extends Controlador{
 
     public function logout(){
         //rEVISRA SI HAY SESION INICIALIZADA valor cero
-        if(isset($_SESSION['user_rol']) && isset($_SESSION['user_id']) && isset($_SESSION['user_nombres']) && isset($_SESSION['user_email'])    ){
+        if(isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])    ){
             
-            unset($_SESSION['user_id']);
-            unset($_SESSION['user_email']);
-            unset($_SESSION['user_nombre']);
-            unset($_SESSION['user_rol']);
+            unset($_SESSION['user_id_presupuestos']);
+            unset($_SESSION['user_email_presupuestos']);
+            unset($_SESSION['user_nombre_presupuestos']);
+            unset($_SESSION['user_rol_presupuestos']);
             session_destroy();
             $this->vista("usuarios/login");
         }else{
             $this->vista("usuarios/login");
         }
-        
-    
-    
-    
+
     }
     
 	public function guardar(){

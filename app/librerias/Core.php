@@ -24,10 +24,10 @@ class Core{
         }
 
         require_once '../app/controladores/'. $this->controladorActual.'.php';
-        
+        //echo "CONTROLADOR ACTUAL----".$this->controladorActual;
         // Instanciar la clase del controlador
         $this->controladorActual= new $this->controladorActual();
-
+        
          // Revisnado la segunda parte de la rul
          if (isset($url[1])) {
             if(method_exists($this->controladorActual, $url[1]))
