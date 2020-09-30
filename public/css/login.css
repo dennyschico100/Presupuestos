@@ -1,0 +1,20 @@
+#togglePassword{
+    position: absolute;
+    top: 41%;
+    right: 17%;
+    font-size: 20px;
+  }
+
+  #togglePassword:hover  ~ .label-pass  {
+    display:inherit ;
+    width: auto;
+  }
+
+  .label-pass{
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    right: 15px;
+    padding: 3px;
+    display: none;
+  }
