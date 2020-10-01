@@ -9,10 +9,13 @@ class Usuario extends Conexion{
     private $conectar;
     private $db_tabla = "usuarios";
 	public  $nombres="ROBERTO";
-    public $apellidos="ROBERT";
-    public $email="roberto@gmail.com";
+    public  $apellidos="ROBERT";
+    public  $email="roberto@gmail.com";
     private $password="";
-    public $estado=1;
+	public $dui="";
+	public $sexo=0;	
+	public $estado=1;
+	
     public $returnData = [];
 
     public function msg($success,$status,$message,$extra=[] ){
@@ -216,10 +219,10 @@ class Usuario extends Conexion{
 		try{
 			
 			//parent::set_names();
-			$consulta="INSERT INTO ".$this->db_tabla." (nombres,apellidos,email,password,telefono,estado) values (?,?,?,?,?,?)";
+			$consulta="INSERT INTO ".$this->db_tabla." (NOMBRES,APELLIDOS,EMAIL,CONTRASEÑA,SEXO,DUI,ESTADO,TELEFONO,FECHA_CREACION) values (?,?,?,?,?,?,?,?,now() )";
 			
 			if( isset($data->nombre) && isset($data->apellido) && isset($data->telefono )  &&
-			 	isset($data->email) && isset($data->estado) )
+			 	isset($data->email)  && isset($data->dui) && isset($data->sexo) && isset($data->estado) )
 			{				
 				echo var_dump($data);
 
@@ -230,9 +233,10 @@ class Usuario extends Conexion{
 					
 				$this->nombre=$data->nombre;
 				$this->apellidos= $data->apellido;
-				
 				$this->telefono=$data->telefono;
 				$this->email= $data->email;
+				$this->dui= $data->dui;
+				$this->sexo= (int) $data->sexo;
 				//$this->cargo= test_input($data->nombre)
 				$this->estado= 3;
 				$this->password1=$data->password1;					
@@ -249,8 +253,11 @@ class Usuario extends Conexion{
 					$sentencia->bindValue(2,$this->apellidos);
 					$sentencia->bindValue(3,$this->email);
 					$sentencia->bindValue(4,$this->password1);
-					$sentencia->bindValue(5,$this->telefono);
-					$sentencia->bindValue(6,$this->estado);
+					$sentencia->bindValue(5,$this->sexo);
+					$sentencia->bindValue(6,$this->dui);
+					$sentencia->bindValue(7,$this->estado);
+					$sentencia->bindValue(8,$this->telefono);	
+										
 					if($sentencia->execute()){
 						//$msg['message'] = 'Usuario registrado correctamente !' ;
 						$returnData=$this->msg(1,201,'Usuario registrodo correctamente'.$this->password1);
@@ -290,7 +297,7 @@ class Usuario extends Conexion{
 			if(isset( $data->correo) ){
 				if( !empty(trim($data->correo))){
 
-					$consulta=" SELECT  count(*)  FROM ".$this->db_tabla." where  email=? " ;
+					$consulta=" SELECT  count(*)  FROM ".$this->db_tabla." where  EMAIL=? " ;
 					$sentencia=$this->conectar->prepare($consulta);
 					$this->email=$this->test_input($data->email);
 

@@ -179,7 +179,7 @@ class Usuarios  extends Controlador{
                 $this->usuarioModelo->guardar($this->data);
                  
                 //echo json_encode($userAuthenticated);
-
+                
                 
             } else {
                 // Load view with errors
@@ -208,7 +208,7 @@ class Usuarios  extends Controlador{
            $est='';
            $atr='';
                       
-           switch ($row['estado']) {
+           switch ($row['ESTADO']) {
                case 1:
                     $est='ACTIVO';
                     $atr='btn-md estado';
@@ -231,17 +231,17 @@ class Usuarios  extends Controlador{
                 break;
            }
            
-           $sub_array[]=$row['nombres'];
-           $sub_array[]=$row['apellidos'];
-           $sub_array[]=$row['telefono'];
-           $sub_array[]=$row['email'];
-           $sub_array[]=$row['created_at'];
+           $sub_array[]=$row['NOMBRES'];
+           $sub_array[]=$row['APELLIDOS'];
+           $sub_array[]=$row['TELEFONO'];
+           $sub_array[]=$row['EMAIL'];
+           $sub_array[]=$row['FECHA_CREACION'];
            
            
            $sub_array[]="<button type='button' name='estado' id='btn-estado'  class='".$atr." ' >".$est."</button>";
-           $sub_array[]="<button type='button' name='estado' id='' class='btn btn-success btn-md update' onClick='mostrar(".$row["id_usuario"].")' ><i class='fas fa-pen'></i></button>";
+           $sub_array[]="<button type='button' name='estado' id='' class='btn btn-success btn-md update' onClick='mostrar(".$row["ID_USUARIO"].")' ><i class='fas fa-pen'></i></button>";
            $sub_array[]="<button type='button' name='estado' id='' 
-           class='btn btn-danger  btn-md update'  onClick='eliminar(".$row["id_usuario"].")'  ><i class='fas fa-trash'></i></button>";
+           class='btn btn-danger  btn-md update'  onClick='eliminar(".$row["ID_USUARIO"].")'  ><i class='fas fa-trash'></i></button>";
           
            
            $data[]=$sub_array;

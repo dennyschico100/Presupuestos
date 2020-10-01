@@ -38,9 +38,17 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Custom Components:</h6>
-        <a class="collapse-item" href="buttons.html">Buttons</a>
-        <a class="collapse-item" href="cards.html">Cards</a>
+        
+        <?php if($_SESSION['user_rol_presupuestos'] =='2'  )   { ?>
+          <a class="collapse-item" href="<?php echo URL_ROOT;?>/usuarios/listar">LIsta Usuarios</a>
+                        
+        <a class="collapse-item" href="cards.html">Permisos</a>
+        
+        <?php  } else if( isset($_SESSION['user_email_presupuestos'] )  && $_SESSION['user_rol_presupuestos'] =='1'   ) { ?>
+          
+        <?php } else { } ?>
       </div>
+
     </div>
   </li>
 
@@ -158,7 +166,7 @@
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="button">
                     <i class="fas fa-search fa-sm"></i>
-                  </button>
+                  </button> 
                 </div>
               </div>
             </form>
@@ -275,7 +283,8 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['user_nombres_presupuestos'];?></span>
+
             <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
           </a>
           <!-- Dropdown - User Information -->
@@ -292,11 +301,13 @@
               <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
               Activity Log
             </a>
+           
+            
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-              Logout
-            </a>
+            <a class="dropdown-item" href="<?php echo URL_ROOT;?>/usuarios/logout"><i
+                                class="fa fa-power-off"></i> Cerrar Sesion</a>
+            
+
           </div>
         </li>
 
