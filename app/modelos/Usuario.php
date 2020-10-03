@@ -279,7 +279,7 @@ class Usuario extends Conexion{
 				}
 
             }else{
-				$returnData=$this->msg(0,422,'complete todos los campos '); 
+				$returnData=$this->msg(0,422,'Complete todos los campos '); 
 				
 			}
 			
