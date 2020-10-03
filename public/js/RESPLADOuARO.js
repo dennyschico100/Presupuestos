@@ -119,12 +119,9 @@ function recargarTabla() {
 
 }
 
-const $popUpError = document.getElementById("box-error");
-const divform=document.getElementById("div-form");
-const $mensajeRespuesta=document.getElementById("mensaje-respuesta");  
+const $popUpError = document.getElementById("d");
 
 const clases = ["modal", "fade"];
-
 
 
 $("#usuario_form").on("submit", function (e) {
@@ -176,25 +173,18 @@ $("#usuario_form").on("submit", function (e) {
     xhr.addEventListener("readystatechange", function (event) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             //msg=JSON.parse(event.target.responseText);
+            console.error();
             const respuesta = JSON.parse(event.target.responseText);
             const status = respuesta.status;
-            console.error(respuesta);
-            
-            if (xhr.status===200 ) {
-                if($popUpError.classList.contains("modal") &&  $popUpError.classList.contains("fade")  ){
-                    
-                    $popUpError.classList.remove(...clases);
-                    //usuarioModal.style.backgroundColor="#333";
-                    $popUpError.classList.add('show-box');
-                    divform.style.opacity="1";
-                    divform.style.backgroundColor="#333";
-                    usuarioModal.style.opacity="0.5";
-                    usuarioModal.style.zIndex="100";
-                    $mensajeRespuesta.innerHTML=`${respuesta.message}`;
-                    
 
+            if (status === 422) {
+                if($popUpError.classList.contains("modal") &&  $popUpError.classList.contains("fade")  ){
+                    $popUpError.classList.remove(...clases);
+                    
+                    $popUpError.classList.add('show-box');
+                    
                 }else{
-                    $popUpError.classList.add(...clases);
+                    $popUpError.classList.add(clases);
                     $popUpError.classList.add("show-box");
                             
                 }
@@ -230,37 +220,8 @@ $("#usuario_form").on("submit", function (e) {
 });
 
 
-var usuarioModal= document.getElementById("usuarioModal");
-        
-
-const btnClose=document.getElementById("btnClose");
-
-btnClose.addEventListener("click",()=>{
-    console.error(usuarioModal.classList);
-
-    if(usuarioModal.classList.contains("hide-form")){
-        usuarioModal.classList.remove("hide-form");
-        usuarioModal.classList.opacity="1";
-        
-    }else{
-        divform.classList.remove("div-form-show");
-        
-        console.log(divform.classList);
-        usuarioModal.style.opacity="1";
-        //usuarioModal.style.background="";
-
-        
-        usuarioModal.classList.add("hide-form");
-    }
-//usuarioModal.classList.add("caja");
-//usuarioModal.style.opacity="0";
-//usuarioModal.style.display="none";
-
-            
-});
-
 const $btnCerrar=document.getElementById("btn-cerrar");
-
+/*
 $btnCerrar.addEventListener("click",()=>{
     
         
@@ -268,26 +229,20 @@ $btnCerrar.addEventListener("click",()=>{
         
         $popUpError.classList.remove('show-box');
         $popUpError.classList.add(...clases);
-
-        usuarioModal.style.opacity="1.0";
-
-        divform.style.opacity="0.5";
-        divform.style.backgroundColor="#333";
         
-        limpiar();
 
     }else{
     
     }
     
-}) 
+}) */
 
 const $mostrarButton = document.getElementById("mostrar");
 
 $mostrarButton.addEventListener("click", (e) => {
     console.log(e.target);
     console.log($popUpError.classList);
-    
+
     //modal fade
 
 });
@@ -295,45 +250,36 @@ $mostrarButton.addEventListener("click", (e) => {
 //Asigna el valor `POST`  a la variable tipoPeticion
 (() => {
     const $addButton = document.getElementById("add_button");
-    
+    //const modalBackdrop=document.querySelector(".modal-backdrop");
 
     $addButton.addEventListener("click", () => {
         tipoPeticion = "POST";
         
 
-        
+        const usuarioModal= document.getElementById("usuarioModal");
         const wrapper =document.getElementById("wrapper");
         usuarioModal.classList.add("caja");
-       
-        if(!usuarioModal.classList.contains("modal")){
-
-            divform.classList.add("div-form-show");
-
-            //usuarioModal.classList.remove("modal");
-            //usuarioModal.classList.remove("show");
-
-            //usuarioModal.classList.remove("caja");
+       setTimeout( ()=>{
+        if(!usuarioModal.classList.contains("smodal")){
+            usuarioModal.classList.remove("modal");
+            usuarioModal.classList.remove("show");
+            usuarioModal.classList.remove("caja");
+            
             usuarioModal.style.zIndex="9999";
-            usuarioModal.classList.add("show-form");
-            usuarioModal.classList.remove("hide-form");
+
+            
             usuarioModal.style.opacity="1";
+            usuarioModal.style.position="absolute";
 
-            //usuarioModal.style.position="absolute";
-            //usuarioModal.style.left="20%";
-            //usuarioModal.style.top="10%";
+            usuarioModal.classList.add("caja2");
             
-            usuarioModal.classList.add("show-form");
-            
-            usuarioModal.style.width="500px";
-            //usuarioModal.classList.add("caja2");
-
             console.log(usuarioModal.classList);
             document.body.style.background="#333";
             wrapper.style.zIndex="9998";
             //wrapper.style.opacity="0.5";
             
         }
-       
+       } ,1000);
        
     
         //document.getElementsByClassName('modal-backdrop').style.backgroundColor="";
@@ -343,17 +289,7 @@ $mostrarButton.addEventListener("click", (e) => {
     });
 })();
 
-function limpiar(id) { 
-
-    $('#nombre').val("");
-    $('#apellido').val("");
-    $('#email').val("");
-    $('#dui').val("");
-    $('#sexo').val("");
-    $('#cargo').val("");
-    $('#telefono').val("");
-
-}
+function limpiar(id) { }
 
 function mostrar(id) {
     tipoPeticion = "PUT";

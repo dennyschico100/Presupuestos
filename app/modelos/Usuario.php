@@ -221,14 +221,14 @@ class Usuario extends Conexion{
 			//parent::set_names();
 			$consulta="INSERT INTO ".$this->db_tabla." (NOMBRES,APELLIDOS,EMAIL,CONTRASEÑA,SEXO,DUI,ESTADO,TELEFONO,FECHA_CREACION) values (?,?,?,?,?,?,?,?,now() )";
 			
+
 			if( isset($data->nombre) && isset($data->apellido) && isset($data->telefono )  &&
-			 	isset($data->email)  && isset($data->dui) && isset($data->sexo) && isset($data->estado) )
+			 	isset($data->email)  && isset($data->dui) && isset($data->sexo) )
 			{				
-				echo var_dump($data);
+				
 
 				if(!empty(trim($data->nombre))  &&  !empty(trim($data->apellido))  && !empty(trim($data->telefono)) &&
-				!empty(trim($data->email))  && !empty(trim($data->estado))    &&
-				!empty(trim($data->password1))  )
+				!empty(trim($data->email))      &&  !empty(trim($data->password1))  )
 				{
 					
 				$this->nombre=$data->nombre;
@@ -294,23 +294,25 @@ class Usuario extends Conexion{
 		$res=false;
 		try{
 			
-			if(isset( $data->correo) ){
-				if( !empty(trim($data->correo))){
+			if(isset( $data->email) ){
+				if( !empty(trim($data->email))){
 
-					$consulta=" SELECT  count(*)  FROM ".$this->db_tabla." where  EMAIL=? " ;
+					$consulta=" SELECT  *FROM ".$this->db_tabla." where  EMAIL=? " ;
 					$sentencia=$this->conectar->prepare($consulta);
-					$this->email=$this->test_input($data->email);
+					$this->email=$data->email;
 
 					$sentencia->bindValue(1,$this->email);
 					
 					if($sentencia->execute()){
-						$rows=$sentencia->fetchColumn(); 
+						$respuesta=$sentencia->fetchAll(PDO::FETCH_ASSOC); 
+						$rows=count($respuesta);
 						if(  $rows >= 1 ) {
+							
 						//$res=$sentencia->fetchAll();
 						//RESPONDIENDO UN OBJETO HACIA EL FRONTEND
 						//return json_encode($res);
 						//echo "SI HAY REGISTROS";	
-						$res=true;
+							$res=true;
 
 						}else{
 

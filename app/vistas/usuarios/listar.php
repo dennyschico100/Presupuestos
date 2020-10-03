@@ -1,6 +1,113 @@
 <?php  require APP_ROOT.'/vistas/inc/header.php' ?>
 <div style="border:0px solid green;" class="container-fluid">
+    <style>
+    #usuarioModal {
+        
+    }
 
+    .show-box {
+        transform: translate(0);
+        border: 0px solid yellow;
+        position: absolute;
+        top: 0%;
+        right: 45%;
+        animation: move 2s ease-out;
+        height:150vh;
+        
+        opacity:1;
+        z-index:999; 
+        
+    }
+
+    .show-opacity-box{
+        opacity:0.5;
+        
+        z-index:100;
+        
+    } 
+    
+    #btn-cerrar{
+        font-size:30px;
+
+    }
+    
+    .caja{
+    position: fixed;
+    top: -120px;
+    left: 50%;
+    z-index: 1050;
+    margin 0 auto;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0
+    }
+
+    .hide-form{
+        opacity:0;
+        display:none;
+    }
+
+    .show-form{
+        opacity:1;
+        top:0;
+        left:18%;
+        position: absolute;
+        overflow: auto;
+        height: auto;
+  
+    }
+
+
+    span{
+        
+        height:100px;
+    }
+    #modal-ventana{
+        
+        background-color:#ff8a50;
+        color:#fff;
+
+    }
+    #box-error{
+        left:-13.5%;
+    }
+    #div-form{
+            
+
+    }
+
+    .div-form-show{
+        height: 100%;
+    width: 100%;
+    background-color: #333;
+    opacity: 0.5;
+    position:absolute;
+    }
+    @keyframes move {
+        0% {
+            rotate(0deg);
+
+            transform: translate(0%, 90%) rotate(0deg);
+            opacity: 1;
+
+
+        }
+
+        80% {
+            transform: translate(0%, 0%) rotate(0deg);
+
+
+        }
+
+        100% {
+            transform: translate(0%, -0%) rotate(0deg);
+            opacity: 1;
+
+        }
+
+    }
+    </style>
     <section class="col-md-12  content overflow-hidden">
 
         <div id="resultados_ajax"></div>
@@ -9,11 +116,14 @@
 
         <div class="row">
             <div class="col-md-12">
+                <button ckass="btn btn-success" id="mostrar">MOSTRAR</button>
                 <div class="box">
+                    
+
                     <div class="box-header with-border">
                         <h1 class="box-title">
                             <button class="btn btn-primary btn-lg" id="add_button" onclick="limpiar()"
-                                data-toggle="modal" data-target="#usuarioModal"><i class="fa fa-plus"
+                                ><i class="fa fa-plus"
                                     aria-hidden="true"></i> Nuevo Usuario</button></h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -60,11 +170,31 @@
 
 </div><!-- /.content-wrapper -->
 <!--Fin-Contenido-->
+<div id="div-form">
 
+</div>
+<div class="modal fade col-md-6 offset-md-3" id="box-error" >
+
+<div class="modal-dialog" role="document">
+                           <div  id="modal-ventana"  class="modal-content">
+                               <div class="col-md-12">
+                               <div class="modal-header">
+                                   <h5 class="modal-title" id="exampleModalLabel">Mensjae Importante !</h5>
+                                   <button id="btn-cerrar" class="close" type="button" data-dismiss="modal"
+                                       aria-label="Close">
+                                       <span  class="text-white" aria-hidden="true"><h3>X</h3></span>
+                                   </button>
+                               </div>
+                               </div>
+                               <div id="mensaje-respuesta" class="modal-body"></div>
+                               
+                           </div>
+                       </div>
+                       </div>
 <!--FORMULARIO VENTANA MODAL-->
-
-<div id="usuarioModal" class="modal fade">
-
+<div id="usuarioModal" class="fade ">
+    
+                       
     <div class="modal-dialog">
 
         <form method="POST" name="fmrusuario" id="usuario_form">
@@ -73,7 +203,7 @@
 
                 <div class="modal-header">
 
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal">&times;</button>
 
                     <div class="container">
                         <h4 class="modal-title">Agregar Usuario</h4>
@@ -105,8 +235,7 @@
                     </div>
                     <div class="col-md-10 form-group ">
                         <label>Numero de Dui</label>
-                        <input type="text" name="dui" id="dui" class="form-control" placeholder="00000000-0"
-                           />
+                        <input type="text" name="dui" id="dui" class="form-control" placeholder="00000000-0" />
                         <br />
 
                     </div>
@@ -134,8 +263,7 @@
 
                         </select>
                     </div>
-                    <br />
-
+            
 
                     <!-- pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$"/ -->
 
@@ -145,27 +273,9 @@
                         <label>Teléfono</label>
                         <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Teléfono"
                             pattern="[0-9]{0,15}" />
-                        <br />
+                        
                     </div>
 
-
-
-                    <br />
-                    <div class="col-md-6 form-group ">
-
-
-                        <label>Estado</label>
-                        <select class="form-control" id="estado" name="estado">
-                            <option value="">-- Selecciona estado --</option>
-                            <option value="1" selected>Activo</option>
-                            <option value="0">Inactivo</option>
-                        </select>
-                    </div>
-
-
-
-
-                    <br /><br />
 
                     <!--LISTA DE PERMISOS-->
 
@@ -215,17 +325,16 @@
 
 <div>
 
-<?php  require APP_ROOT.'/vistas/inc/footer.php' ?>
+    <?php  require APP_ROOT.'/vistas/inc/footer.php' ?>
 
 
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-<script
-  src="
+    <script src="
   https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js
-    " ></script>
+    "></script>
 
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
-  
 
-<script src="<?php echo URL_ROOT.'/public/js/usuarios.js';?>"></script>
+
+    <script src="<?php echo URL_ROOT.'/public/js/usuarios.js';?>"></script>

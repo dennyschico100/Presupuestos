@@ -5740,7 +5740,8 @@ a.close.disabled {
   z-index: 1040;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
+  
+
 }
 
 .modal-backdrop.fade {
@@ -10790,6 +10791,7 @@ a:focus {
   }
 }
 
+
 .chart-pie {
   position: relative;
   height: 15rem;
@@ -10802,11 +10804,12 @@ a:focus {
   }
 }
 
-.bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+.bg-login-imagen {
+  background: url("https://www.practicalmoneyskills.com/assets/images/non-card/creating_a_budget.jpg");
   background-position: center;
   background-size: cover;
 }
+
 
 .bg-register-image {
   background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");

@@ -34,7 +34,7 @@
   
   <!-- Core plugin JavaScript-->
   <script src=""></script>
-  <script src="<?php //echo URL_ROOT.'/public/vendor/jquery-easing/jquery.easing.min.js'; ?>"></script>
+  <script src="<?php echo URL_ROOT.'/public/vendor/jquery-easing/jquery.easing.min.js'; ?>"></script>
   
 
   <!-- Custom scripts for all pages-->
