@@ -260,7 +260,7 @@ class Usuario extends Conexion{
 										
 					if($sentencia->execute()){
 						//$msg['message'] = 'Usuario registrado correctamente !' ;
-						$returnData=$this->msg(1,201,'Usuario registrodo correctamente'.$this->password1);
+						$returnData=$this->msg(1,201,'Usuario registrodo correctamente');
 								
 					}
 					else{

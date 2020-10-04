@@ -171,9 +171,6 @@ btnGuardar.addEventListener("click", () => { });
 
 btnClose.addEventListener("click", () => {
    cerrarFormulario();
-    //usuarioModal.classList.add("caja");
-    //usuarioModal.style.opacity="0";
-    //usuarioModal.style.display="none";
 
 });
 
@@ -194,10 +191,6 @@ function cerrarFormulario() {
         
     }
 }
-
-
-//cerrarFormulario();
-
 
 
 function resetearCampos() {
@@ -343,17 +336,9 @@ $btnCerrar.addEventListener("click", () => {
 
     }
 
-})
-
-const $mostrarButton = document.getElementById("mostrar");
-
-$mostrarButton.addEventListener("click", (e) => {
-    console.log(e.target);
-    console.log($popUpError.classList);
-
-    //modal fade
-
 });
+
+
 
 //Asigna el valor `POST`  a la variable tipoPeticion
 (() => {
@@ -384,12 +369,12 @@ function mostrar(id) {
     tipoPeticion = "PUT";
     mostrarFormularo();
     //jQuery.noConflict();
-
     //$("#usuarioModal").modal("show");
-
 }
+
 function eliminar(id) { }
 
+/*
 $("#peticion_put").on("submit", function (e) {
     alert("submit");
     e.preventDefault();
@@ -415,4 +400,4 @@ $("#peticion_put").on("submit", function (e) {
         console.log(url);
     //xhr.send();
 
-});
+});*/
