@@ -7,7 +7,9 @@ class Usuario extends Conexion{
         
     }
     private $conectar;
-    private $db_tabla = "usuarios";
+	private $db_tabla = "usuarios";
+	public $id=0;
+	public $idUsuario=0;
 	public  $nombres="ROBERTO";
     public  $apellidos="ROBERT";
     public  $email="roberto@gmail.com";
@@ -290,6 +292,119 @@ class Usuario extends Conexion{
 			echo json_encode($returnData);
 	}
 
+	public function modificar($data){
+		try{
+			
+			//parent::set_names();
+			$consulta="UPDATE  ".$this->db_tabla."  SET NOMBRES=?, APELLIDOS =?, EMAIL=? ,SEXO=?, DUI=?, TELEFONO =? where ID_USUARIO = ? ";
+			
+
+			if( isset($data->nombre) && isset($data->apellido) && isset($data->telefono )  &&
+			 	isset($data->email)  && isset($data->dui) && isset($data->sexo) )
+			{				
+				
+
+				if(!empty(trim($data->nombre))  &&  !empty(trim($data->apellido))  && !empty(trim($data->telefono)) &&
+				!empty(trim($data->email))     )
+				{
+					
+
+				
+				$this->nombre=$data->nombre;
+				$this->apellidos= $data->apellido;
+				$this->telefono=$data->telefono;
+				$this->email= $data->email;
+				$this->dui= $data->dui;
+				$this->sexo= (int) $data->sexo;
+				//$this->cargo= test_input($data->nombre)
+				//$this->estado= $data->estado;
+				$this->idUsuario=(int) $data->idUsuario;
+				
+				$this->password1=$data->password1;					
+				$var=false;
+				$var=$this->validar_usuario($data);
+				if(!filter_var($data->email,FILTER_VALIDATE_EMAIL)){
+					$returnData=$this->msg(0,422,'Formato de Email invalido ! ');
+					
+				}else if( $var ){
+					//$hash=password_hash($this->password2, PASSWORD_BCRYPT);
+					$sentencia=$this->conectar->prepare($consulta);
+
+					$sentencia->bindValue(1,$this->nombre);
+					$sentencia->bindValue(2,$this->apellidos);
+					$sentencia->bindValue(3,$this->email);;
+					$sentencia->bindValue(4,$this->sexo);
+					$sentencia->bindValue(5,$this->dui);
+					$sentencia->bindValue(6,$this->telefono);	
+					$sentencia->bindValue(7,$this->idUsuario);	
+
+		
+									
+					if($sentencia->execute()){
+						//$msg['message'] = 'Usuario registrado correctamente !' ;
+						$returnData=$this->msg(1,201,'Datos Modificado correctamente');
+								
+					}
+					else{
+						$returnData=$this->msg(0,500,'No se pudo modificar los datos ');
+						
+					}
+				
+				}else{
+					$returnData=$this->msg(0,422,'Ingrese un email  diferente ! ');
+							
+				}
+				
+				}else{
+					$returnData=$this->msg(0,422,'Valores nulos detectados,  completa todo le formulario ');
+				}
+
+            }else{
+				$returnData=$this->msg(0,422,'Complete todos los campos '); 
+				
+			}
+			
+			}catch(PDOException $ex){
+				$returnData=$this->msg(0,500,''.$ex->getMessage());
+			}
+
+			echo json_encode($returnData);
+	}
+
+	public function eliminar($id){
+
+		try{
+			
+			if(!empty($id) ){
+				$consulta="DELETE FROM  ".$this->db_tabla." WHERE ID_USUARIO=?    ";
+				$this->idUsuario=(int) $id;
+				$sentencia=$this->conectar->prepare($consulta);
+				$sentencia->bindValue(1,$this->idUsuario);
+						
+				if($sentencia->execute()){
+					//$msg['message'] = 'Usuario registrado correctamente !' ;
+					$returnData=$this->msg(1,200,'Datos Elminados correctamente');
+
+				}
+				else{
+					$returnData=$this->msg(0,500,'Ocurrio un error  ');
+					
+				}
+
+			}else{
+				$returnData=$this->msg(0,500,'ID NO VALDO ');
+					
+			}
+			
+			
+		}catch(PDOException $ex  ){
+
+			$returnData=$this->msg(0,500,$ex->getMessage());
+				
+		}
+
+		echo  json_encode($returnData);
+	}
 	public function validar_usuario($data){
 		$res=false;
 		try{
@@ -389,10 +504,10 @@ class Usuario extends Conexion{
 	}
 	
 	public function buscarUsuario($id){
-
+		
 		try{
 			$this->id=$id;
-			$consulta=" SELECT *FROM ".$this->db_tabla." where id_usuario= ? ";
+			$consulta=" SELECT *FROM ".$this->db_tabla." where ID_USUARIO= ? ";
 			$sentencia=$this->conectar->prepare($consulta);
 			
 			$sentencia->bindValue(1,$this->id);
@@ -401,13 +516,17 @@ class Usuario extends Conexion{
 				
 				$res= $sentencia->fetchAll(\PDO::FETCH_ASSOC);
 				$rows =count($res);
-				if($rows > 0 ){
-					return json_encode($res[0]);	
+				if($rows > 0 ){ 
+					/*$this->returnData = [
+						'success' => 1,
+						'status'=> 202,
+						'usuario' => $res[0]
+					];*/
+					 echo json_encode($res[0]);
 					
 				}else{
 						$res=null;
 						$returnData=$this->msg(0,422,'No se encontro ningun registro ocn ese ID ');
-						
 				}
 					
 			}else{
@@ -422,13 +541,14 @@ class Usuario extends Conexion{
 			$returnData=$this->msg(0,422,'No se encontro ningun registro ocn ese ID '.$ex->getMessage());
 		
 		}
-
-		return $returnData;
-
-	}	
 		
-		
+		return $this->returnData;
 
+	}
+	
+	
+
+		
 }
 
 

@@ -177,7 +177,6 @@ class Usuarios  extends Controlador{
                 //var_dump($this->);
                 $this->data=(object) $this->data;
                 $this->usuarioModelo->guardar($this->data);
-                 
                 //echo json_encode($userAuthenticated);
                 
                 
@@ -231,17 +230,17 @@ class Usuarios  extends Controlador{
                 break;
            }
            
+           $sub_array[]=$row['ID_USUARIO'];
            $sub_array[]=$row['NOMBRES'];
            $sub_array[]=$row['APELLIDOS'];
            $sub_array[]=$row['TELEFONO'];
            $sub_array[]=$row['EMAIL'];
            $sub_array[]=$row['FECHA_CREACION'];
            
-           
            $sub_array[]="<button type='button' name='estado' id='btn-estado'  class='".$atr." ' >".$est."</button>";
            $sub_array[]="<button type='button' name='estado' id='' class='btn btn-success btn-md update' onClick='mostrar(".$row["ID_USUARIO"].")' ><i class='fas fa-pen'></i></button>";
            $sub_array[]="<button type='button' name='estado' id='' 
-           class='btn btn-danger  btn-md update'  onClick='eliminar(".$row["ID_USUARIO"].")'  ><i class='fas fa-trash'></i></button>";
+           class='btn btn-danger  btn-md update' data-toggle='modal' data-target='#eliminarModal'  onClick='eliminar(".$row["ID_USUARIO"].")'  ><i class='fas fa-trash'></i></button>";
           
            
            $data[]=$sub_array;
@@ -257,21 +256,25 @@ class Usuarios  extends Controlador{
     }
 
     public function obtenerUsuario(){
+        //?id_usuario=1
+        
 
-        if($_SERVER["REQUEST_METHOD"]==="GET"){
+        if($_SERVER["REQUEST_METHOD"]=="GET"){
 
             //$idUsuario=$_POST["REQUEST_METHOD"];
-            $_GET = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $this->idUsuario=$this->sanitizar_campos($_GET["id_usuario"]);
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_NUMBER_INT);
+            if(!empty($_GET["id_usuario"])){
+                    
+                $this->idUsuario= $_GET["id_usuario"];
+                //echo "".$this->idUsuario;
+                $this->usuarioModelo->buscarUsuario($this->idUsuario);  
 
-            $this->modeloUsuario->buscarUsuario($this->idUsuario);
-        
+            }              
         }
-        
-
     }
 
     public function modificar(){
+        
 
         if ($_SERVER['REQUEST_METHOD']=='PUT') {
              
@@ -289,7 +292,8 @@ class Usuarios  extends Controlador{
                //atributos  sin ningun problema , cuando son recividos en el modelo
                //var_dump($this->);
                $this->data=(object) $this->data;
-               $this->usuarioModelo->guardar($this->data);
+
+               $this->usuarioModelo->modificar($this->data);
                 
                //echo json_encode($userAuthenticated);
 
@@ -305,6 +309,24 @@ class Usuarios  extends Controlador{
        }
 
 
+    }
+
+    public function eliminar(){
+
+        
+        if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+
+            $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $uri = explode( '/', $uri );
+            if(!empty($uri[4])){
+                    
+                $this->idUsuario= $uri[4];
+                
+                $this->usuarioModelo->eliminar($this->idUsuario);
+            }else{
+                
+            }
+        }
     }
 
 }

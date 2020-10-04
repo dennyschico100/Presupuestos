@@ -67,10 +67,11 @@
     #box-error {
         left: -13.5%;
     }
-    .dt-buttons{
-        margin-bottom:20px;
-        margin-top:10px;
-        
+
+    .dt-buttons {
+        margin-bottom: 20px;
+        margin-top: 10px;
+
     }
 
     .div-form-show {
@@ -79,6 +80,10 @@
         background-color: #333;
         opacity: 0.5;
         position: absolute;
+    }
+    .bajar{
+        
+        animation: move 2s ease-out;
     }
 
     @keyframes move {
@@ -134,11 +139,12 @@
 
                                 <tr>
 
+                                    <th>ID</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>
                                     <th width="20%">Correo</th>
-                                    <th width="12%">Fecha Ingreso</th>
+                                    <th width="17%">Fecha Ingreso</th>
                                     <th width="10%">Estado</th>
                                     <th width="5%">Editar</th>
                                     <th width="2%">Eliminar</th>
@@ -175,7 +181,7 @@
         <div id="modal-ventana" class="modal-content">
             <div class="col-md-12">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Mensjae Importante !</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Mensaje Importante !</h5>
                     <button id="btn-cerrar" class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span class="text-white" aria-hidden="true">
                             <h3>X</h3>
@@ -188,6 +194,27 @@
         </div>
     </div>
 </div>
+
+<!--INICIO MODAL DEL LOGOUT -->
+<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Aviso Importante</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div  id="mensaje-respuesta-eliminar"  class="modal-body"> Estas  a punto de eliminar este registro .</div>
+        <div  id="div-botones" class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary text-white"  id="btnEliminar"  >Eliminar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- FIN MODAL DEL LOGOUT-->
 <!--FORMULARIO VENTANA MODAL-->
 <div id="usuarioModal" class="fade hide-form">
 

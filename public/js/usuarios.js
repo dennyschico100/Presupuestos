@@ -6,39 +6,50 @@ $(document).ready(function () {
 
 var url = "";
 var tipoPeticion = "POST";
+var idUsuario = 0;
+
 const campoRequerido = document.querySelectorAll(".campo-requerido");
 
 const $popUpError = document.getElementById("box-error");
 const divform = document.getElementById("div-form");
 const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
+const $mensajeRespuestaEliminar = document.getElementById("mensaje-respuesta-eliminar");
+
+const $divBotones=document.getElementById("div-botones");
+
 const clases = ["modal", "fade"];
 
 var usuarioModal = document.getElementById("usuarioModal");
 const btnClose = document.getElementById("btnClose");
 const $btnCerrar = document.getElementById("btn-cerrar");
 
+var elements = document.getElementById("usuario_form").elements;
 
+const eliminarModal=document.getElementById("eliminarModal");
 
 function validarFormulario() {
     let respuesta = true;
 
     console.log("numero de clases " + campoRequerido.length);
-    var elements = document.getElementById("usuario_form").elements;
+
     var obj = {};
     let newObjeto = {};
     let indiceClase = 1;
 
     for (var i = 1; i < 8; i++) {
+
         indiceClase = 1;
         var item = elements.item(i);
-        console.warn(i);
+        //console.warn(i);
+
         obj[item.name] = item.value;
         newObjeto = JSON.stringify(obj);
         if (obj[item.name] == null || obj[item.name] === "") {
             campoRequerido.forEach((el) => {
 
                 if (i === indiceClase) {
-                    console.warn(indiceClase);
+                    //console.warn(indiceClase);
+
                     campoRequerido.innerHTML = "valor necesaro";
                     //console.error(newObjeto);
                     el.innerHTML = "Campo requerido";
@@ -77,7 +88,6 @@ function mostrarFormularo() {
         usuarioModal.style.opacity = "1";
         usuarioModal.classList.add("show-form");
         usuarioModal.style.width = "500px";
-        console.log(usuarioModal.classList);
         document.body.style.background = "rgb(170, 170, 170)";
 
     }
@@ -146,6 +156,10 @@ function mostrarDatos() {
                     {
                         data: [7]
                     }
+                    ,
+                    {
+                        data: [8]
+                    }
                 ]
             });
 
@@ -170,25 +184,25 @@ const btnGuardar = document.getElementById("btnGuardar");
 btnGuardar.addEventListener("click", () => { });
 
 btnClose.addEventListener("click", () => {
-   cerrarFormulario();
+    cerrarFormulario();
 
 });
 
 function cerrarFormulario() {
-    
+
     if (usuarioModal.classList.contains("hide-form")) {
         usuarioModal.classList.remove("hide-form");
         usuarioModal.classList.opacity = "1";
         limpiar();
-        
+
     } else {
         divform.classList.remove("div-form-show");
-        console.log(divform.classList);
+
         usuarioModal.style.opacity = "1";
         //usuarioModal.style.background="";
         usuarioModal.classList.add("hide-form");
         limpiarMensajEsErrores();
-        
+
     }
 }
 
@@ -200,7 +214,6 @@ function recargarTabla() {
 
 
 }
-
 
 
 $("#usuario_form").on("submit", function (e) {
@@ -239,9 +252,16 @@ $("#usuario_form").on("submit", function (e) {
     const FD = new FormData(frmUsuario);
     const objetoUsuario = {};
 
+
     FD.forEach(function (value, key) {
         objetoUsuario[key] = value;
     });
+
+    if (tipoPeticion === "PUT") {
+
+        objetoUsuario["idUsuario"] = parseInt(idUsuario);
+
+    }
 
     const jsonUsuario = JSON.stringify(objetoUsuario);
     console.log(jsonUsuario);
@@ -251,9 +271,10 @@ $("#usuario_form").on("submit", function (e) {
     xhr.addEventListener("readystatechange", function (event) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             //msg=JSON.parse(event.target.responseText);
+
+            console.log(event.target.responseText);
             const respuesta = JSON.parse(event.target.responseText);
             const status = respuesta.status;
-            console.error(respuesta);
 
             if (xhr.status === 200) {
 
@@ -269,12 +290,14 @@ $("#usuario_form").on("submit", function (e) {
                     $mensajeRespuesta.innerHTML = `${respuesta.message}`;
                     document.body.style.background = "#333";
 
+                    console.error(respuesta);
+
                     if (status == 201) {
 
                         limpiar();
                         limpiarMensajEsErrores();
                         cerrarFormulario();
-                        
+
                     }
 
                 } else {
@@ -314,30 +337,27 @@ $("#usuario_form").on("submit", function (e) {
     jQuery.noConflict();
 
 });
++
+
+    $btnCerrar.addEventListener("click", () => {
+
+        if ($popUpError.classList.contains("show-box")) {
+
+            $popUpError.classList.remove('show-box');
+            $popUpError.classList.add(...clases);
+
+            usuarioModal.style.opacity = "1.0";
+
+            divform.style.opacity = "0.5";
+            divform.style.backgroundColor = "#333";
 
 
 
+        } else {
 
-$btnCerrar.addEventListener("click", () => {
+        }
 
-    if ($popUpError.classList.contains("show-box")) {
-
-        $popUpError.classList.remove('show-box');
-        $popUpError.classList.add(...clases);
-
-        usuarioModal.style.opacity = "1.0";
-
-        divform.style.opacity = "0.5";
-        divform.style.backgroundColor = "#333";
-
-
-
-    } else {
-
-    }
-
-});
-
+    });
 
 
 //Asigna el valor `POST`  a la variable tipoPeticion
@@ -366,13 +386,75 @@ function limpiar(id) {
 
 
 function mostrar(id) {
+
+    idUsuario = id;
+    //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
+
+    url = "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
+    const peticion = new XMLHttpRequest();
+
+    peticion.open("GET", url);
+
+    peticion.addEventListener("readystatechange", function (event) {
+        if (peticion.readyState === 4 && peticion.status == 200) {
+
+            const respuesta = JSON.parse(event.target.responseText);
+            $('#nombre').val(respuesta.NOMBRES);
+            $('#apellido').val(respuesta.APELLIDOS);
+            $('#email').val(respuesta.EMAIL);
+            $('#dui').val(respuesta.DUI);
+            $('#sexo').val(respuesta.SEXO);
+            $('#telefono').val(respuesta.TELEFONO);
+            console.log(respuesta);
+        } else if (peticion.readyState === 4) {
+            console.log("UN ERRRO");
+        }
+    });
+
+    peticion.send();
+
     tipoPeticion = "PUT";
     mostrarFormularo();
     //jQuery.noConflict();
     //$("#usuarioModal").modal("show");
 }
 
-function eliminar(id) { }
+const btnEliminar = document.getElementById("btnEliminar");
+
+btnEliminar.addEventListener("click", () => {
+
+    const xhr = new XMLHttpRequest();
+    
+    
+    url = "http://localhost:8081/Presupuestos/usuarios/eliminar/" + idUsuario;
+    
+    
+    xhr.open("DELETE", url);
+    xhr.addEventListener("readystatechange", (event) => {
+
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            $divBotones.style.display="none";
+            
+            eliminarModal.classList.add("bajar");
+            const respuesta = JSON.parse(event.target.responseText);
+            $mensajeRespuestaEliminar.innerHTML = `${respuesta.message}`;
+            
+
+            //console.log(event.target.responseText);
+            id_usuario = 0;
+        } else if (xhr.readyState === 4) {
+
+        }
+    })
+
+    xhr.send();
+})
+
+
+function eliminar(id) {
+    idUsuario = id;
+
+}
 
 /*
 $("#peticion_put").on("submit", function (e) {
