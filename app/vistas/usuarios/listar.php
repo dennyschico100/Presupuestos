@@ -3,8 +3,10 @@
     <style>
     #usuarioModal {
         
+
     }
 
+    
     .show-box {
         transform: translate(0);
         border: 0px solid yellow;
@@ -44,7 +46,6 @@
     }
 
     .hide-form{
-        opacity:0;
         display:none;
     }
 
@@ -192,7 +193,7 @@
                        </div>
                        </div>
 <!--FORMULARIO VENTANA MODAL-->
-<div id="usuarioModal" class="fade ">
+<div id="usuarioModal" class="fade hide-form">
     
                        
     <div class="modal-dialog">
@@ -219,24 +220,35 @@
                         <label>Nombres</label>
                         <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombres"
                             pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$" />
+                        <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                         <br />
+
 
                         <label>Apellidos</label>
                         <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Apellidos"
                             pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$" />
+                            <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                         <br />
+
                     </div>
                     <div class="col-md-10 form-group ">
                         <label>Correo</label>
                         <input type="email" name="email" id="email" class="form-control" placeholder="Correo"
                             required="required" />
+                            <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                         <br />
 
                     </div>
                     <div class="col-md-10 form-group ">
                         <label>Numero de Dui</label>
                         <input type="text" name="dui" id="dui" class="form-control" placeholder="00000000-0" />
+                        <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                         <br />
+
 
                     </div>
 
@@ -248,6 +260,8 @@
                             <option value="2">Masculino</option>
 
                         </select>
+                        <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                     </div>
 
 
@@ -262,6 +276,8 @@
                             <option value="0">Jefe Presupuesto</option>
 
                         </select>
+                        <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                     </div>
             
 
@@ -273,7 +289,8 @@
                         <label>Teléfono</label>
                         <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Teléfono"
                             pattern="[0-9]{0,15}" />
-                        
+                        <span class="text-danger  campo-requerido" ><strong></strong></span>
+
                     </div>
 
 

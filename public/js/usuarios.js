@@ -1,24 +1,88 @@
-
 $(document).ready(function () {
-    
+
 
 
 });
 
 var url = "";
 var tipoPeticion = "POST";
-//document.body.style.opacity="0"
+const campoRequerido = document.querySelectorAll(".campo-requerido");
 
-setTimeout(() => {
-    //document.body.style.opacity="1";  
+const $popUpError = document.getElementById("box-error");
+const divform = document.getElementById("div-form");
+const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
+const clases = ["modal", "fade"];
 
-}, 3000);
+var usuarioModal = document.getElementById("usuarioModal");
+const btnClose = document.getElementById("btnClose");
+const $btnCerrar = document.getElementById("btn-cerrar");
+
+
+
+function validarFormulario() {
+    let respuesta = true;
+
+    console.log("numero de clases " + campoRequerido.length);
+    var elements = document.getElementById("usuario_form").elements;
+    var obj = {};
+    let newObjeto = {};
+    let indiceClase = 1;
+
+    for (var i = 1; i < 8; i++) {
+        indiceClase = 1;
+        var item = elements.item(i);
+        console.warn(i);
+        obj[item.name] = item.value;
+        newObjeto = JSON.stringify(obj);
+        if (obj[item.name] == null || obj[item.name] === "") {
+            campoRequerido.forEach((el) => {
+
+                if (i === indiceClase) {
+                    console.warn(indiceClase);
+                    campoRequerido.innerHTML = "valor necesaro";
+                    //console.error(newObjeto);
+                    el.innerHTML = "Campo requerido";
+                    respuesta = false;
+                }
+                indiceClase++;
+
+            });
+        }
+    }
+
+    return respuesta;
+}
+
+function limpiarMensajEsErrores() {
+
+    campoRequerido.forEach((el) => {
+        el.innerHTML = "";
+
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function (event) {
     console.log("DOM fully loaded and parsed");
     document.body.style.backgroundColor = "";
 
 });
+
+function mostrarFormularo() {
+    if (usuarioModal.classList.contains("hide-form")) {
+
+        divform.classList.add("div-form-show");
+        usuarioModal.style.zIndex = "9999";
+        usuarioModal.classList.add("show-form");
+        usuarioModal.classList.remove("hide-form");
+        usuarioModal.style.opacity = "1";
+        usuarioModal.classList.add("show-form");
+        usuarioModal.style.width = "500px";
+        console.log(usuarioModal.classList);
+        document.body.style.background = "rgb(170, 170, 170)";
+
+    }
+}
+
 
 function mostrarDatos() {
     var jqxhr = $.get(
@@ -105,25 +169,44 @@ function desabilitarCampos() {
 const btnGuardar = document.getElementById("btnGuardar");
 btnGuardar.addEventListener("click", () => { });
 
+btnClose.addEventListener("click", () => {
+   cerrarFormulario();
+    //usuarioModal.classList.add("caja");
+    //usuarioModal.style.opacity="0";
+    //usuarioModal.style.display="none";
+
+});
+
 function cerrarFormulario() {
-
-
-
+    
+    if (usuarioModal.classList.contains("hide-form")) {
+        usuarioModal.classList.remove("hide-form");
+        usuarioModal.classList.opacity = "1";
+        limpiar();
+        
+    } else {
+        divform.classList.remove("div-form-show");
+        console.log(divform.classList);
+        usuarioModal.style.opacity = "1";
+        //usuarioModal.style.background="";
+        usuarioModal.classList.add("hide-form");
+        limpiarMensajEsErrores();
+        
+    }
 }
-function resetearCampos() {
 
+
+//cerrarFormulario();
+
+
+
+function resetearCampos() {
 
 }
 function recargarTabla() {
 
 
 }
-
-const $popUpError = document.getElementById("box-error");
-const divform=document.getElementById("div-form");
-const $mensajeRespuesta=document.getElementById("mensaje-respuesta");  
-
-const clases = ["modal", "fade"];
 
 
 
@@ -168,7 +251,6 @@ $("#usuario_form").on("submit", function (e) {
     });
 
     const jsonUsuario = JSON.stringify(objetoUsuario);
-
     console.log(jsonUsuario);
 
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -179,28 +261,34 @@ $("#usuario_form").on("submit", function (e) {
             const respuesta = JSON.parse(event.target.responseText);
             const status = respuesta.status;
             console.error(respuesta);
-            
-            if (xhr.status===200 ) {
-                if($popUpError.classList.contains("modal") &&  $popUpError.classList.contains("fade")  ){
-                    
+
+            if (xhr.status === 200) {
+
+                if ($popUpError.classList.contains("modal") && $popUpError.classList.contains("fade")) {
+
                     $popUpError.classList.remove(...clases);
                     //usuarioModal.style.backgroundColor="#333";
                     $popUpError.classList.add('show-box');
-                    divform.style.opacity="1";
-                    divform.style.backgroundColor="#333";
-                    usuarioModal.style.opacity="0.5";
-                    usuarioModal.style.zIndex="100";
-                    $mensajeRespuesta.innerHTML=`${respuesta.message}`;
-                    
+                    divform.style.opacity = "1";
+                    divform.style.backgroundColor = "#333";
+                    usuarioModal.style.opacity = "0.5";
+                    usuarioModal.style.zIndex = "100";
+                    $mensajeRespuesta.innerHTML = `${respuesta.message}`;
+                    document.body.style.background = "#333";
 
-                }else{
+                    if (status == 201) {
+
+                        limpiar();
+                        limpiarMensajEsErrores();
+                        cerrarFormulario();
+                        
+                    }
+
+                } else {
                     $popUpError.classList.add(...clases);
                     $popUpError.classList.add("show-box");
-                            
                 }
-
             } else {
-
                 $("#usuarioModal").modal("hide");
 
                 $("#usuario_form")[0].reset();
@@ -218,8 +306,13 @@ $("#usuario_form").on("submit", function (e) {
         //bootbox.alert(""+msg.message);
     });
 
-    xhr.send(jsonUsuario);
+    if (validarFormulario()) {
 
+        xhr.send(jsonUsuario);
+
+    } else {
+
+    }
     // Define what happens in case of error
     xhr.addEventListener("error", function (event) {
         alert("Ocurrio un error");
@@ -230,64 +323,34 @@ $("#usuario_form").on("submit", function (e) {
 });
 
 
-var usuarioModal= document.getElementById("usuarioModal");
-        
 
-const btnClose=document.getElementById("btnClose");
 
-btnClose.addEventListener("click",()=>{
-    console.error(usuarioModal.classList);
+$btnCerrar.addEventListener("click", () => {
 
-    if(usuarioModal.classList.contains("hide-form")){
-        usuarioModal.classList.remove("hide-form");
-        usuarioModal.classList.opacity="1";
-        
-    }else{
-        divform.classList.remove("div-form-show");
-        
-        console.log(divform.classList);
-        usuarioModal.style.opacity="1";
-        //usuarioModal.style.background="";
+    if ($popUpError.classList.contains("show-box")) {
 
-        
-        usuarioModal.classList.add("hide-form");
-    }
-//usuarioModal.classList.add("caja");
-//usuarioModal.style.opacity="0";
-//usuarioModal.style.display="none";
-
-            
-});
-
-const $btnCerrar=document.getElementById("btn-cerrar");
-
-$btnCerrar.addEventListener("click",()=>{
-    
-        
-    if($popUpError.classList.contains("show-box")  ){
-        
         $popUpError.classList.remove('show-box');
         $popUpError.classList.add(...clases);
 
-        usuarioModal.style.opacity="1.0";
+        usuarioModal.style.opacity = "1.0";
 
-        divform.style.opacity="0.5";
-        divform.style.backgroundColor="#333";
-        
-        limpiar();
+        divform.style.opacity = "0.5";
+        divform.style.backgroundColor = "#333";
 
-    }else{
-    
+
+
+    } else {
+
     }
-    
-}) 
+
+})
 
 const $mostrarButton = document.getElementById("mostrar");
 
 $mostrarButton.addEventListener("click", (e) => {
     console.log(e.target);
     console.log($popUpError.classList);
-    
+
     //modal fade
 
 });
@@ -295,55 +358,16 @@ $mostrarButton.addEventListener("click", (e) => {
 //Asigna el valor `POST`  a la variable tipoPeticion
 (() => {
     const $addButton = document.getElementById("add_button");
-    
-
     $addButton.addEventListener("click", () => {
         tipoPeticion = "POST";
-        
 
-        
-        const wrapper =document.getElementById("wrapper");
-        usuarioModal.classList.add("caja");
-       
-        if(!usuarioModal.classList.contains("modal")){
-
-            divform.classList.add("div-form-show");
-
-            //usuarioModal.classList.remove("modal");
-            //usuarioModal.classList.remove("show");
-
-            //usuarioModal.classList.remove("caja");
-            usuarioModal.style.zIndex="9999";
-            usuarioModal.classList.add("show-form");
-            usuarioModal.classList.remove("hide-form");
-            usuarioModal.style.opacity="1";
-
-            //usuarioModal.style.position="absolute";
-            //usuarioModal.style.left="20%";
-            //usuarioModal.style.top="10%";
-            
-            usuarioModal.classList.add("show-form");
-            
-            usuarioModal.style.width="500px";
-            //usuarioModal.classList.add("caja2");
-
-            console.log(usuarioModal.classList);
-            document.body.style.background="#333";
-            wrapper.style.zIndex="9998";
-            //wrapper.style.opacity="0.5";
-            
-        }
-       
-       
-    
+        mostrarFormularo();
         //document.getElementsByClassName('modal-backdrop').style.backgroundColor="";
-        
-
 
     });
 })();
 
-function limpiar(id) { 
+function limpiar(id) {
 
     $('#nombre').val("");
     $('#apellido').val("");
@@ -355,10 +379,14 @@ function limpiar(id) {
 
 }
 
+
 function mostrar(id) {
     tipoPeticion = "PUT";
-    jQuery.noConflict();
-    $("#usuarioModal").modal("show");
+    mostrarFormularo();
+    //jQuery.noConflict();
+
+    //$("#usuarioModal").modal("show");
+
 }
 function eliminar(id) { }
 
