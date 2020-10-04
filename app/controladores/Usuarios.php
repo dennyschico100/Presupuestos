@@ -68,14 +68,22 @@ class Usuarios  extends Controlador{
 
                 //echo json_encode($userAuthenticated);
 
+                //echo "<h1>".$userAuthenticated['usuario']['ESTADO']."</h1>";
+                
+                echo var_dump($userAuthenticated['usuario']['ESTADO']);
 
-
-                if ( $userAuthenticated['success'] === 1 ) {
+                if ( $userAuthenticated['success'] === 1  ) {
                     //echo "crear sesion";
+                    if($userAuthenticated['usuario']['ESTADO'] === "3" ){
+                        $this->cambiarPassword();
+                        //presupuestos012456789
 
-                    // Create session
-                    $this->createUserSession($userAuthenticated);
-                    echo "despues de crear sesion";
+                    }else{
+                            
+                        // Create session
+                        $this->createUserSession($userAuthenticated);
+                        echo "despues de crear sesion";
+                    }
 
                 } else {
                     echo json_encode($userAuthenticated);
@@ -83,8 +91,9 @@ class Usuarios  extends Controlador{
                     $this->data = [ 
                         'errores' => 'Email o contraseña incorrecta',
                     ];
+
                     $this->vista('usuarios/login',$this->data);
-            
+                    
                 }
             } else {
                 // Load view with errors
@@ -97,6 +106,14 @@ class Usuarios  extends Controlador{
         }
         
     }
+
+    public function cambiarPassword(){
+        
+        $this->vista('usuarios/cambiarPassword');
+
+
+    }
+
 
     public function isLoggedIn()
     {
@@ -192,8 +209,6 @@ class Usuarios  extends Controlador{
 
     }
     
-
-
     public function obtenerTodos(){
         
         $resultado=$this->usuarioModelo->listar();

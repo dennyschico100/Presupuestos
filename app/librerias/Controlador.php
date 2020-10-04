@@ -13,7 +13,7 @@ class Controlador{
         }
 
     }
-
+    
     public function vista($vista,$data=[]){
         
         if(file_exists('../app/vistas/'.$vista.".php")){

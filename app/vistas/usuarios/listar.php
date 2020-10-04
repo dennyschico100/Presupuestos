@@ -340,7 +340,7 @@
 
                 <div class="modal-footer">
 
-                    <input type="hidden" name="password1" value="dfjkfjñjdu798789327482u87987ñ`ñp+'¡0">
+                    <input type="hidden" name="password1"  value="presupuestos012456789">
                     <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i
                             class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
