@@ -177,15 +177,16 @@ class Usuario extends Conexion{
                             }else{
 								$this->returnData = [
                                     'success' => 0,
-                                    'status'=> 422
-                                ];
+                                    'status'=> 422,
+									"message"=>"Credenciales errroneas "
+								];
 							}
 							  
 
 						}else{
                             
                     
-                            $this->returnData = $this->msg(0,422,'Usuario y/o  contraeña incorrecta  !');
+                            $this->returnData = $this->msg(0,422,"Usuario y/o  contraeña incorrecta !");
 						}
 
 					}else{
@@ -292,6 +293,71 @@ class Usuario extends Conexion{
 			echo json_encode($returnData);
 	}
 
+	public function activarCuenta($data){
+		try{
+			
+			//echo var_dump($data);
+
+			$consulta="UPDATE  ".$this->db_tabla."  SET CONTRASEÑA=?, ESTADO=? where EMAIL = ? ";
+			
+			if( isset($data->password)   && isset($data->email)  )
+			{				
+				
+				if(!empty(trim($data->password))  && !empty(trim($data->email))     )
+				{
+						
+					$this->password1=$data->password;		
+					$this->email=$data->email;
+					$var=false;
+					$var=$this->validar_usuario($data);
+					if(!filter_var($data->email,FILTER_VALIDATE_EMAIL)){
+						$returnData=$this->msg(0,422,'Formato de Email invalido ! ');
+						
+					}else if( $var ){
+						//$hash=password_hash($this->password2, PASSWORD_BCRYPT);
+						$sentencia=$this->conectar->prepare($consulta);
+
+						//echo var_dump($this->password1);
+						$sentencia->bindValue(1,$this->password1);
+						$sentencia->bindValue(2,$this->estado);	
+						$sentencia->bindValue(3,$this->email);	
+					
+
+						if($sentencia->execute()){
+								
+							return $returnData=[
+								"success"=>1,
+								"status"=>201,
+								"message"=>"Contraseña modificada correctamente",
+								"cuentaActivada"=> 1
+							];
+						}
+						else{
+							$returnData=$this->msg(0,500,'No se pudo modificar los datos ');
+							
+						}
+					
+					}else{
+						$returnData=$this->msg(0,422,'Email no existe   ! ');
+								
+					}
+					
+					}else{
+						$returnData=$this->msg(0,422,'Valores nulos detectados,  completa todo le formulario ');
+					}
+
+            }else{
+				$returnData=$this->msg(0,422,'Complete todos los campos '); 
+				
+			}
+			
+			}catch(PDOException $ex){
+				$returnData=$this->msg(0,500,''.$ex->getMessage());
+			}
+
+			echo json_encode($returnData);
+	}
+
 	public function modificar($data){
 		try{
 			
@@ -308,8 +374,6 @@ class Usuario extends Conexion{
 				!empty(trim($data->email))     )
 				{
 					
-
-				
 				$this->nombre=$data->nombre;
 				$this->apellidos= $data->apellido;
 				$this->telefono=$data->telefono;

@@ -21,7 +21,7 @@
                                 <form class="user" id="frm-login" method="post"  action="<?php  echo URL_ROOT?>/usuarios/login">
                                 <div id="div-error" class="error-contenedor">
                                 <?php   if(!empty($data['errores']) ) { ; ?>
-
+                                    
                                 <div class="alert alert-danger">
                                     <strong>
 

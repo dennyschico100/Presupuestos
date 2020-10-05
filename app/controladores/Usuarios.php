@@ -8,6 +8,9 @@ class Usuarios  extends Controlador{
     }
     
     private $data = ['errores' => ''];
+    private $dataUsuario = ['errores' => ''];
+    private $userActivado=false;
+    
     private $idUsuario;
 
     
@@ -40,24 +43,34 @@ class Usuarios  extends Controlador{
     }
 
     public function login(){    
-        
+         
          if ($_SERVER['REQUEST_METHOD']=='POST') {
 
-            
             // Process form
             // Sanitize POST Data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             
-            
-            foreach($_POST as $key=>$value)
-            {            
-                $this->data[$key]=$this->sanitizar_campos($value);
-                
-                           
-            }    
+            echo var_dump($this->dataUsuario);   
+
+            if($this->userActivado){
+
+                foreach($_POST as $key=>$value)
+                {            
+                    $this->dataUsuario [$key]=$this->sanitizar_campos($value);
+                                
+                }
+
+            }else{
+
+                foreach($_POST as $key=>$value)
+                {            
+                    $this->data [$key]=$this->sanitizar_campos($value);
+                                
+                } 
+            }
             
             //Make sure are empty
-            if ( empty($data['email_err']) && empty($data['password_err']) ) {
+            if ( empty($dataUsuario['email_err']) && empty($dataUsuario['password_err']) ) {
                 
                 //Convirtiedno $data en fomrato JSON PARA PODER ACCEDER  A SUS
                 //atributos  sin ningun problema , cuando son recividos en el modelo
@@ -66,12 +79,7 @@ class Usuarios  extends Controlador{
                 
                 $userAuthenticated = $this->usuarioModelo->login($this->data);
 
-                //echo json_encode($userAuthenticated);
-
-                //echo "<h1>".$userAuthenticated['usuario']['ESTADO']."</h1>";
-                
-                echo var_dump($userAuthenticated['usuario']['ESTADO']);
-
+               
                 if ( $userAuthenticated['success'] === 1  ) {
                     //echo "crear sesion";
                     if($userAuthenticated['usuario']['ESTADO'] === "3" ){
@@ -111,8 +119,57 @@ class Usuarios  extends Controlador{
         
         $this->vista('usuarios/cambiarPassword');
 
+    }
+
+    public function activarCuenta(){
+
+        if ($_SERVER['REQUEST_METHOD']=='POST') {
+            
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                      
+            //echo var_dump($_POST);
+
+            foreach($_POST as $key=>$value)
+            {            
+                $this->data[$key]=$this->sanitizar_campos($value);
+                               
+            }           
+            //Make sure are empty
+            if ( !empty($_POST) ) {
+                
+                $this->data=(object) $this->data;
+                //echo var_dump($this->data);
+                $usuarioActivado=$this->usuarioModelo->activarCuenta($this->data);
+                //echo var_dump($usuarioActivado);
+                echo $usuarioActivado["cuentaActivada"];
+                if($usuarioActivado["cuentaActivada"] === 1 ){
+                    echo "<br>SE ACTIVO DIO ....".$usuarioActivado["cuentaActivada"];
+                    $this->userActivado=true;
+
+                    $this->login();
+        
+                }else{
+                    echo "NO ACTIVO DIO FALSO";
+                    
+                }
+
+               //echo json_encode($userAuthenticated);          
+            } else {
+               // Load view with errors
+               //$this->vista('usuarios/login',$this->data);
+
+            }
+
+       } else {
+           //$this->vista("usuarios/login");
+          
+           //$this->vista('usuarios/login',$this->data);
+
+       }
+
 
     }
+
 
 
     public function isLoggedIn()
@@ -177,7 +234,6 @@ class Usuarios  extends Controlador{
 
          //$this->usuarioModelo->();
          if ($_SERVER['REQUEST_METHOD']=='POST') {
-             
              $input = json_decode(file_get_contents('php://input'));   
             // Sanitize POST Data
             //$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

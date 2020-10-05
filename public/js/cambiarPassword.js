@@ -34,7 +34,7 @@ togglePassword.addEventListener('click', function (e) {
 })();
 
 (()=>{
-
+    alert("cambiar");
 })();
 
 function validar_campos() {
@@ -73,10 +73,13 @@ function ValidarEmail(email) {
 const enviar = document.getElementById("enviar")
 enviar.addEventListener('click', function (e) {
 
+
     const contra = document.getElementById("pass").value;
+    const confirmarContra=document.getElementById("pass2").value;
     const exampleInputEmail = document.getElementById("email").value;
     let pass_error = document.getElementById("pass-error");
     let email_error = document.getElementById("email-error");
+    let coincidir = document.getElementById("coincidir-error");
 
     const str = new String(exampleInputEmail);
 
@@ -101,9 +104,11 @@ enviar.addEventListener('click', function (e) {
         email_error.classList.add("email-error");
         pass_error.innerHTML = "";
         email_validated = true;
-
+        alert(email_validated);
     }
-    
+
+    console.warn(confirmarContra.length);
+
     if (contra.length < 1) {
 
         stop_form();
@@ -111,17 +116,32 @@ enviar.addEventListener('click', function (e) {
         pass_error.innerHTML = "Ingresa tu contraseña !";
 
     } else if (contra.length < 4) {
-        stop_form();
         pass_error.classList.remove("pass-error");
         pass_error.innerHTML = "Contraeña debe de tener almnos 6 caracteres !"
 
-    } else {
+    } else if(confirmarContra.length === 0 ) {
+        
+        stop_form();
+
+        coincidir.classList.remove("pass-error");
+        coincidir.innerHTML="REPITE TU PASSWORD";
+
+    }else if(contra !== confirmarContra ){
+        stop_form();
+
+        coincidir.classList.remove("pass-error");
+        coincidir.innerHTML="CONTRASEÑAS NO COINIDEN";
+
+    } else  {
         pass_error.innerHTML = "";
         password_validated = true;
+        
     }
+
 
     if (password_validated && email_validated) {
         send_form();
+
     }
 
 
