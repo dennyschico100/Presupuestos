@@ -6,6 +6,7 @@
     define('DB_PASS','Francsico100');
     define('DB_NAME','aulas4');
     define('DB_CHARSET','utf8');
+    
 
     // App Root
     define('APP_ROOT', dirname(dirname(__FILE__)));

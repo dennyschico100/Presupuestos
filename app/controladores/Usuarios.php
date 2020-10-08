@@ -4,13 +4,13 @@ class Usuarios  extends Controlador{
     public function __construct(){
         session_start();
         $this->usuarioModelo = $this->modelo('Usuario');
+        $this->usuarioRolModelo = $this->modelo('UsuarioRoles');
         
     }
     
     private $data = ['errores' => ''];
     private $dataUsuario = ['errores' => ''];
     private $userActivado=false;
-    
     private $idUsuario;
 
     
@@ -88,21 +88,23 @@ class Usuarios  extends Controlador{
 
                     }else{
                             
-                        // Create session
+                        // Crer session
+                        //$userAuthenticated['usuario']['ID_USUARIO']
+                
+                        $this->usuarioModelo->registrarInicioSesion($userAuthenticated['usuario']['ID_USUARIO']);
                         $this->createUserSession($userAuthenticated);
-                        echo "despues de crear sesion";
+                        echo "<h1>despues de crear sesion</h1>";
                     }
 
                 } else {
-                    echo json_encode($userAuthenticated);
+                    //echo json_encode($userAuthenticated);
 
                     $this->data = [ 
                         'errores' => 'Email o contraseña incorrecta',
                     ];
-
                     $this->vista('usuarios/login',$this->data);
-                    
                 }
+
             } else {
                 // Load view with errors
                 $this->vista('usuarios/login',$this->data);
@@ -171,7 +173,6 @@ class Usuarios  extends Controlador{
     }
 
 
-
     public function isLoggedIn()
     {
         if (  isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
@@ -186,7 +187,6 @@ class Usuarios  extends Controlador{
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $input = json_decode(file_get_contents('php://input'));
         $method = $_SERVER['REQUEST_METHOD'];
-        
         /*
         if ('PUT' === $method) {
         parse_str(file_get_contents('php://input'), $_PUT);
@@ -203,27 +203,30 @@ class Usuarios  extends Controlador{
     }
 
     public function createUserSession($user)
-    {
+    {       
             $_SESSION['user_id_presupuestos'] = $user['usuario']['ID_USUARIO'];            
             $_SESSION['user_email_presupuestos'] = $user['usuario']['EMAIL'];
             $_SESSION['user_nombres_presupuestos'] = $user['usuario']['NOMBRES'];
             $_SESSION['user_rol_presupuestos'] = $user['rol_usuario'];
-            
-           //return $this->editarUsuario();
-            
-          $this->vista('home/index');
-    }
+        
+            //return $this->editarUsuario();
+           $this->vista('home/index');
+           
+    }  
 
     public function logout(){
         //rEVISRA SI HAY SESION INICIALIZADA valor cero
         if(isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])    ){
-            
+            $id=$_SESSION['user_id_presupuestos'];
+
             unset($_SESSION['user_id_presupuestos']);
             unset($_SESSION['user_email_presupuestos']);
             unset($_SESSION['user_nombre_presupuestos']);
             unset($_SESSION['user_rol_presupuestos']);
             session_destroy();
+            $this->usuarioModelo->registrarCierreSesion($id);
             $this->vista("usuarios/login");
+
         }else{
             $this->vista("usuarios/login");
         }
@@ -249,16 +252,23 @@ class Usuarios  extends Controlador{
                 //atributos  sin ningun problema , cuando son recividos en el modelo
                 //var_dump($this->);
                 $this->data=(object) $this->data;
-                $this->usuarioModelo->guardar($this->data);
-                //echo json_encode($userAuthenticated);
-                
-                
+                $res= [];
+
+                $res= (object) $this->usuarioModelo->guardar($this->data);
+                if($res->success == 1 ){
+
+                    $_idUsuario=(int)$res->id;
+                    $this->usuarioRolModelo->asignarRol($_idUsuario,$this->data->rol);    
+                    
+                }else{
+                    echo json_encode($res);
+
+                }         
             } else {
-                // Load view with errors
+
                 $this->vista('usuarios/login',$this->data);
             }
         } else {
-            //$this->vista("usuarios/login");
            
             $this->vista('usuarios/login',$this->data);
         }
@@ -282,6 +292,7 @@ class Usuarios  extends Controlador{
                case 1:
                     $est='ACTIVO';
                     $atr='btn-md estado';
+                    
                 
                 break;
                 case 2:
@@ -328,8 +339,6 @@ class Usuarios  extends Controlador{
 
     public function obtenerUsuario(){
         //?id_usuario=1
-        
-
         if($_SERVER["REQUEST_METHOD"]=="GET"){
 
             //$idUsuario=$_POST["REQUEST_METHOD"];
@@ -363,11 +372,8 @@ class Usuarios  extends Controlador{
                //atributos  sin ningun problema , cuando son recividos en el modelo
                //var_dump($this->);
                $this->data=(object) $this->data;
-
                $this->usuarioModelo->modificar($this->data);
-                
                //echo json_encode($userAuthenticated);
-
                
            } else {
                // Load view with errors
@@ -382,6 +388,7 @@ class Usuarios  extends Controlador{
 
     }
 
+
     public function eliminar(){
 
         
@@ -392,12 +399,29 @@ class Usuarios  extends Controlador{
             if(!empty($uri[4])){
                     
                 $this->idUsuario= $uri[4];
+
+                $res= [];
+
+                $res=(object) $this->usuarioRolModelo->eliminarUsuarioRol($this->idUsuario);
                 
-                $this->usuarioModelo->eliminar($this->idUsuario);
+                if($res->success== 1 ){
+                    
+                    $this->usuarioModelo->eliminar($this->idUsuario);
+                    
+                }else{
+                    
+                    echo json_encode($res);
+                                  
+                }
+                
             }else{
                 
             }
         }
+    }
+
+    public function actividad(){
+        $this->vista("usuarios/actividad");
     }
 
 }

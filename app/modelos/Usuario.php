@@ -34,11 +34,11 @@ class Usuario extends Conexion{
 		try{
 			
 			if(isset($data) ){
-				if(!empty(trim($data) ) ){
+				if(!empty(trim($data->email) ) ){
                     
-					$consulta=" SELECT  count(*)  FROM ".$this->db_tabla." where email =?    " ;
+					$consulta=" SELECT  (ID_USUARIO) FROM ".$this->db_tabla." where EMAIL =?    " ;
 					$sentencia=$this->conectar->prepare($consulta);
-					$this->email=$data;
+					$this->email=$data->email;
                     
 					$sentencia->bindValue(1,$this->email);
 					if($sentencia->execute()){
@@ -51,7 +51,9 @@ class Usuario extends Conexion{
 						//RESPONDIENDO UN OBJETO HACIA EL FRONTEND
 						//return json_encode($res);
 						//echo "SI HAY REGISTROS";	
-						$res=true;
+						return $res[0]["ID_USUARIO"];
+
+
 
 						}else{
 							$res=false;
@@ -156,14 +158,10 @@ class Usuario extends Conexion{
 							$this->id=$res[0]['ID_USUARIO'];
 							
 							$rol=$this->usuarioRol($this->id);
-							
-
 							//echo "".json_encode($res[0]['contraseña']);
 
                             //$check_password = password_verify($data->password,$pass['pass'] );
 							//$res[0]['contraseña']='';
-
-							
                              if($data->password ===  $res[0]['CONTRASEÑA']  ){
 								$res[0]['contraseña']='';
 								
@@ -263,13 +261,19 @@ class Usuario extends Conexion{
 										
 					if($sentencia->execute()){
 						//$msg['message'] = 'Usuario registrado correctamente !' ;
-						$returnData=$this->msg(1,201,'Usuario registrodo correctamente');
-								
+						//return $returnData=$this->msg(1,201,'Usuario registrodo correctamente');
+						$_id=$this->buscarUsuarioEmail($data);
+						$returnData=[
+							'success'=>1,
+							'status'=>201,
+							'message'=>"Usuario regsitraod correcatmentre",
+							'id'=>$_id
+						];
+						
 					}
 					else{
 						$returnData=$this->msg(0,500,'No se ingresaron datos ');
-						
-	
+							
 					}
 				
 				}else{
@@ -290,7 +294,10 @@ class Usuario extends Conexion{
 				$returnData=$this->msg(0,500,''.$ex->getMessage());
 			}
 
-			echo json_encode($returnData);
+			 return   (object) $returnData;
+			 
+
+
 	}
 
 	public function activarCuenta($data){
@@ -448,7 +455,7 @@ class Usuario extends Conexion{
 				if($sentencia->execute()){
 					//$msg['message'] = 'Usuario registrado correctamente !' ;
 					$returnData=$this->msg(1,200,'Datos Elminados correctamente');
-
+					
 				}
 				else{
 					$returnData=$this->msg(0,500,'Ocurrio un error  ');
@@ -559,12 +566,9 @@ class Usuario extends Conexion{
 			$returnData=$this->msg(0,500,'Ocurrio un error :'.$ex->getMessage());
 					
 			//$msg['message']="Error al listar usuraios ";
-
 		}
 
-		//return json_encode($returnData);
-
-		
+		//return json_encode($returnData);	
 	}
 	
 	public function buscarUsuario($id){
@@ -610,11 +614,110 @@ class Usuario extends Conexion{
 
 	}
 	
-	
+	public function registrarInicioSesion($id){
+		try{
+			
+			//parent::set_names();
+			//$consulta="UPDATE  ".$this->db_tabla." SET  ULTIMO_INICIO_SESION= ? where ID_USUARIO = ? ";
+			$consulta="INSERT INTO  SESIONES  (ID_USUARIO,FECHA_INICIO_SESION) VALUES(?,?) ";
+			
+			if(isset($id) )
+			{				
+				
+				if(!empty(trim($id)  ) )
+				{
+					
+					$this->idUsuario=(int) $id;				
+					//$hash=password_hash($this->password2, PASSWORD_BCRYPT);
+					$sentencia=$this->conectar->prepare($consulta);
+					$fechaSesion=date("Y-m-d H:i:s");
+					
+					$sentencia->bindValue(1,$this->idUsuario);	
+					
+					$sentencia->bindValue(2,date("Y-m-d H:i:s"));
+					
+									
+					if($sentencia->execute()){
+						//$msg['message'] = 'Usuario registrado correctamente !' ;
+						$returnData=$this->msg(1,201,'Se registro la sesion');
+						//return true;	
 
+					}else{
+						//return false;	
+						
+						$returnData=$this->msg(0,500,'No se pudo modificar los datos ');
+					}
+				
+				
+				}else{
+					$returnData=$this->msg(0,422,'ID de usuario necesario ');
+				}
+
+            }else{
+				$returnData=$this->msg(0,422,'ID de usuario necesario '); 
+				
+			}
+			
+			}catch(PDOException $ex){
+				$returnData=$this->msg(0,500,''.$ex->getMessage());
+			}
+
+			return json_encode($returnData);
+
+	}
+
+	public function registrarCierreSesion($id){
+		try{
+			
+			//parent::set_names();
+			$consulta="UPDATE  SESIONES SET  FECHA_CIERRE_SESION= ? where ID_USUARIO = ? ";
+			//$consulta="INSERT INTO  SESIONES  (ID_USUARIO,FECHA_INICIO_SESION) VALUES(?,?) ";
+			
+			if(isset($id) )
+			{				
+				
+				if(!empty(trim($id)  ) )
+				{
+					
+					$this->idUsuario=(int) $id;				
+					//$hash=password_hash($this->password2, PASSWORD_BCRYPT);
+					$sentencia=$this->conectar->prepare($consulta);
+					$fechaSesion=date("Y-m-d H:i:s");
+					
+					echo var_dump($fechaSesion);
+
+					echo $consulta;
+					$sentencia->bindValue(1,date("Y-m-d H:i:s"));
+					$sentencia->bindValue(2,$this->idUsuario);	
+									
+					if($sentencia->execute()){
+						//$msg['message'] = 'Usuario registrado correctamente !' ;
+						$returnData=$this->msg(1,201,'Se registro el cierre de  sesion');
+						//return true;	
+					}else{
+						//return false;	
+						
+						$returnData=$this->msg(0,500,'No se pudo modificar los datos ');
+					}
+								
+				}else{
+					$returnData=$this->msg(0,422,'ID de usuario necesario ');
+				}
+
+            }else{
+				$returnData=$this->msg(0,422,'ID de usuario necesario '); 
+				
+			}
+			
+			}catch(PDOException $ex){
+				$returnData=$this->msg(0,500,''.$ex->getMessage());
+			}
+
+			echo json_encode($returnData);
+
+	}
 		
 }
-
 
 
 ?>

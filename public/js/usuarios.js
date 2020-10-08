@@ -4,6 +4,9 @@ $(document).ready(function () {
 
 });
 
+
+
+
 var url = "";
 var tipoPeticion = "POST";
 var idUsuario = 0;
@@ -95,13 +98,15 @@ function mostrarFormularo() {
 
 
 function mostrarDatos() {
+
     var jqxhr = $.get(
         "http://localhost:8081/Presupuestos/usuarios/obtenerTodos",
         function (data, status) {
             const datos = JSON.parse(data);
             console.log(datos[0]);
-
-            $("#usuario_data").DataTable({
+            
+            $("#usuario_data").DataTable(
+                {
                 data: datos,
                 oPaginate: {
                     sFirst: "Primero",
@@ -215,6 +220,12 @@ function recargarTabla() {
 
 }
 
+function topFunction() {
+    console.log("going to the top");
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
 
 $("#usuario_form").on("submit", function (e) {
     //const datosFormulario= $('#usuario_form').serialize();
@@ -243,7 +254,6 @@ $("#usuario_form").on("submit", function (e) {
         default:
             break;
     }
-
 
     const xhr = new XMLHttpRequest();
     xhr.open(tipoPeticion, url);
@@ -289,15 +299,20 @@ $("#usuario_form").on("submit", function (e) {
                     usuarioModal.style.zIndex = "100";
                     $mensajeRespuesta.innerHTML = `${respuesta.message}`;
                     document.body.style.background = "#333";
-
+                    
+                    //mostrarDatos();
+                    topFunction();
                     console.error(respuesta);
-
+                    
                     if (status == 201) {
 
                         limpiar();
                         limpiarMensajEsErrores();
                         cerrarFormulario();
-
+                        topFunction();
+                        
+                        $("#usuario_data").DataTable().ajax.reload();
+                    
                     }
 
                 } else {
@@ -310,10 +325,6 @@ $("#usuario_form").on("submit", function (e) {
                 $("#usuario_form")[0].reset();
             }
             //jQuery.noConflict();
-
-            /* $("#usuario_data")
-                 .DataTable()
-                 .ajax.reload(); */
             //$('#resultados_ajax').html(datos);
 
         } else if (xhr.readyState === 4) {
@@ -443,6 +454,7 @@ btnEliminar.addEventListener("click", () => {
             //console.log(event.target.responseText);
             id_usuario = 0;
         } else if (xhr.readyState === 4) {
+            
 
         }
     })

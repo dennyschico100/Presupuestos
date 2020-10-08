@@ -1,115 +1,8 @@
 <?php  require APP_ROOT.'/vistas/inc/header.php' ?>
+<link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/usuarioListar.css">
+
 <div style="border:0px solid green;" class="container-fluid">
-    <style>
-    #usuarioModal {}
 
-
-    .show-box {
-        transform: translate(0);
-        border: 0px solid yellow;
-        position: absolute;
-        top: 0%;
-        right: 45%;
-        animation: move 2s ease-out;
-        height: 150vh;
-
-        opacity: 1;
-        z-index: 999;
-
-    }
-
-    .show-opacity-box {
-        opacity: 0.5;
-
-        z-index: 100;
-
-    }
-
-    #btn-cerrar {
-        font-size: 30px;
-
-    }
-
-    .caja {
-        position: fixed;
-        top: -120px;
-        left: 50%;
-        z-index: 1050;
-        margin 0 auto;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        outline: 0
-    }
-
-    .hide-form {
-        display: none;
-    }
-
-    .show-form {
-        opacity: 1;
-        top: 0;
-        left: 18%;
-        position: absolute;
-        overflow: auto;
-        height: auto;
-
-    }
-
-
-    #modal-ventana {
-
-        background-color: #ff8a50;
-        color: #fff;
-
-    }
-
-    #box-error {
-        left: -13.5%;
-    }
-
-    .dt-buttons {
-        margin-bottom: 20px;
-        margin-top: 10px;
-
-    }
-
-    .div-form-show {
-        height: 100%;
-        width: 100%;
-        background-color: #333;
-        opacity: 0.5;
-        position: absolute;
-    }
-    .bajar{
-        
-        animation: move 2s ease-out;
-    }
-
-    @keyframes move {
-        0% {
-            rotate(0deg);
-
-            transform: translate(0%, 90%) rotate(0deg);
-            opacity: 1;
-
-
-        }
-
-        80% {
-            transform: translate(0%, 0%) rotate(0deg);
-
-
-        }
-
-        100% {
-            transform: translate(0%, -0%) rotate(0deg);
-            opacity: 1;
-
-        }
-
-    }
-    </style>
     <section class="col-md-12  content overflow-hidden">
 
         <div id="resultados_ajax"></div>
@@ -169,8 +62,8 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
     </section><!-- /.content -->
-
 </div><!-- /.content-wrapper -->
+
 <!--Fin-Contenido-->
 <div id="div-form">
 
@@ -290,13 +183,15 @@
 
                     <div class="col-md-6 form-group ">
 
-
+    
                         <label>Cargo</label>
-                        <select class="form-control" id="cargo" name="cargo">
+                        <select class="form-control" id="cargo" name="rol">
                             <option value="">-- Selecciona cargo --</option>
-                            <option value="1" selected>Tesorero</option>
-                            <option value="0">Analista presupesto</option>
-                            <option value="0">Jefe Presupuesto</option>
+                            
+                            <option value="1">Analista presupesto</option>
+                            <option value="3">Jefe Presupuesto</option>
+                            <option value="4" selected>Tesorero</option>
+
 
                         </select>
                         <span class="text-danger  campo-requerido"><strong></strong></span>

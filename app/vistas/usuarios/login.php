@@ -11,32 +11,34 @@
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div style="border:px solid red;" class="col-lg-6 d-none d-lg-block bg-login-imagen">
-                    </div>
-                    
+                        </div>
+
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Bienvenido !</h1>
                                 </div>
-                                <form class="user" id="frm-login" method="post"  action="<?php  echo URL_ROOT?>/usuarios/login">
-                                <div id="div-error" class="error-contenedor">
-                                <?php   if(!empty($data['errores']) ) { ; ?>
-                                    
-                                <div class="alert alert-danger">
-                                    <strong>
+                                <form class="user" id="frm-login" method="post"
+                                    action="<?php  echo URL_ROOT?>/usuarios/login">
+                                    <div id="div-error" class="error-contenedor">
+                                        <?php echo "Today is " . date("Y-m-d H:i:s") . "<br>";
+                                            if(!empty($data['errores']) ) { ; ?>
 
-                                        <?php  echo  $data['errores'];  ?>
+                                        <div class="alert alert-danger">
+                                            <strong>
 
-                                        <a style="position:absolute;right:4px;margin-top:-10px; " id="cerrar"
-                                            class=" close">&times</a>
-                                    </strong>
+                                                <?php  echo  $data['errores'];  ?>
 
-                                </div>
-                            </div>
-                            <?php   }?>    
-                                <div id="frm" class="form-group">
-                                        <input type="email" class="form-control form-control-user"
-                                            id="email" name="email" aria-describedby="emailHelp"
+                                                <a style="position:absolute;right:4px;margin-top:-10px; " id="cerrar"
+                                                    class=" close">&times</a>
+                                            </strong>
+
+                                        </div>
+                                    </div>
+                                    <?php   }?>
+                                    <div id="frm" class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="email"
+                                            name="email" aria-describedby="emailHelp"
                                             placeholder="Enter Email Address...">
                                         <div style="border:px solid blue;" class="col-md-12">
                                             <span>
@@ -48,9 +50,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" class="form-control form-control-user password "
-                                            id="pass" aria-describedby="password-constraints"
-                                            placeholder="Password">
+                                        <input type="password" name="password"
+                                            class="form-control form-control-user password " id="pass"
+                                            aria-describedby="password-constraints" placeholder="Password">
                                         <i class="far fa-eye" id="togglePassword"></i>
                                         <label for="" class="label-pass">Mostrar Contraseña</label>
                                         <div style="border:px solid blue;" class="col-md-12">
