@@ -5,8 +5,6 @@ $(document).ready(function () {
 });
 
 
-
-
 var url = "";
 var tipoPeticion = "POST";
 var idUsuario = 0;
@@ -16,7 +14,10 @@ const campoRequerido = document.querySelectorAll(".campo-requerido");
 const $popUpError = document.getElementById("box-error");
 const divform = document.getElementById("div-form");
 const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
+const $mensajeResp
+const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
 const $mensajeRespuestaEliminar = document.getElementById("mensaje-respuesta-eliminar");
+uestaEliminar = document.getElementById("mensaje-respuesta-eliminar");
 
 const $divBotones=document.getElementById("div-botones");
 
@@ -348,7 +349,7 @@ $("#usuario_form").on("submit", function (e) {
     jQuery.noConflict();
 
 });
-+
+
 
     $btnCerrar.addEventListener("click", () => {
 

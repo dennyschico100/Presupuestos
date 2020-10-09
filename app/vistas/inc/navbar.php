@@ -32,17 +32,20 @@
   <!-- Nav Item - Pages Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
-      <span>Components</span>
+      <i class="fas fa-user fa-cog"></i>
+      <!--<i class="fas fa-fw fa-cog"></i>-->
+      
+      <span>Usuarios</span>
     </a>
+
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Custom Components:</h6>
+        <h6 class="collapse-header">Opciones disponibles</h6>
         
         <?php if($_SESSION['user_rol_presupuestos'] =='2'  )   { ?>
           <a class="collapse-item" href="<?php echo URL_ROOT;?>/usuarios/listar">LIsta Usuarios</a>
                         
-        <a class="collapse-item" href="cards.html">Permisos</a>
+        <a class="collapse-item" href="<?php  echo URL_ROOT;?>/usuariosRoles/listar">Permisos</a>
         
         <?php  } else if( isset($_SESSION['user_email_presupuestos'] )  && $_SESSION['user_rol_presupuestos'] =='1'   ) { ?>
           

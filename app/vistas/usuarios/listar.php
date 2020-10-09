@@ -88,7 +88,7 @@
     </div>
 </div>
 
-<!--INICIO MODAL DEL LOGOUT -->
+<!--INICIO MODAL DEL ELIMINAR USUARIO -->
 <div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -107,8 +107,8 @@
     </div>
   </div>
 
-<!-- FIN MODAL DEL LOGOUT-->
-<!--FORMULARIO VENTANA MODAL-->
+<!-- FIN MODAL DEL ELIMINAR USUARIO-->
+<!--FORMULARIO USUARIO VENTANA MODAL-->
 <div id="usuarioModal" class="fade hide-form">
 
 
