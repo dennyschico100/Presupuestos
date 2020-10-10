@@ -85,11 +85,11 @@ const clasesFormulario = ["modal", "fade"];
 
 var usuarioModal = document.getElementById("usuarioModal");
 const btnClose = document.getElementById("btnClose");
-const $btnCerrar = document.getElementById("btn-cerrar");
+const $btnCerrarVentanaModal = document.getElementById("btn-cerrar");
 
 
-var elementosFormulario = document.getElementById("usuario_form").elements;
-
+var elementosFormulario = document.getElementById("roles_form").elements;
+var idUsuario = 0;
 
 function mostrar(id) {
 
@@ -109,6 +109,7 @@ function mostrar(id) {
             $('#apellido').val(respuesta.APELLIDOS);
             $('#email').val(respuesta.EMAIL);
 
+            
             console.log(respuesta);
         } else if (peticion.readyState === 4) {
             console.log("UN ERRRO");
@@ -120,14 +121,18 @@ function mostrar(id) {
         method: "GET"
 
     }
-    
-    fetch(url).then( (response) => (
+
+    fetch(url).then((response) => (
         response.ok ? response.json() : Promise.reject(response))
-        
+
     ).then(data => {
         $('#nombre').val(data.NOMBRES);
         $('#apellido').val(data.APELLIDOS);
         $('#email').val(data.EMAIL);
+
+        $("#nombre").attr('disabled', 'disabled');
+        $("#apellido").attr('disabled', 'disabled');
+        $("#email").attr('disabled', 'disabled');
 
     }).catch((err) => {
         console.log(err);
@@ -141,13 +146,10 @@ function mostrar(id) {
 
 function validarFormulario() {
     let respuesta = true;
-
     console.log("numero de clases " + campoRequerido.length);
-
     var obj = {};
     let newObjeto = {};
     let indiceClase = 1;
-
     for (var i = 1; i < 8; i++) {
 
         indiceClase = 1;
@@ -185,7 +187,7 @@ function limpiarMensajEsErrores() {
 }
 
 
-function limpiarCampos(id) {
+function limpiarCampos() {
 
     $('#nombre').val("");
     $('#apellido').val("");
@@ -230,55 +232,55 @@ function cerrarFormulario() {
     }
 }
 
-$("#usuario_form").on("submit", function (e) {
-    //const datosFormulario= $('#usuario_form').serialize();
+function topFunction() {
+    console.log("going to the top");
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+$btnCerrarVentanaModal.addEventListener("click", () => {
+
+    if ($popUpError.classList.contains("show-box")) {
+
+        $popUpError.classList.remove('show-box');
+        $popUpError.classList.add(...clasesFormulario);
+        
+        usuarioModal.style.opacity = "1.0";
+
+        divform.style.opacity = "0.5";
+        divform.style.backgroundColor = "#333";
+
+
+
+    } else {
+
+    }
+
+});
+
+$("#roles_form").on("submit", function (e) {
     e.preventDefault();
 
-    //var formStr = new String(datosFormulario);
-
-    //var formDataParsed=JSON.stringify(datosFormulario);
-
-    //console.warn(typeof formDataParsed);
-    //var password1 = $("#password1").val();
-    //var password2 = $("#password2").val();
-
-    //si el password conincide entonces se envia el formulario
-    //if (password1 == password2) {
-
-    switch (tipoPeticion) {
-        case "POST":
-            url = "http://localhost:8081/Presupuestos/usuarios/guardar";
-
-            break;
-
-        case "PUT":
-            url = "http://localhost:8081/Presupuestos/usuarios/modificar";
-
-            break;
-        default:
-            break;
-    }
+    url = "http://localhost:8081/Presupuestos/usuariosRoles/modificar";
 
     const xhr = new XMLHttpRequest();
     xhr.open(tipoPeticion, url);
-
-    const frmUsuario = document.getElementById("usuario_form");
-    const FD = new FormData(frmUsuario);
-    const objetoUsuario = {};
-
+    const frmUsuarioRol = document.getElementById("roles_form");
+    const FD = new FormData(frmUsuarioRol);
+    const objetoUsuarioRol = {};
 
     FD.forEach(function (value, key) {
-        objetoUsuario[key] = value;
+        objetoUsuarioRol[key] = value;
     });
 
+    /*
     if (tipoPeticion === "PUT") {
 
-        objetoUsuario["idUsuario"] = parseInt(idUsuario);
+        
+    }*/
+    objetoUsuarioRol["idUsuario"] = parseInt(idUsuario);
 
-    }
-
-    const jsonUsuario = JSON.stringify(objetoUsuario);
-    console.log(jsonUsuario);
+    const jsonUsuarioRol = JSON.stringify(objetoUsuarioRol);
+    console.log(jsonUsuarioRol);
 
     xhr.setRequestHeader("Content-Type", "application/json");
     const msg = "";
@@ -294,7 +296,7 @@ $("#usuario_form").on("submit", function (e) {
 
                 if ($popUpError.classList.contains("modal") && $popUpError.classList.contains("fade")) {
 
-                    $popUpError.classList.remove(...clases);
+                    $popUpError.classList.remove(...clasesFormulario);
                     //usuarioModal.style.backgroundColor="#333";
                     $popUpError.classList.add('show-box');
                     divform.style.opacity = "1";
@@ -315,7 +317,7 @@ $("#usuario_form").on("submit", function (e) {
                         cerrarFormulario();
                         topFunction();
 
-                        $("#usuario_data").DataTable().ajax.reload();
+                       // $("#usuario_data").DataTable().ajax.reload();
 
                     }
 
@@ -326,7 +328,7 @@ $("#usuario_form").on("submit", function (e) {
             } else {
                 $("#usuarioModal").modal("hide");
 
-                $("#usuario_form")[0].reset();
+                $("#roles_form")[0].reset();
             }
             //jQuery.noConflict();
             //$('#resultados_ajax').html(datos);
@@ -339,7 +341,7 @@ $("#usuario_form").on("submit", function (e) {
 
     if (validarFormulario()) {
 
-        //xhr.send(jsonUsuario);
+        xhr.send(jsonUsuarioRol);
 
     } else {
 

@@ -88,7 +88,7 @@
 
     <div class="modal-dialog">
 
-        <form method="POST" name="fmrusuario" id="usuario_form">
+        <form method="POST" name="fmrusuario" id="roles_form">
 
             <div class="modal-content">
 

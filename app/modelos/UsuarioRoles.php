@@ -112,22 +112,22 @@ class UsuarioRoles extends Conexion {
 	    return   (object) $returnData;
     } 
 
-    public function modificarRol($_idUsuario,$_rol){
+    public function modificarRol($data){
         try{
 			
 			//parent::set_names();
-			$consulta="UPDATE  ".$this->db_table."  SET ID_ROL=? where ID_USUARIO = ? ";
+			$consulta="UPDATE  ".$this->table."  SET ID_ROL=? where ID_USUARIO = ? ";
 	
-			if( isset($_idUsuario) && isset($_rol) )
+			if( isset($data->idUsuario) && isset($data->rol) )
 			{				
 				
 
-				if(!empty(trim($_idUsuario))  &&  !empty(trim($_rol))   )
+				if(!empty(trim($data->idUsuario))  &&  !empty(trim($data->rol))   )
 				{
 					
             
-                $this->idUsuario= $_idUsuario;
-                $this->idRol= (int) $_rol;
+                $this->idUsuario= $data->idUsuario;
+                $this->idRol= (int) $data->rol;
                 $sentencia=$this->conectar->prepare($consulta);
                 $sentencia->bindValue(1,$this->idRol);
                 $sentencia->bindValue(2,$this->idUsuario);							 
@@ -158,7 +158,7 @@ class UsuarioRoles extends Conexion {
 			echo json_encode($returnData);
 
     }
-    
+
     public function obtenerUsuarioRoles(){
         try{
 			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";

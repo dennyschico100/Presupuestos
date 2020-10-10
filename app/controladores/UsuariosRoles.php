@@ -4,8 +4,11 @@ class UsuariosRoles extends Controlador{
         session_start();
         //$this->usuarioModelo = $this->modelo('Usuario');
         $this->usuarioRolModelo = $this->modelo('UsuarioRoles');
-    
+        
     }
+
+    
+    private $data = ['errores' => ''];
 
     public function sanitizar_campos($data) {
         $data = trim($data);
@@ -127,6 +130,39 @@ class UsuariosRoles extends Controlador{
 
     }
 
+    public function modificar(){
+        if ($_SERVER['REQUEST_METHOD']=='PUT') {
+             
+            $input = json_decode(file_get_contents('php://input'));   
+           // Sanitize POST Data
+           //$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+           //var_dump($_POST);
+           foreach($input as $key=>$value)
+           {            
+               $this->data[$key]=$this->sanitizar_campos($value);    
+           }             
+           
+           if ( true) {
+               //Convirtiedno $data en fomrato JSON PARA PODER ACCEDER  A SUS
+               //atributos  sin ningun problema , cuando son recividos en el modelo
+               //var_dump($this->);
+               $this->data=(object) $this->data;
+               $this->usuarioRolModelo->modificarRol($this->data);
+               //echo json_encode($userAuthenticated);
+               
+           } else {
+               // Load view with errors
+               $this->vista('usuarios/login',$this->data);
+           }
+
+       } else {
+           //$this->vista("usuarios/login");
+          
+           $this->vista('usuarios/login',$this->data);
+       }
+
+
+    }
 }
 
 

@@ -14,8 +14,6 @@ const campoRequerido = document.querySelectorAll(".campo-requerido");
 const $popUpError = document.getElementById("box-error");
 const divform = document.getElementById("div-form");
 const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
-const $mensajeResp
-const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
 const $mensajeRespuestaEliminar = document.getElementById("mensaje-respuesta-eliminar");
 uestaEliminar = document.getElementById("mensaje-respuesta-eliminar");
 
@@ -26,6 +24,7 @@ const clases = ["modal", "fade"];
 var usuarioModal = document.getElementById("usuarioModal");
 const btnClose = document.getElementById("btnClose");
 const $btnCerrar = document.getElementById("btn-cerrar");
+
 
 var elements = document.getElementById("usuario_form").elements;
 
@@ -77,7 +76,7 @@ function limpiarMensajEsErrores() {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    console.log("DOM fully loaded and parsed");
+    
     document.body.style.backgroundColor = "";
 
 });
