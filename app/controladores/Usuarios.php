@@ -176,9 +176,15 @@ class Usuarios  extends Controlador{
     public function isLoggedIn()
     {
         if (  isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
+                
+            if($_SESSION['user_rol_presupuestos'] == 2 ){
                 return true;
-        } else {
+                
+            }else{
+                           
                 return false;
+            }          
+
         } 
     }
     
@@ -336,7 +342,7 @@ class Usuarios  extends Controlador{
       echo json_encode($data);
 
     }
-
+    
     public function obtenerUsuario(){
         //?id_usuario=1
         if($_SERVER["REQUEST_METHOD"]=="GET"){
@@ -354,7 +360,7 @@ class Usuarios  extends Controlador{
     }
 
     public function modificar(){
-        
+
 
         if ($_SERVER['REQUEST_METHOD']=='PUT') {
              

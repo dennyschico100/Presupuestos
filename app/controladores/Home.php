@@ -5,7 +5,7 @@ class Home extends Controlador{
     public function isLoggedIn(){
         return true;
     }*/
-
+    
     public function index(){
         session_start();
         

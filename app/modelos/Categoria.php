@@ -1,7 +1,7 @@
 <?php
 
 require_once '../app/config/Conexion.php';
-class Presupuesto extends Conexion {
+class Categoria extends Conexion {
 
     public function __construct(){
         $this->conectar=parent::abrirConexion();
@@ -9,7 +9,7 @@ class Presupuesto extends Conexion {
     }
     
     private $conectar;
-    private $tabla = "presupuesto";
+    private $tabla = "categoria";
 
     public $returnData = [];
 
@@ -27,14 +27,15 @@ class Presupuesto extends Conexion {
 		
 		try{
 			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";
-			$consulta="SELECT P.ID_PRESUPUESTO, P.MONTO_INICIAL,P.MONTO_ACTUAL,P.PORCENTAJE_EJECUTADO, C.DESCRIPCION ,C.ID_CATEGORIA FROM presupuesto as P INNER JOIN categoria as c 
-                        ON  P.ID_CATEGORIA= C.ID_CATEGORIA ";
+            $consulta="SELECT *from CATEGORIA ";
+            
 			$sentencia=$this->conectar->prepare($consulta);
 			
 			if($sentencia->execute()){
+            
 				$res=$sentencia->fetchAll(PDO::FETCH_ASSOC);
 			    $rows=count($res);
-				
+                
 				if($rows > 0 ){
 
 					//var_dump($res);		
@@ -64,7 +65,8 @@ class Presupuesto extends Conexion {
 
 		//return json_encode($returnData);	
 	}
-	public function buscarPresupuesto($id){
+   
+	public function buscarCategoria($id){
 		
 		try{
 			$this->id=(int)$id;
@@ -112,8 +114,6 @@ class Presupuesto extends Conexion {
 
 	}
 	
-   
-    
 }
 
 

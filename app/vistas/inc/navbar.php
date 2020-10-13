@@ -48,8 +48,8 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Opciones disponibles</h6>
 
-                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/usuarios/listar">Presupuestos</a>
-                    <a class="collapse-item" href="<?php  echo URL_ROOT;?>/usuariosRoles/listar">Asignacion</a>
+                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/listar">Presupuestos</a>
+                    <a class="collapse-item" href="<?php  echo URL_ROOT;?>/presupuestos/transaccion">Asignacion</a>
 
                     <?php 
            break;  ?>

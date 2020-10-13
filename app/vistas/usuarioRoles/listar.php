@@ -15,9 +15,7 @@
 
 
                     <div class="box-header with-border">
-                        <h1 class="box-title">
-                            <button class="btn btn-primary btn-lg" id="add_button" onclick="limpiar()"><i
-                                    class="fa fa-plus" aria-hidden="true"></i> Nuevo Usuario</button></h1>
+                        <h1 class="box-title"></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
