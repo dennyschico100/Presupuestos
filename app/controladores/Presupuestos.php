@@ -117,6 +117,27 @@ class Presupuestos extends Controlador {
           
     }
 
+    public function registrar(){
+        
+        if(!$this->isLoggedIn() ) {
+            
+            if(isset($_SESSION['user_email_presupuestos'])){
+                //echo "".$_SESSION['user_email'];
+
+            }
+                
+            $this->vista('usuarios/login');
+            
+         }else{
+            $data=[
+                "titulo"=>"Home",
+                "mensaje"=>"METODO INDEX DEL HOME "
+            ];
+            $this->vista('presupuestos/crear');       
+         }
+          
+    }
+
 }
 
 ?>
