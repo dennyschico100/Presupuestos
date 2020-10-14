@@ -99,16 +99,16 @@
 
                             <div class="col-md-4 form-group ">
                                 <label>Descripcion </label>
-                                <textarea class="form-control descripcionGasto" id="exampleFormControlTextarea1" rows="1"></textarea>
+                                <textarea name="descripcionGasto" class="form-control descripcionGasto" id="exampleFormControlTextarea1" rows="1"></textarea>
 
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
 
                             </div>
 
-                            <div class="col-md-2 form-group ">
+                            <div class="col-md-1 form-group ">
                          
                             </div>
-                            <div class="col-md-1 form-group ">
+                            <div class="col-md-2 form-group ">
                                 <label>Unidades</label>
                                 <input type="number" min="1" name="unidades" id=""
                                     class="form-control unidades" placeholder="$0" />
@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-md-2 form-group ">
                                 <label>Monto</label>
-                                <input type="number"min="1" name="montoAsignado" id="montoAsignado" class="montoAsignado form-control"
+                                <input type="number"min="1" name="montoAsignado" id="" class="montoAsignado form-control"
                                     placeholder="00000000" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <strong>
@@ -133,10 +133,9 @@
 
                             <div class="col-md-2 form-group ">
                                 <label>Total</label>
-                                <input disabled type="text" name="montoAsignado" id="montoAsignado" class="form-control"
-                                    placeholder="00000000" />
+                                   
+                                <label  class="totalFila form-control" for="">$</label>
 
-                                <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <strong>
 
                                     <span class="text-danger" id="error-monto">
@@ -164,9 +163,12 @@
                     </div>
                    <div  class="modal-body">
                    <div  class="row">
-                            <div class="col-md-1"><label for=""><STRONG>Total</STRONG></label></div>
-                            <div class="col-md-10"></div>
-                            <div class="col-md-1">$0</div>
+                            <div class="col-md-1"><label for=""><h3>Total </h3></label></div>
+                            <div class="col-md-9"></div>
+                            <h3><div id="montoTotalPresupuesto" class="col-md-1">$0</div>
+                            </h3>
+                            <div class="col-md-1"></div>
+                            
                             <hr style="width:100%; border:1px solid #037e8c;  margin:2px" />
                             
                     </div>
@@ -174,8 +176,11 @@
 
                     <!-- FIN DE LA TABLA PREUPUESTOS -->
                     <div class="modal-footer">
+                        <!--
+                         <input type="hidden" name="password1" value="presupuestos012456789">
+                       
 
-                        <input type="hidden" name="password1" value="presupuestos012456789">
+                        -->
                         <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left"
                             value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
