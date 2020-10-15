@@ -1,5 +1,16 @@
 "use strict";
 
+let datetime=0;
+(()=>{
+
+    var currentdate = new Date(); 
+     datetime = currentdate.getFullYear()  + "-"
+                    + (currentdate.getMonth()+1)+ "-" 
+                    +  currentdate.getDate()
+    
+                    console.log(datetime);
+})();
+
 const $tblPresupuesto = document.getElementById("tblPresupuesto");
 const $btnGuardar = document.getElementById("btnGuardar");
 
@@ -12,10 +23,25 @@ var numInputs = 3;
 
 const arrUnidades = [];
 const arrMonto = [];
+const arrDescripcion = [];
+const arrMontoFila= [];
+const arrObjects= [];
+
 let arrUnidadPorMonto2 = [];
 
 
+let arrDetalle = [];
+
+let arrUnidadPorMonto = [];
 const objetoPresupuesto = {};
+
+const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
+
+const $categoriaDestino=document.getElementById("destino");
+let idCategoria=0;
+
+
+
 
 (() => {
     console.log("xx");
@@ -37,12 +63,59 @@ $btnGuardar.addEventListener("click", (e) => {
 
     e.preventDefault();
     //validarFormulario()
+    
+    const objPresupuesto={};
+    
+
     if(validarFormulario()){
         
         obtenerDatosDescripcion();
         obtenerDatosUnidades();
         obtenerDatosMontos();
-        obtenerUnidadPorMonto();        
+        obtenerUnidadPorMonto();   
+        objPresupuesto.ID_CATEGORIA=idCategoria;
+        objPresupuesto.MONTO_INICIAL=sumaTotalPresupuesto;
+        objPresupuesto.MONTO_ACTUALK=sumaTotalPresupuesto;
+        objPresupuesto.PORCENTAJE_EJCUTADO=0;
+        objPresupuesto.ESTADO='enProceso';
+        objPresupuesto.USUARIO_CREA=IdUsuarioSesion; 
+        objPresupuesto.FECHA_CREACION=datetime;
+
+        console.log(objPresupuesto);
+        arrObjects.length=0;
+        arrObjects.push(objPresupuesto);
+        
+        let lenArr=arrMonto.length;
+        const $totalFila=document.querySelectorAll(".totalFila");
+        let lenFilas=$totalFila.length;
+        alert(lenFilas);
+        
+        
+        const indice=lenFilas;
+        
+        lenFilas-=1;
+        let j=0;
+        for(let i=0; i <  indice ;i++ ){
+            j=i;
+            j++;
+            
+            const objetoDetallePresupuesto= {};
+            objetoDetallePresupuesto.descripcion=arrDescripcion[i];
+            objetoDetallePresupuesto.unidades=arrUnidades [i];
+            objetoDetallePresupuesto.monto=arrMonto[lenFilas];
+            objetoDetallePresupuesto.total=arrUnidadPorMonto[i];
+            
+            //console.log("ITERACION "+arrDescripcion[i]);
+            //console.warn(objetoDetallePresupuesto);
+            arrDetalle.push(objetoDetallePresupuesto);
+            //console.log(arrDetalle[i]);
+            arrObjects.push(arrDetalle[i]);
+            //console.error(arrObjects[j]);
+            
+        }
+
+        console.log(arrObjects);
+        
     }else{
 
     }
@@ -58,15 +131,39 @@ function limpiar(){
 }
 
 function limpiarArreglos(){
+    arrDescripcion.length=0;
     arrMonto.length=0;
     arrUnidades.length=0;
-    //arrUnidadPorMonto.length=0;
+    arrUnidadPorMonto.length=0;
 
 }
+
 function mostrarMontoTotalFila() {
 
 }
 
+async function obtenerCategorias(){
+    
+    const resp= await fetch(`${URLCategoria}/obtenerTodos`);
+    const respData=await resp.json();
+    console.log(respData);
+    mostrarCategorias(respData);
+
+}
+
+obtenerCategorias();
+function mostrarCategorias(categoria){
+    const categoriaEl = document.getElementById("destino");
+    categoria.forEach((c) => { 
+        
+        if(c.ID_CATEGORIA != 1){
+            let $option =document.createElement("option");
+            $option.setAttribute("value",c.ID_CATEGORIA);
+            $option.innerHTML=c.DESCRIPCION; 
+            categoriaEl.appendChild($option);
+        }
+    });
+}
 
 function obtenerUnidadPorMonto() {
 
@@ -74,9 +171,9 @@ function obtenerUnidadPorMonto() {
     sumaTotalPresupuesto=0;
     const len = $filas.length;
 
-    let arrUnidadPorMonto = [];
 
-    alert("filas "+len);
+    //alert("filas "+len);
+
     //arrUnidadPorMonto.length=0;
     //arrUnidadPorMonto.splice(0,arrUnidadPorMonto.length)
     let indiceFila = 0;
@@ -88,6 +185,8 @@ function obtenerUnidadPorMonto() {
 
         let total = (arrUnidades[index] * arrMonto[index]);
         arrUnidadPorMonto.push(total);
+        
+    
        /* console.log(" ARAY UNIDADES "+arrUnidades);
         console.log(" ARAY UNIDADES "+arrMonto);
 
@@ -106,22 +205,43 @@ function obtenerUnidadPorMonto() {
     
     })
     montoTotalPresupuesto.innerHTML="$"+sumaTotalPresupuesto;      
-    arrUnidadPorMonto.length=0;
+    console.log(arrUnidadPorMonto);
+    //arrUnidadPorMonto.length=0;
+
+
     
 }
+
 function obtenerDatosDescripcion() {
     const $descripcionGasto = document.querySelectorAll('.descripcionGasto');
+    arrDescripcion.pop();
 
     $descripcionGasto.forEach(element => {
         console.log(element.value);
+        arrDescripcion.push(element.value);
     });
+    console.log(arrDescripcion );
     
 }
+
+function obtenerMontoFila () {
+    const $totalFila  = document.querySelectorAll('.totalFila');
+    arrDescripcion.pop();
+    arrT
+    $descripcionGasto.forEach(element => {
+        console.log(element.value);
+        arrDescripcion.push(element.value);
+    });
+    console.log(arrDescripcion );
+    
+}
+
 
 
 function obtenerDatosUnidades() {
     const $unidades = document.querySelectorAll('.unidades');
     arrUnidades.pop();
+
 
     $unidades.forEach(element => {
         console.log(element.value);
@@ -208,12 +328,13 @@ function validarFormulario() {
     let respuesta = true;
     const $campoRequerido = document.querySelectorAll(".campo-requerido");
     
-    alert("numero de clases " + $campoRequerido.length);
+    //alert("numero de clases " + $campoRequerido.length);
     var obj = {};
     let newObjeto = {};
     let indiceClase = 1;
     numInputs++;
-    alert(numInputs);
+    //alert(numInputs);
+
     for (var i = 1; i < numInputs; i++) {
 
         indiceClase = 1;
@@ -222,15 +343,15 @@ function validarFormulario() {
 
         obj[item.name] = item.value;
         newObjeto = JSON.stringify(obj);
-        console.log(newObjeto);
+        //console.log(newObjeto);
         if (obj[item.name] == null || obj[item.name] === "") {
             $campoRequerido.forEach((el) => {
-                console.warn(i + " and " + indiceClase);
+                //console.warn(i + " and " + indiceClase);
 
                 if (i === indiceClase) {
-                    console.warn(indiceClase);
+                    //console.warn(indiceClase);
                     $campoRequerido.innerHTML = "valor necesaro";
-                    console.error(newObjeto);
+                    //console.error(newObjeto);
                     el.innerHTML = "Campo requerido";
                     respuesta = false;
                 }

@@ -90,8 +90,20 @@
                             <h4 class="modal-title"></h4>
 
                         </div>
-
+                       
                     </div>
+                    <div class="col-md-2 form-group ">
+                                
+                                <label>Destino</label>
+                                <select class="form-control" id="destino" name="origen">
+                                    <option selected value="">-Asignar a -</option>
+                                                                      
+                                </select>
+                                <span class="text-danger  campo-requerido"><strong></strong></span>
+
+                        </div>
+                        <div class="col-md-10"></div>
+
 
 
                     <div   id="tblPresupuesto" style="border:px solid aqua;" class="modal-body">
@@ -217,8 +229,12 @@
   https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js
     "></script>
 
-    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js">
+    </script>
+<?php $session_value=(isset($_SESSION['user_id_presupuestos']))?$_SESSION['user_id_presupuestos']:''; ?>
+<script type="text/javascript">
+    var IdUsuarioSesion='<?php echo $session_value;?>';
+    
+</script>
 
-    .min.js"></script>
-
-    <script src="<?php echo URL_ROOT.'/public/js/registroPresupuesto.js';?>"></script>
+<script src="<?php echo URL_ROOT.'/public/js/registroPresupuesto.js';?>"></script>
