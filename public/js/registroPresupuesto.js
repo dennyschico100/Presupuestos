@@ -1,22 +1,22 @@
 "use strict";
 
-let datetime=0;
-(()=>{
+let datetime = 0;
+(() => {
 
-    var currentdate = new Date(); 
-     datetime = currentdate.getFullYear()  + "-"
-                    + (currentdate.getMonth()+1)+ "-" 
-                    +  currentdate.getDate()
-    
-                    console.log(datetime);
+    var currentdate = new Date();
+    datetime = currentdate.getFullYear() + "-"
+        + (currentdate.getMonth() + 1) + "-"
+        + currentdate.getDate()
+
+    console.log(datetime);
 })();
 
 const $tblPresupuesto = document.getElementById("tblPresupuesto");
 const $btnGuardar = document.getElementById("btnGuardar");
 
 var elementosFormulario = document.getElementById("asignaciones_form").elements;
-const montoTotalPresupuesto=document.getElementById("montoTotalPresupuesto");
-let sumaTotalPresupuesto=0;
+const montoTotalPresupuesto = document.getElementById("montoTotalPresupuesto");
+let sumaTotalPresupuesto = 0;
 
 let numFilas = 0;
 var numInputs = 3;
@@ -24,8 +24,8 @@ var numInputs = 3;
 const arrUnidades = [];
 const arrMonto = [];
 const arrDescripcion = [];
-const arrMontoFila= [];
-const arrObjects= [];
+const arrMontoFila = [];
+const arrObjects = [];
 
 let arrUnidadPorMonto2 = [];
 
@@ -37,22 +37,22 @@ const objetoPresupuesto = {};
 
 const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
 
-const $categoriaDestino=document.getElementById("destino");
-let idCategoria=0;
+const $categoriaDestino = document.getElementById("destino");
+let idCategoria = 0;
 
-
+const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
 
 
 (() => {
-    console.log("xx");
+
     const $btnAdd = document.getElementById("btnAdd");
     $btnAdd.addEventListener("click", () => {
-        if(validarFormulario()){
-            
+        if (validarFormulario()) {
+
             crearFila();
             numFilas += 4;
 
-        }else{
+        } else {
 
         }
     })
@@ -63,78 +63,120 @@ $btnGuardar.addEventListener("click", (e) => {
 
     e.preventDefault();
     //validarFormulario()
-    
-    const objPresupuesto={};
-    
 
-    if(validarFormulario()){
-        
+    const objPresupuesto = {};
+
+    if (validarFormulario()) {
+
         obtenerDatosDescripcion();
         obtenerDatosUnidades();
         obtenerDatosMontos();
-        obtenerUnidadPorMonto();   
-        objPresupuesto.ID_CATEGORIA=idCategoria;
-        objPresupuesto.MONTO_INICIAL=sumaTotalPresupuesto;
-        objPresupuesto.MONTO_ACTUALK=sumaTotalPresupuesto;
-        objPresupuesto.PORCENTAJE_EJCUTADO=0;
-        objPresupuesto.ESTADO='enProceso';
-        objPresupuesto.USUARIO_CREA=IdUsuarioSesion; 
-        objPresupuesto.FECHA_CREACION=datetime;
+        obtenerUnidadPorMonto();
+        objPresupuesto.ID_CATEGORIA = idCategoria;
+        objPresupuesto.MONTO_INICIAL = sumaTotalPresupuesto;
+        objPresupuesto.MONTO_ACTUAL = sumaTotalPresupuesto;
+        objPresupuesto.PORCENTAJE_EJECUTADO = 0;
+        objPresupuesto.ESTADO = 'enProceso';
+        objPresupuesto.USUARIO_CREA = IdUsuarioSesion;
+        objPresupuesto.FECHA_CREACION = datetime;
 
         console.log(objPresupuesto);
-        arrObjects.length=0;
+        arrObjects.length = 0;
         arrObjects.push(objPresupuesto);
-        
-        let lenArr=arrMonto.length;
-        const $totalFila=document.querySelectorAll(".totalFila");
-        let lenFilas=$totalFila.length;
+
+        let lenArr = arrMonto.length;
+        const $totalFila = document.querySelectorAll(".totalFila");
+        let lenFilas = $totalFila.length;
         alert(lenFilas);
-        
-        
-        const indice=lenFilas;
-        
-        lenFilas-=1;
-        let j=0;
-        for(let i=0; i <  indice ;i++ ){
-            j=i;
+
+
+        const indice = lenFilas;
+
+        lenFilas -= 1;
+        let j = 0;
+        for (let i = 0; i < indice; i++) {
+            j = i;
             j++;
-            
-            const objetoDetallePresupuesto= {};
-            objetoDetallePresupuesto.descripcion=arrDescripcion[i];
-            objetoDetallePresupuesto.unidades=arrUnidades [i];
-            objetoDetallePresupuesto.monto=arrMonto[lenFilas];
-            objetoDetallePresupuesto.total=arrUnidadPorMonto[i];
-            
+
+            const objetoDetallePresupuesto = {};
+            objetoDetallePresupuesto.descripcion = arrDescripcion[i];
+            objetoDetallePresupuesto.unidades = arrUnidades[i];
+            objetoDetallePresupuesto.monto = arrMonto[i];
+            objetoDetallePresupuesto.total = arrUnidadPorMonto[i];
+            objetoDetallePresupuesto.usuarioCrea=IdUsuarioSesion;
             //console.log("ITERACION "+arrDescripcion[i]);
             //console.warn(objetoDetallePresupuesto);
             arrDetalle.push(objetoDetallePresupuesto);
             //console.log(arrDetalle[i]);
             arrObjects.push(arrDetalle[i]);
             //console.error(arrObjects[j]);
-            
+
+        }
+        const car = {
+            name: "carro1",
+            status: true,
+            year: 2000
         }
 
         console.log(arrObjects);
+        let options = {
+            method: "POST",
+            body: JSON.stringify(arrObjects),
+            headers: {                              // ***
+                "Content-Type": "application/json"    // ***
+            }
+        }
+
+        const xhr=new XMLHttpRequest();
+        xhr.open(options.method,URL);
+        //xhr.send(JSON.stringify(arrObjects));
+
+        xhr.addEventListener("readystatechange",(event)=>{
+            if(xhr.readyState == 4 && xhr.status == 200 ){
+                console.warn(event.target.responseText);
+                
+                let json=JSON.parse(event.target.responseText);
+                console.warn(json);
+
+            }else if(xhr.readyState== 4){
+
+            }else{
+                
+            }
+        });
+
+        fetch(URL,options).then((response)=>{
+            response.ok ? response.text() : Promise.reject(response);
+            
+        }).then((data)=>{
+            console.error(data);
+        }).catch((err)=>{
+            console.log(err);
+        });
         
-    }else{
+      
+    
+
+    } else {
 
     }
 
     limpiarArreglos();
 
+
 });
 
-function limpiar(){
-      arrMonto.length=0;
-      arrUnidades.length=0;
-      arrUnidadPorMonto.length=0; 
+function limpiar() {
+    arrMonto.length = 0;
+    arrUnidades.length = 0;
+    arrUnidadPorMonto.length = 0;
 }
 
-function limpiarArreglos(){
-    arrDescripcion.length=0;
-    arrMonto.length=0;
-    arrUnidades.length=0;
-    arrUnidadPorMonto.length=0;
+function limpiarArreglos() {
+    arrDescripcion.length = 0;
+    arrMonto.length = 0;
+    arrUnidades.length = 0;
+    arrUnidadPorMonto.length = 0;
 
 }
 
@@ -142,24 +184,24 @@ function mostrarMontoTotalFila() {
 
 }
 
-async function obtenerCategorias(){
-    
-    const resp= await fetch(`${URLCategoria}/obtenerTodos`);
-    const respData=await resp.json();
+async function obtenerCategorias() {
+
+    const resp = await fetch(`${URLCategoria}/obtenerTodos`);
+    const respData = await resp.json();
     console.log(respData);
     mostrarCategorias(respData);
 
 }
 
 obtenerCategorias();
-function mostrarCategorias(categoria){
+function mostrarCategorias(categoria) {
     const categoriaEl = document.getElementById("destino");
-    categoria.forEach((c) => { 
-        
-        if(c.ID_CATEGORIA != 1){
-            let $option =document.createElement("option");
-            $option.setAttribute("value",c.ID_CATEGORIA);
-            $option.innerHTML=c.DESCRIPCION; 
+    categoria.forEach((c) => {
+
+        if (c.ID_CATEGORIA != 1) {
+            let $option = document.createElement("option");
+            $option.setAttribute("value", c.ID_CATEGORIA);
+            $option.innerHTML = c.DESCRIPCION;
             categoriaEl.appendChild($option);
         }
     });
@@ -168,7 +210,7 @@ function mostrarCategorias(categoria){
 function obtenerUnidadPorMonto() {
 
     const $filas = document.querySelectorAll('.totalFila');
-    sumaTotalPresupuesto=0;
+    sumaTotalPresupuesto = 0;
     const len = $filas.length;
 
 
@@ -185,31 +227,31 @@ function obtenerUnidadPorMonto() {
 
         let total = (arrUnidades[index] * arrMonto[index]);
         arrUnidadPorMonto.push(total);
-        
-    
-       /* console.log(" ARAY UNIDADES "+arrUnidades);
-        console.log(" ARAY UNIDADES "+arrMonto);
 
-        console.log("Vamos a operar"+(arrUnidades[index] +" x " +arrMonto[index]));
-        console.log(arrUnidadPorMonto);*/
-        
-        $montoFila.item(indiceFila).innerHTML="$"+arrUnidadPorMonto[indiceFila];
+
+        /* console.log(" ARAY UNIDADES "+arrUnidades);
+         console.log(" ARAY UNIDADES "+arrMonto);
+ 
+         console.log("Vamos a operar"+(arrUnidades[index] +" x " +arrMonto[index]));
+         console.log(arrUnidadPorMonto);*/
+
+        $montoFila.item(indiceFila).innerHTML = "$" + arrUnidadPorMonto[indiceFila];
         //console.log("indice fila "+indiceFila);
 
         indiceFila++;
 
     }
-    arrUnidadPorMonto.forEach((el)=>{
+    arrUnidadPorMonto.forEach((el) => {
 
-        sumaTotalPresupuesto+=el;
-    
+        sumaTotalPresupuesto += el;
+
     })
-    montoTotalPresupuesto.innerHTML="$"+sumaTotalPresupuesto;      
+    montoTotalPresupuesto.innerHTML = "$" + sumaTotalPresupuesto;
     console.log(arrUnidadPorMonto);
     //arrUnidadPorMonto.length=0;
 
 
-    
+
 }
 
 function obtenerDatosDescripcion() {
@@ -220,20 +262,20 @@ function obtenerDatosDescripcion() {
         console.log(element.value);
         arrDescripcion.push(element.value);
     });
-    console.log(arrDescripcion );
-    
+    console.log(arrDescripcion);
+
 }
 
-function obtenerMontoFila () {
-    const $totalFila  = document.querySelectorAll('.totalFila');
-    arrDescripcion.pop();
-    arrT
-    $descripcionGasto.forEach(element => {
-        console.log(element.value);
-        arrDescripcion.push(element.value);
-    });
-    console.log(arrDescripcion );
-    
+function obtenerMontoFila() {
+    const $totalFila = document.querySelectorAll('.totalFila');
+    //arrDescripcion.pop();
+    arrMontoFila.pop();
+    $totalFila.forEach(element=>{
+        arrMontoFila.push(element.value);
+    })
+   
+    console.log(arrMontoFila) ;
+
 }
 
 
@@ -323,11 +365,16 @@ function crearFila() {
 }
 
 
+$categoriaDestino.addEventListener("change",()=>{
+    idCategoria=$categoriaDestino.value;
+    
+   //obtenerPresupuestoPorId(id);
+});
 
 function validarFormulario() {
     let respuesta = true;
     const $campoRequerido = document.querySelectorAll(".campo-requerido");
-    
+
     //alert("numero de clases " + $campoRequerido.length);
     var obj = {};
     let newObjeto = {};
