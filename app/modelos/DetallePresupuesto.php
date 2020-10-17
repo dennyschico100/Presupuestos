@@ -72,12 +72,12 @@ class  DetallePresupuesto extends Conexion {
 
 		//return json_encode($returnData);	
 	}
-	public function buscarPresupuesto($id){
+	public function buscarPresupuestoDetalle($id){
 		
 		try{
 			$this->id=(int)$id;
 			
-			$consulta=" SELECT *FROM ".$this->tabla." WHERE ID_CATEGORIA= ? ";
+			$consulta=" SELECT *FROM ".$this->tabla." WHERE ID_PRESUPUESTO= ? ";
 			$sentencia=$this->conectar->prepare($consulta);
 			
 			$sentencia->bindValue(1,$this->id);
@@ -86,16 +86,16 @@ class  DetallePresupuesto extends Conexion {
 			if($res=$sentencia->execute()){ 
 			
 				//$rows=$sentencia->fetchColumn(); 
-			
 				$res= $sentencia->fetchAll(\PDO::FETCH_ASSOC);
 				$rows =count($res);
+				
 				if($rows > 0 ){ 
 					/*$this->returnData = [
 						'success' => 1,
 						'status'=> 202,
 						'usuario' => $res[0]
 					];*/
-					 echo json_encode($res[0]);
+					 echo json_encode($res);
 					
 				}else{
 						$res=null;

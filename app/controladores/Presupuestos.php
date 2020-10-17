@@ -196,6 +196,7 @@ class Presupuestos extends Controlador {
                         
                         $this->dataDetalle=(object) $this->dataDetalle;
                         $this->dataDetalle->idPresupuesto=$idPresupuesto;
+
                         $this->DetallePresupuestoModelo->registrarDetallePresupuesto($this->dataDetalle);
 
                     }
@@ -220,6 +221,26 @@ class Presupuestos extends Controlador {
       
 
       
+    }
+
+    function obtenerDetallePresupuestoPorId(){
+
+        if($_SERVER["REQUEST_METHOD"]=="GET"){
+
+            //$idUsuario=$_POST["REQUEST_METHOD"];
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_NUMBER_INT);
+            if(!empty($_GET["id_presupuesto"])){
+                    
+            echo var_dump($_GET["id_presupuesto"]);
+
+                $this->idPresupuesto= $_GET["id_presupuesto"];
+                
+                $this->DetallePresupuestoModelo->buscarPresupuestoDetalle($this->idPresupuesto);
+
+            }   else{
+                
+            }    
+        }
     }
 
 }

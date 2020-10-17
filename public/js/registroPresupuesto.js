@@ -184,10 +184,11 @@ $btnGuardar.addEventListener("click", (e) => {
         }).then((data)=>{
             
             respuesta=data;
-            console.log(respuesta)
+            console.log(data)
             $mensajeRespuesta.innerHTML = `${respuesta.message}`;
         }).catch((err)=>{
             respuesta=err;
+            console.log(err)
             $mensajeRespuesta.innerHTML = `${respuesta.message}`;
         });
 
