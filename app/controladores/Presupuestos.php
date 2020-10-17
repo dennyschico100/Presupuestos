@@ -191,7 +191,7 @@ class Presupuestos extends Controlador {
                             //echo json_encode($value);
                             
                             $this->dataDetalle[$key]=$this->sanitizar_campos($value);    
-
+                            
                         }
                         
                         $this->dataDetalle=(object) $this->dataDetalle;

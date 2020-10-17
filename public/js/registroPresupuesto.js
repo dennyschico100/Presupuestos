@@ -43,6 +43,38 @@ let idCategoria = 0;
 const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
 
 
+const $popUpError = document.getElementById("box-error");
+
+const $btnCerrar = document.getElementById("btn-cerrar");
+
+
+const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
+
+$btnCerrar.addEventListener("click", () => {
+
+    if ($popUpError.classList.contains("show-box")) {
+
+        $popUpError.classList.remove('show-box');
+        $popUpError.classList.add(...clases);
+
+      /*  usuarioModal.style.opacity = "1.0";
+
+        divform.style.opacity = "0.5";
+        divform.style.backgroundColor = "#333";*/
+
+    } else {
+
+    }
+
+});
+
+function topFunction() {
+    console.log("going to the top");
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+const clases = ["modal", "fade"];
+
 (() => {
 
     const $btnAdd = document.getElementById("btnAdd");
@@ -127,7 +159,7 @@ $btnGuardar.addEventListener("click", (e) => {
             }
         }
 
-        const xhr=new XMLHttpRequest();
+        /*const xhr=new XMLHttpRequest();
         xhr.open(options.method,URL);
         //xhr.send(JSON.stringify(arrObjects));
 
@@ -143,20 +175,26 @@ $btnGuardar.addEventListener("click", (e) => {
             }else{
                 
             }
-        });
-
+        });*/
+        let respuesta="";
         fetch(URL,options).then((response)=>{
-            response.ok ? response.text() : Promise.reject(response);
+            
+            return (response.ok ?  response.json() : Promise.reject(response));
             
         }).then((data)=>{
-            console.error(data);
+            
+            respuesta=data;
+            console.log(respuesta)
+            $mensajeRespuesta.innerHTML = `${respuesta.message}`;
         }).catch((err)=>{
-            console.log(err);
+            respuesta=err;
+            $mensajeRespuesta.innerHTML = `${respuesta.message}`;
         });
-        
-      
-    
 
+        $popUpError.classList.remove(...clases);
+        $popUpError.classList.add('show-box');
+        topFunction();
+                    
     } else {
 
     }
@@ -308,8 +346,6 @@ function obtenerDatosMontos() {
     console.warn(arrMonto);
 
 }
-
-
 
 
 //CREANDO LA FILA 

@@ -126,7 +126,6 @@ class  DetallePresupuesto extends Conexion {
 
 			$consulta=" INSERT INTO   ".$this->tabla." (ID_PRESUPUESTO ,NOMBRE_GASTO,UNIDADES,MONTO,
 			MONTO_TOTAL,USUARIO_CREA,FECHA_CREACION ) VALUES (?,?,?,?,?,?,?)    ";
-          //  echo var_dump($data);
             if( isset($data->idPresupuesto) && isset($data->descripcion)  && isset($data->unidades) 
             && isset($data->monto) && isset($data->total) && isset($data->usuarioCrea)  )
 			{				
@@ -152,7 +151,7 @@ class  DetallePresupuesto extends Conexion {
 					
                     if($sentencia->execute()){
 
-						$this->returnData=$this->msg(1,201,'Detalle de Presupuesto Guardado');
+						$this->returnData=$this->msg(1,201,' Presupuesto Guardado Correctamete');
                         
 					}
 					else{
