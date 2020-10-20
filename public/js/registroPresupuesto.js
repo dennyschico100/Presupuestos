@@ -1,6 +1,22 @@
 "use strict";
 
-let datetime = 0;
+
+
+const elementosFormulario = document.getElementById("asignaciones_form").elements;
+const montoTotalPresupuesto = document.getElementById("montoTotalPresupuesto");
+const arrUnidades = [], arrMonto = [], arrDescripcion = [], arrMontoFila = [], arrObjects = [], arrDetalle = [], arrUnidadPorMonto = [];
+const objetoPresupuesto = {};
+const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
+const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
+const $popUpError = document.getElementById("box-error");
+const $btnCerrar = document.getElementById("btn-cerrar");
+const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
+const $tblPresupuesto = document.getElementById("tblPresupuesto");
+const $btnGuardar = document.getElementById("btnGuardar");
+const $categoriaDestino = document.getElementById("destino");
+
+let idCategoria = 0, datetime = 0, sumaTotalPresupuesto = 0, numFilas = 0, numInputs = 3;
+
 (() => {
 
     var currentdate = new Date();
@@ -11,45 +27,6 @@ let datetime = 0;
     console.log(datetime);
 })();
 
-const $tblPresupuesto = document.getElementById("tblPresupuesto");
-const $btnGuardar = document.getElementById("btnGuardar");
-
-var elementosFormulario = document.getElementById("asignaciones_form").elements;
-const montoTotalPresupuesto = document.getElementById("montoTotalPresupuesto");
-let sumaTotalPresupuesto = 0;
-
-let numFilas = 0;
-var numInputs = 3;
-
-const arrUnidades = [];
-const arrMonto = [];
-const arrDescripcion = [];
-const arrMontoFila = [];
-const arrObjects = [];
-
-let arrUnidadPorMonto2 = [];
-
-
-let arrDetalle = [];
-
-let arrUnidadPorMonto = [];
-const objetoPresupuesto = {};
-
-const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
-
-const $categoriaDestino = document.getElementById("destino");
-let idCategoria = 0;
-
-const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
-
-
-const $popUpError = document.getElementById("box-error");
-
-const $btnCerrar = document.getElementById("btn-cerrar");
-
-
-const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
-
 $btnCerrar.addEventListener("click", () => {
 
     if ($popUpError.classList.contains("show-box")) {
@@ -57,10 +34,10 @@ $btnCerrar.addEventListener("click", () => {
         $popUpError.classList.remove('show-box');
         $popUpError.classList.add(...clases);
 
-      /*  usuarioModal.style.opacity = "1.0";
-
-        divform.style.opacity = "0.5";
-        divform.style.backgroundColor = "#333";*/
+        /*  usuarioModal.style.opacity = "1.0";
+  
+          divform.style.opacity = "0.5";
+          divform.style.backgroundColor = "#333";*/
 
     } else {
 
@@ -135,7 +112,7 @@ $btnGuardar.addEventListener("click", (e) => {
             objetoDetallePresupuesto.unidades = arrUnidades[i];
             objetoDetallePresupuesto.monto = arrMonto[i];
             objetoDetallePresupuesto.total = arrUnidadPorMonto[i];
-            objetoDetallePresupuesto.usuarioCrea=IdUsuarioSesion;
+            objetoDetallePresupuesto.usuarioCrea = IdUsuarioSesion;
             //console.log("ITERACION "+arrDescripcion[i]);
             //console.warn(objetoDetallePresupuesto);
             arrDetalle.push(objetoDetallePresupuesto);
@@ -143,11 +120,6 @@ $btnGuardar.addEventListener("click", (e) => {
             arrObjects.push(arrDetalle[i]);
             //console.error(arrObjects[j]);
 
-        }
-        const car = {
-            name: "carro1",
-            status: true,
-            year: 2000
         }
 
         console.log(arrObjects);
@@ -176,18 +148,18 @@ $btnGuardar.addEventListener("click", (e) => {
                 
             }
         });*/
-        let respuesta="";
-        fetch(URL,options).then((response)=>{
-            
-            return (response.ok ?  response.json() : Promise.reject(response));
-            
-        }).then((data)=>{
-            
-            respuesta=data;
+        let respuesta = "";
+        fetch(URL, options).then((response) => {
+
+            return (response.ok ? response.json() : Promise.reject(response));
+
+        }).then((data) => {
+
+            respuesta = data;
             console.log(data)
             $mensajeRespuesta.innerHTML = `${respuesta.message}`;
-        }).catch((err)=>{
-            respuesta=err;
+        }).catch((err) => {
+            respuesta = err;
             console.log(err)
             $mensajeRespuesta.innerHTML = `${respuesta.message}`;
         });
@@ -195,7 +167,7 @@ $btnGuardar.addEventListener("click", (e) => {
         $popUpError.classList.remove(...clases);
         $popUpError.classList.add('show-box');
         topFunction();
-                    
+
     } else {
 
     }
@@ -252,11 +224,6 @@ function obtenerUnidadPorMonto() {
     sumaTotalPresupuesto = 0;
     const len = $filas.length;
 
-
-    //alert("filas "+len);
-
-    //arrUnidadPorMonto.length=0;
-    //arrUnidadPorMonto.splice(0,arrUnidadPorMonto.length)
     let indiceFila = 0;
 
     for (let index = 0; index < len; index++) {
@@ -266,7 +233,6 @@ function obtenerUnidadPorMonto() {
 
         let total = (arrUnidades[index] * arrMonto[index]);
         arrUnidadPorMonto.push(total);
-
 
         /* console.log(" ARAY UNIDADES "+arrUnidades);
          console.log(" ARAY UNIDADES "+arrMonto);
@@ -309,11 +275,11 @@ function obtenerMontoFila() {
     const $totalFila = document.querySelectorAll('.totalFila');
     //arrDescripcion.pop();
     arrMontoFila.pop();
-    $totalFila.forEach(element=>{
+    $totalFila.forEach(element => {
         arrMontoFila.push(element.value);
     })
-   
-    console.log(arrMontoFila) ;
+
+    console.log(arrMontoFila);
 
 }
 
@@ -402,10 +368,10 @@ function crearFila() {
 }
 
 
-$categoriaDestino.addEventListener("change",()=>{
-    idCategoria=$categoriaDestino.value;
-    
-   //obtenerPresupuestoPorId(id);
+$categoriaDestino.addEventListener("change", () => {
+    idCategoria = $categoriaDestino.value;
+
+    //obtenerPresupuestoPorId(id);
 });
 
 function validarFormulario() {
@@ -419,7 +385,7 @@ function validarFormulario() {
     numInputs++;
     //alert(numInputs);
 
-    for (var i = 1; i < numInputs; i++) {
+    for (let i = 1; i < numInputs; i++) {
 
         indiceClase = 1;
         var item = elementosFormulario.item(i);
@@ -428,7 +394,7 @@ function validarFormulario() {
         obj[item.name] = item.value;
         newObjeto = JSON.stringify(obj);
         //console.log(newObjeto);
-        if (obj[item.name] == null || obj[item.name] === "") {
+        if (obj[item.name] == null || obj[item.name] === "" ) {
             $campoRequerido.forEach((el) => {
                 //console.warn(i + " and " + indiceClase);
 

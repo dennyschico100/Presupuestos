@@ -225,7 +225,10 @@ class Presupuestos extends Controlador {
 
     function obtenerDetallePresupuestoPorId(){
 
-        if($_SERVER["REQUEST_METHOD"]=="GET"){
+        if(!$this->isLoggedIn()){
+            
+        }else{
+            if($_SERVER["REQUEST_METHOD"]=="GET"){
 
             //$idUsuario=$_POST["REQUEST_METHOD"];
             $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_NUMBER_INT);
@@ -240,6 +243,7 @@ class Presupuestos extends Controlador {
             }   else{
                 
             }    
+        }
         }
     }
 
