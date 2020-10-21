@@ -27,9 +27,9 @@ class DetallePresupuestoController extends Controlador
      */
     public function getDetail()
     {
-       // header('Access-Control-Allow-Origin: *');
-        //header('Content-Type: application/json; charset=UTF-8');
-      
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json; charset=UTF-8');
+
 
         $id = isset($_SESSION['id']) ? $_SESSION['id'] : $_GET['id'];
 
@@ -62,8 +62,6 @@ class DetallePresupuestoController extends Controlador
                     array("message" => "No record found.")
                 );
             }
-
-           
         } else {
             header('Location: http://localhost/practicas/Presupuestos/presupuestos/listar');
         }
