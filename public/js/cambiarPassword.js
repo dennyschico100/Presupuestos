@@ -34,7 +34,7 @@ togglePassword.addEventListener('click', function (e) {
 })();
 
 (()=>{
-    alert("cambiar");
+    
 })();
 
 function validar_campos() {

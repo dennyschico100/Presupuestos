@@ -96,9 +96,15 @@ function mostrarFormularo() {
     }
 }
 
-
 function mostrarDatos() {
-
+    /*{
+                        text: "Pdf",
+                        className: "btn btn-secondary"
+                    },
+                    {
+                        text: "excelHtml5",
+                        className: "btn btn-secondary"
+                    } */
     var jqxhr = $.get(
         "http://localhost:8081/Presupuestos/usuarios/obtenerTodos",
         function (data, status) {
@@ -121,14 +127,7 @@ function mostrarDatos() {
                 aServerSide: true, //Paginación y filtrado realizados por el servidor
                 dom: "Bfrtip", //Definimos los elementos del control de tabla
                 buttons: [
-                    {
-                        text: "Pdf",
-                        className: "btn btn-secondary"
-                    },
-                    {
-                        text: "excelHtml5",
-                        className: "btn btn-secondary"
-                    }
+                    
                 ],
 
                 bDestroy: true,
@@ -362,7 +361,7 @@ $("#usuario_form").on("submit", function (e) {
             divform.style.opacity = "0.5";
             divform.style.backgroundColor = "#333";
 
-
+            
 
         } else {
 
@@ -449,7 +448,11 @@ btnEliminar.addEventListener("click", () => {
             eliminarModal.classList.add("bajar");
             const respuesta = JSON.parse(event.target.responseText);
             $mensajeRespuestaEliminar.innerHTML = `${respuesta.message}`;
-            
+            setTimeout(()=>{
+                
+                location.reload();
+
+            },3500);
 
             //console.log(event.target.responseText);
             id_usuario = 0;

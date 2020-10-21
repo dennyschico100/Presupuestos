@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 const elementosFormulario = document.getElementById("asignaciones_form").elements;
 const montoTotalPresupuesto = document.getElementById("montoTotalPresupuesto");
 const arrUnidades = [], arrMonto = [], arrDescripcion = [], arrMontoFila = [], arrObjects = [], arrDetalle = [], arrUnidadPorMonto = [];
@@ -15,7 +13,7 @@ const $tblPresupuesto = document.getElementById("tblPresupuesto");
 const $btnGuardar = document.getElementById("btnGuardar");
 const $categoriaDestino = document.getElementById("destino");
 
-let idCategoria = 0, datetime = 0, sumaTotalPresupuesto = 0, numFilas = 0, numInputs = 3;
+let idCategoria = 0, datetime = 0, sumaTotalPresupuesto = 0, numFilas = 0, numInputs = 4,numCamposVacios=4;
 
 (() => {
 
@@ -96,9 +94,7 @@ $btnGuardar.addEventListener("click", (e) => {
         let lenArr = arrMonto.length;
         const $totalFila = document.querySelectorAll(".totalFila");
         let lenFilas = $totalFila.length;
-        alert(lenFilas);
-
-
+        //alert(lenFilas);
         const indice = lenFilas;
 
         lenFilas -= 1;
@@ -130,24 +126,7 @@ $btnGuardar.addEventListener("click", (e) => {
                 "Content-Type": "application/json"    // ***
             }
         }
-
-        /*const xhr=new XMLHttpRequest();
-        xhr.open(options.method,URL);
-        //xhr.send(JSON.stringify(arrObjects));
-
-        xhr.addEventListener("readystatechange",(event)=>{
-            if(xhr.readyState == 4 && xhr.status == 200 ){
-                console.warn(event.target.responseText);
-                
-                let json=JSON.parse(event.target.responseText);
-                console.warn(json);
-
-            }else if(xhr.readyState== 4){
-
-            }else{
-                
-            }
-        });*/
+        
         let respuesta = "";
         fetch(URL, options).then((response) => {
 
@@ -385,6 +364,7 @@ function validarFormulario() {
     numInputs++;
     //alert(numInputs);
 
+
     for (let i = 1; i < numInputs; i++) {
 
         indiceClase = 1;
@@ -396,14 +376,15 @@ function validarFormulario() {
         //console.log(newObjeto);
         if (obj[item.name] == null || obj[item.name] === "" ) {
             $campoRequerido.forEach((el) => {
-                //console.warn(i + " and " + indiceClase);
-
+                console.warn(i + " and " + indiceClase);
+                
                 if (i === indiceClase) {
-                    //console.warn(indiceClase);
+                    console.warn("INDICE DE CLASE DE HTML"+indiceClase);
                     $campoRequerido.innerHTML = "valor necesaro";
-                    //console.error(newObjeto);
+                    console.error(newObjeto);
                     el.innerHTML = "Campo requerido";
                     respuesta = false;
+                    numCamposVacios--;
                 }
                 indiceClase++;
             });
@@ -415,7 +396,12 @@ function validarFormulario() {
                     $campoRequerido.innerHTML = "";
 
                     el.innerHTML = "";
-                    respuesta = true;
+                    //alert(numCamposVacios);
+                        
+                    if(numCamposVacios===0){
+                        
+                        respuesta = true;
+                    }
                 }
                 indiceClase++;
 

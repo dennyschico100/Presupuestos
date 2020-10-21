@@ -98,7 +98,7 @@
                                 
                                 <label>Destino</label>
                                 <select class="form-control" id="destino" name="origen">
-                                    <option selected value="">-Asignar a -</option>
+                                    <option selected value="" >-Asignar a -</option>
                                                                       
                                 </select>
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
