@@ -2,7 +2,7 @@
 
 const main = document.getElementById("main");
 
-let url = "http://localhost:8081/Presupuestos/presupuestos/obtenerTodos";
+let url = "http://localhost/practicas/Presupuestos/presupuestos/obtenerTodos";
 
 const COLORES = ["#ef476f", "#fb8500", "#06d6a0", "#118ab2", "#f94144"];
 
@@ -36,6 +36,7 @@ async function obtenerPresupuestos() {
 }
 
 function mostrarPresupuestos(presupuesto) {
+    const urlDetail = 'http://localhost/practicas/Presupuestos/detallepresupuestocontroller/detail';
     main.innerHTML = "";
     let index = 0;
     presupuesto.forEach((p) => {
@@ -50,19 +51,20 @@ function mostrarPresupuestos(presupuesto) {
                 alt=""
             />
             <div class="movie-info">
-                <h3 class='text-black'>${p.DESCRIPCION}</h3><strong  class='ejecutado' >Ejecutado</strong>
-                
-                <span class="">${p.PORCENTAJE_EJECUTADO}%</span>
-                <div class='div-montoInicial' ><h5>Monto Inicial</h5>
-                <span class=''>${p.MONTO_INICIAL}</span>
-                </div>
-            </div>
-            <div class="overview">  
-            <h4>Monto Inicial :</h4>$
-            ${p.MONTO_INICIAL}
-                <h4>Monto Actual :</h4>$
-            ${p.MONTO_ACTUAL}
-                
+                <a href='${urlDetail + '?id='+ p.ID_PRESUPUESTO}'>
+                    <h3 class='text-black'>${p.DESCRIPCION} </h3><strong  class='ejecutado' >Ejecutado</strong>
+                        
+                        <span class="">${p.PORCENTAJE_EJECUTADO}%</span>
+                    <div class='div-montoInicial' ><h5>Monto Inicial</h5>
+                        <span class=''>${p.MONTO_INICIAL}</span>
+                        </div>
+                    </div>
+                    <div class="overview">  
+                    <h4>Monto Inicial :</h4>$
+                    ${p.MONTO_INICIAL}
+                        <h4>Monto Actual :</h4>$
+                    ${p.MONTO_ACTUAL}
+                </a>
             </div>
         `;
 
