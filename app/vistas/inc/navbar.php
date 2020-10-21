@@ -50,7 +50,8 @@
 
                     <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/listar">Presupuestos</a>
                     <a class="collapse-item" href="<?php  echo URL_ROOT;?>/presupuestos/transaccion">Asignacion</a>
-
+                    <a class="collapse-item" href="<?php  echo URL_ROOT;?>/presupuestos/registrar">Registrar presupuesto</a>
+                        
                     <?php 
            break;  ?>
 

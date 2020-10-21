@@ -23,7 +23,7 @@ const $btnCerrarVentanaModal = document.getElementById("btn-cerrar");
 
 var elementosFormulario = document.getElementById("presupuestos_form").elements;
 
-let presupuestoGlobalActivo=false;
+let presupuestoGlobalActivo = false;
 
 
 obtenerPresupuestos(url);
@@ -31,7 +31,8 @@ obtenerPresupuestos(url);
 async function obtenerPresupuestos() {
     const resp = await fetch(url);
     const respData = await resp.json();
-    console.warn(respData);
+    //console.warn(respData);
+    console.log(respData);
     mostrarPresupuestos(respData);
 }
 
@@ -133,7 +134,7 @@ function limpiarCampos() {
 }
 
 function mostrarFormulario() {
-    
+
     if (usuarioModal.classList.contains("hide-form")) {
 
         divform.classList.add("div-form-show");
@@ -175,7 +176,7 @@ function topFunction() {
 (() => {
     const $addButton = document.getElementById("add_button");
     $addButton.addEventListener("click", () => {
-        
+
 
         mostrarFormulario();
         //document.getElementsByClassName('modal-backdrop').style.backgroundColor="";
@@ -189,7 +190,7 @@ $btnCerrarVentanaModal.addEventListener("click", () => {
 
         $popUpError.classList.remove('show-box');
         $popUpError.classList.add(...clasesFormulario);
-        
+
         usuarioModal.style.opacity = "1.0";
 
         divform.style.opacity = "0.5";
@@ -264,7 +265,7 @@ $("#roles_form").on("submit", function (e) {
                         cerrarFormulario();
                         topFunction();
 
-                       // $("#usuario_data").DataTable().ajax.reload();
+                        // $("#usuario_data").DataTable().ajax.reload();
 
                     }
 

@@ -25,6 +25,7 @@ class Controlador{
     
     public function isLoggedIn()
     {
+        /*
         if (isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) &&
          isset($_SESSION['user_email_presupuestos'])) {
             
@@ -34,6 +35,7 @@ class Controlador{
         } else {
                 return false;
         } 
+        */
     }
 
 }

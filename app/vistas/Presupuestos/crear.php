@@ -1,5 +1,5 @@
 <?php require APP_ROOT . '/vistas/inc/header.php' ?>
-<link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/transaccion.css">
+<link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/registroPresupuesto.css">
 
 <div style="border:0px solid green;" class="container-fluid">
 
@@ -7,20 +7,14 @@
 
         <div id="resultados_ajax"></div>
 
-        <h2><b>Nueva Asignacion</b> </h2>
-
+        <h2><b>Registrar Presupuesto</b> </h2>
         <div class="row">
             <div class="col-md-12">
 
                 <div class="box">
-
-
-
                     <!-- /.box-header -->
                     <!-- centro -->
                     <div id="main" style="border:px solid red;" class="panel-body table-responsive">
-
-
 
                     </div>
 
@@ -79,7 +73,7 @@
 <div class="container">
     <div id="transaccionModal" class="row">
 
-        <div style="border:px solid red;" class="col-md-6">
+        <div style="border:px solid red;" class="col-md-12">
 
             <form method="POST" name="fmrusuario" id="asignaciones_form">
 
@@ -87,7 +81,9 @@
 
                     <div class="modal-header">
 
-                        <button type="button" id="btnClose" class="close" data-dismiss="modal"></button>
+                        <button type="button" id="btnAdd" class="close" data-dismiss="modal">
+                            <i class="fas fa-plus"></i>
+                        </button>
 
                         <div class="container">
                             <h4 class="modal-title"></h4>
@@ -95,63 +91,43 @@
                         </div>
 
                     </div>
+                    <div class="col-md-2 form-group ">
+
+                        <label>Destino</label>
+                        <select class="form-control" id="destino" name="origen">
+                            <option selected value="">-Asignar a -</option>
+
+                        </select>
+                        <span class="text-danger  campo-requerido"><strong></strong></span>
+
+                    </div>
+                    <div class="col-md-10"></div>
 
 
-                    <div style="border:px solid aqua;" class="modal-body">
+
+                    <div id="tblPresupuesto" style="border:px solid aqua;" class="modal-body">
                         <div class="row">
 
-                            <div class="col-md-6 form-group ">
-                                <label>Tipo </label>
-                                <select class="form-control" id="tipoAsignacion" name="tipoAsignacion">
-                                    <option selected value="">-- Selecciona el Tipo --</option>
-                                    <option value="1">Global</option>
-                                    <option value="2">Asignar a Area </option>
+                            <div class="col-md-4 form-group ">
+                                <label>Descripcion </label>
+                                <textarea name="descripcionGasto" class="form-control descripcionGasto" id="exampleFormControlTextarea1" rows="1"></textarea>
 
-                                </select>
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
 
                             </div>
 
-
-                            <div class="col-md-6 form-group ">
-
-
-                                <label>Origen</label>
-                                <select class="form-control" id="origen" name="origen">
-                                    <option selected value="">-Presupuesto origen-</option>
-
-                                </select>
-                                <span class="text-danger  campo-requerido"><strong></strong></span>
+                            <div class="col-md-1 form-group ">
 
                             </div>
-
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-6 form-group ">
-                                <label>Monto Dispobible</label>
-                                <input type="number" min="1" name="montoDisponible" id="montoDisponible" class="form-control" placeholder="$0" />
+                            <div class="col-md-2 form-group ">
+                                <label>Unidades</label>
+                                <input type="number" min="1" name="unidades" id="" class="form-control unidades" placeholder="$0" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <br />
                             </div>
-                            <div class="col-md-6 form-group ">
-                                <label>Destino</label>
-                                <select class="form-control" id="destino" name="destino">
-                                    <option value="">Categoria destino -</option>
-
-
-                                </select>
-
-                                <span class="text-danger" id="error-categorias">
-                                    <span class="text-danger  campo-requerido"><strong></strong></span>
-
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-6 form-group ">
+                            <div class="col-md-2 form-group ">
                                 <label>Monto</label>
-                                <input type="text" name="montoAsignado" id="montoAsignado" class="form-control" placeholder="00000000" />
+                                <input type="number" min="1" name="montoAsignado" id="" class="montoAsignado form-control" placeholder="00000000" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <strong>
 
@@ -162,7 +138,25 @@
                                 <br />
 
                             </div>
+                            <div class="col-md-1"></div>
+
+                            <div class="col-md-2 form-group ">
+                                <label>Total</label>
+
+                                <label class="totalFila form-control" for="">$</label>
+
+                                <strong>
+
+                                    <span class="text-danger" id="error-monto">
+
+                                    </span>
+                                </strong>
+                                <br />
+
+                            </div>
+
                         </div>
+
 
 
 
@@ -170,28 +164,35 @@
 
                         <!--LISTA DE PERMISOS-->
 
-                        <div class="form-group">
 
-                            <div class="col-lg-6">
-
-                                <ul style="list-style:none;" id="permisos">
-
-
-                                </ul>
-
-                            </div>
-
-                        </div>
 
                         <!--FIN LISTA DE PERMISOS-->
 
 
                     </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-1"><label for="">
+                                    <h3>Total </h3>
+                                </label></div>
+                            <div class="col-md-9"></div>
+                            <h3>
+                                <div id="montoTotalPresupuesto" class="col-md-1">$0</div>
+                            </h3>
+                            <div class="col-md-1"></div>
 
+                            <hr style="width:100%; border:1px solid #037e8c;  margin:2px" />
 
+                        </div>
+                    </div>
+
+                    <!-- FIN DE LA TABLA PREUPUESTOS -->
                     <div class="modal-footer">
+                        <!--
+                         <input type="hidden" name="password1" value="presupuestos012456789">
+                       
 
-                        <input type="hidden" name="password1" value="presupuestos012456789">
+                        -->
                         <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
                         <button type="button" onclick="  limpiar()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
@@ -209,19 +210,7 @@
 
 
         </div>
-        <div style="border:2px solid yellow;" class="col-md-6">
 
-            <div id="spinner" class="">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-
-            <div id="r">
-
-            </div>
-        </div>
 
 
     </div>
@@ -234,8 +223,15 @@
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="
+  https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js
+    "></script>
 
-    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js">
+    </script>
+    <?php $session_value = (isset($_SESSION['user_id_presupuestos'])) ? $_SESSION['user_id_presupuestos'] : ''; ?>
+    <script type="text/javascript">
+        var IdUsuarioSesion = '<?php echo $session_value; ?>';
+    </script>
 
-    <script src="<?php echo URL_ROOT . '/public/js/transaccion.js'; ?>"></script>
+    <script src="<?php echo URL_ROOT . '/public/js/registroPresupuesto.js'; ?>"></script>

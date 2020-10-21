@@ -20,6 +20,7 @@ const $btnCerrarVentanaModal = document.getElementById("btn-cerrar");
 const campoRequerido = document.querySelectorAll(".campo-requerido");
 var elementosFormulario = document.getElementById("asignaciones_form").elements;
 
+
 const $errorMontoAsignado=document.getElementById("error-monto");
 const $errorCategorias=document.getElementById("error-categorias");
 const $tipoAsignacion=document.getElementById("tipoAsignacion");

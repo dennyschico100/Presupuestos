@@ -19,6 +19,7 @@ class DetallePresupuestoController extends Controlador
     {
         $_SESSION['id'] = isset($_GET['id']) ? (int)$_GET['id'] : die();
         $this->vista('detalles/detalle');
+        //header('Location:http://localhost/practicas/Presupuestos/detallepresupuestocontroller/getDetail');
 
     }
     /**
@@ -26,9 +27,9 @@ class DetallePresupuestoController extends Controlador
      */
     public function getDetail()
     {
-        header('Access-Control-Allow-Origin: *');
-        header('Content-Type: application/json; charset=UTF-8');
-
+       // header('Access-Control-Allow-Origin: *');
+        //header('Content-Type: application/json; charset=UTF-8');
+      
 
         $id = isset($_SESSION['id']) ? $_SESSION['id'] : $_GET['id'];
 
@@ -61,6 +62,8 @@ class DetallePresupuestoController extends Controlador
                     array("message" => "No record found.")
                 );
             }
+
+           
         } else {
             header('Location: http://localhost/practicas/Presupuestos/presupuestos/listar');
         }
