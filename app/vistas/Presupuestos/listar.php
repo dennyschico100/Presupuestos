@@ -1,26 +1,27 @@
-<?php  require APP_ROOT.'/vistas/inc/header.php' ?>
+<?php 
+
+require APP_ROOT . '/vistas/inc/header.php' ?>
+
 <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/presupuestos.css">
 
 <div style="border:0px solid green;" class="container-fluid">
 
     <section class="col-md-12  content overflow-hidden">
-        
+
         <div id="resultados_ajax"></div>
 
         <h2>Listado de Presupuestos</h2>
 
-        <div  class="row">
+        <div class="row">
             <div class="col-md-12">
 
                 <div class="box">
 
 
-                    
+
                     <!-- /.box-header -->
                     <!-- centro -->
-                    <div id="main"  style="border:px solid red;" class="panel-body table-responsive">
-
-                       
+                    <div id="main" style="border:px solid red;" class="panel-body table-responsive">
 
                     </div>
 
@@ -56,23 +57,23 @@
 </div>
 
 <!--INICIO MODAL DEL ELIMINAR USUARIO -->
-<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Aviso Importante</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Aviso Importante</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div id="mensaje-respuesta-eliminar" class="modal-body"> Estas a punto de eliminar este registro .</div>
+            <div id="div-botones" class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary text-white" id="btnEliminar">Eliminar</a>
+            </div>
         </div>
-        <div  id="mensaje-respuesta-eliminar"  class="modal-body"> Estas  a punto de eliminar este registro .</div>
-        <div  id="div-botones" class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary text-white"  id="btnEliminar"  >Eliminar</a>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <!-- FIN MODAL DEL ELIMINAR USUARIO-->
 <!--FORMULARIO USUARIO VENTANA MODAL-->
@@ -101,16 +102,14 @@
 
                     <div class="col-md-10 form-group ">
                         <label>Nombres</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombres"
-                            pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$" />
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombres" pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$" />
                         <span class="text-danger  campo-requerido"><strong></strong></span>
 
                         <br />
 
 
                         <label>Apellidos</label>
-                        <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Apellidos"
-                            pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$" />
+                        <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Apellidos" pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$" />
                         <span class="text-danger  campo-requerido"><strong></strong></span>
 
                         <br />
@@ -118,8 +117,7 @@
                     </div>
                     <div class="col-md-10 form-group ">
                         <label>Correo</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Correo"
-                            required="required" />
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Correo" required="required" />
                         <span class="text-danger  campo-requerido"><strong></strong></span>
 
                         <br />
@@ -150,11 +148,11 @@
 
                     <div class="col-md-6 form-group ">
 
-    
+
                         <label>Cargo</label>
                         <select class="form-control" id="cargo" name="rol">
                             <option value="">-- Selecciona cargo --</option>
-                            
+
                             <option value="1">Analista presupesto</option>
                             <option value="3">Jefe Presupuesto</option>
                             <option value="4" selected>Tesorero</option>
@@ -172,8 +170,7 @@
 
                     <div class="col-md-6 form-group ">
                         <label>Teléfono</label>
-                        <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Teléfono"
-                            pattern="[0-9]{0,15}" />
+                        <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Teléfono" pattern="[0-9]{0,15}" />
                         <span class="text-danger  campo-requerido"><strong></strong></span>
 
                     </div>
@@ -202,12 +199,10 @@
 
                 <div class="modal-footer">
 
-                    <input type="hidden" name="password1"  value="presupuestos012456789">
-                    <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i
-                            class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    <input type="hidden" name="password1" value="presupuestos012456789">
+                    <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
-                    <button type="button" onclick="  cerrarFormulario()" class="btn btn-danger" data-dismiss="modal"><i
-                            class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
+                    <button type="button" onclick="  cerrarFormulario()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
 
 
 
@@ -227,7 +222,7 @@
 
 <div>
 
-    <?php  require APP_ROOT.'/vistas/inc/footer.php' ?>
+    <?php require APP_ROOT . '/vistas/inc/footer.php' ?>
 
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -238,4 +233,4 @@
 
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
 
-    <script src="<?php echo URL_ROOT.'/public/js/presupuestos.js';?>"></script>
+    <script src="<?php echo URL_ROOT . '/public/js/presupuestos.js'; ?>"></script>

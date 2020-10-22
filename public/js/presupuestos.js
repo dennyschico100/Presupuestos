@@ -6,6 +6,7 @@ let url = "http://localhost:8081/Presupuestos/presupuestos/obtenerTodos";
 
 const COLORES = ["#ef476f", "#fb8500", "#06d6a0", "#118ab2", "#f94144"];
 
+
 const campoRequerido = document.querySelectorAll(".campo-requerido");
 
 const $popUpError = document.getElementById("box-error");
@@ -23,7 +24,7 @@ const $btnCerrarVentanaModal = document.getElementById("btn-cerrar");
 
 var elementosFormulario = document.getElementById("presupuestos_form").elements;
 
-let presupuestoGlobalActivo=false;
+let presupuestoGlobalActivo = false;
 
 
 obtenerPresupuestos(url);
@@ -31,11 +32,13 @@ obtenerPresupuestos(url);
 async function obtenerPresupuestos() {
     const resp = await fetch(url);
     const respData = await resp.json();
-    console.warn(respData);
+    //console.warn(respData);
+    console.log(respData);
     mostrarPresupuestos(respData);
 }
 
 function mostrarPresupuestos(presupuesto) {
+    const urlDetail = 'http://localhost:8081/Presupuestos/detallepresupuestocontroller/detail';
     main.innerHTML = "";
     let index = 0;
     presupuesto.forEach((p) => {
@@ -50,19 +53,20 @@ function mostrarPresupuestos(presupuesto) {
                 alt=""
             />
             <div class="movie-info">
-                <h3 class='text-black'>${p.DESCRIPCION}</h3><strong  class='ejecutado' >Ejecutado</strong>
-                
-                <span class="">${p.PORCENTAJE_EJECUTADO}%</span>
-                <div class='div-montoInicial' ><h5>Monto Inicial</h5>
-                <span class=''>${p.MONTO_INICIAL}</span>
-                </div>
-            </div>
-            <div class="overview">  
-            <h4>Monto Inicial :</h4>$
-            ${p.MONTO_INICIAL}
-                <h4>Monto Actual :</h4>$
-            ${p.MONTO_ACTUAL}
-                
+                <a href='${urlDetail + '?id='+ p.ID_PRESUPUESTO}'>
+                    <h3 class='text-black'>${p.DESCRIPCION} </h3><strong  class='ejecutado' >Ejecutado</strong>
+                        
+                        <span class="">${p.PORCENTAJE_EJECUTADO}%</span>
+                    <div class='div-montoInicial' ><h5>Monto Inicial</h5>
+                        <span class=''>${p.MONTO_INICIAL}</span>
+                        </div>
+                    </div>
+                    <div class="overview">  
+                    <h4>Monto Inicial :</h4>$
+                    ${p.MONTO_INICIAL}
+                        <h4>Monto Actual :</h4>$
+                    ${p.MONTO_ACTUAL}
+                </a>
             </div>
         `;
 
@@ -131,7 +135,7 @@ function limpiarCampos() {
 }
 
 function mostrarFormulario() {
-    
+
     if (usuarioModal.classList.contains("hide-form")) {
 
         divform.classList.add("div-form-show");
@@ -173,7 +177,7 @@ function topFunction() {
 (() => {
     const $addButton = document.getElementById("add_button");
     $addButton.addEventListener("click", () => {
-        
+
 
         mostrarFormulario();
         //document.getElementsByClassName('modal-backdrop').style.backgroundColor="";
@@ -187,7 +191,7 @@ $btnCerrarVentanaModal.addEventListener("click", () => {
 
         $popUpError.classList.remove('show-box');
         $popUpError.classList.add(...clasesFormulario);
-        
+
         usuarioModal.style.opacity = "1.0";
 
         divform.style.opacity = "0.5";
@@ -262,7 +266,7 @@ $("#roles_form").on("submit", function (e) {
                         cerrarFormulario();
                         topFunction();
 
-                       // $("#usuario_data").DataTable().ajax.reload();
+                        // $("#usuario_data").DataTable().ajax.reload();
 
                     }
 

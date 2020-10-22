@@ -1,5 +1,6 @@
 "use strict";
 
+<<<<<<< HEAD
 const elementosFormulario = document.getElementById("asignaciones_form").elements;
 const montoTotalPresupuesto = document.getElementById("montoTotalPresupuesto");
 const arrUnidades = [], arrMonto = [], arrDescripcion = [], arrMontoFila = [], arrObjects = [], arrDetalle = [], arrUnidadPorMonto = [];
@@ -15,6 +16,9 @@ const $categoriaDestino = document.getElementById("destino");
 
 let idCategoria = 0, datetime = 0, sumaTotalPresupuesto = 0, numFilas = 0, numInputs = 4,numCamposVacios=4;
 
+=======
+let datetime = 0;
+>>>>>>> graficas1
 (() => {
 
     var currentdate = new Date();
@@ -25,6 +29,7 @@ let idCategoria = 0, datetime = 0, sumaTotalPresupuesto = 0, numFilas = 0, numIn
     console.log(datetime);
 })();
 
+<<<<<<< HEAD
 $btnCerrar.addEventListener("click", () => {
 
     if ($popUpError.classList.contains("show-box")) {
@@ -49,6 +54,39 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 const clases = ["modal", "fade"];
+=======
+const $tblPresupuesto = document.getElementById("tblPresupuesto");
+const $btnGuardar = document.getElementById("btnGuardar");
+
+var elementosFormulario = document.getElementById("asignaciones_form").elements;
+const montoTotalPresupuesto = document.getElementById("montoTotalPresupuesto");
+let sumaTotalPresupuesto = 0;
+
+let numFilas = 0;
+var numInputs = 3;
+
+const arrUnidades = [];
+const arrMonto = [];
+const arrDescripcion = [];
+const arrMontoFila = [];
+const arrObjects = [];
+
+let arrUnidadPorMonto2 = [];
+
+
+let arrDetalle = [];
+
+let arrUnidadPorMonto = [];
+const objetoPresupuesto = {};
+
+const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
+
+const $categoriaDestino = document.getElementById("destino");
+let idCategoria = 0;
+
+const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
+
+>>>>>>> graficas1
 
 (() => {
 
@@ -94,7 +132,13 @@ $btnGuardar.addEventListener("click", (e) => {
         let lenArr = arrMonto.length;
         const $totalFila = document.querySelectorAll(".totalFila");
         let lenFilas = $totalFila.length;
+<<<<<<< HEAD
         //alert(lenFilas);
+=======
+        alert(lenFilas);
+
+
+>>>>>>> graficas1
         const indice = lenFilas;
 
         lenFilas -= 1;
@@ -108,7 +152,11 @@ $btnGuardar.addEventListener("click", (e) => {
             objetoDetallePresupuesto.unidades = arrUnidades[i];
             objetoDetallePresupuesto.monto = arrMonto[i];
             objetoDetallePresupuesto.total = arrUnidadPorMonto[i];
+<<<<<<< HEAD
             objetoDetallePresupuesto.usuarioCrea = IdUsuarioSesion;
+=======
+            objetoDetallePresupuesto.usuarioCrea=IdUsuarioSesion;
+>>>>>>> graficas1
             //console.log("ITERACION "+arrDescripcion[i]);
             //console.warn(objetoDetallePresupuesto);
             arrDetalle.push(objetoDetallePresupuesto);
@@ -117,6 +165,14 @@ $btnGuardar.addEventListener("click", (e) => {
             //console.error(arrObjects[j]);
 
         }
+<<<<<<< HEAD
+=======
+        const car = {
+            name: "carro1",
+            status: true,
+            year: 2000
+        }
+>>>>>>> graficas1
 
         console.log(arrObjects);
         let options = {
@@ -126,6 +182,7 @@ $btnGuardar.addEventListener("click", (e) => {
                 "Content-Type": "application/json"    // ***
             }
         }
+<<<<<<< HEAD
         
         let respuesta = "";
         fetch(URL, options).then((response) => {
@@ -146,6 +203,37 @@ $btnGuardar.addEventListener("click", (e) => {
         $popUpError.classList.remove(...clases);
         $popUpError.classList.add('show-box');
         topFunction();
+=======
+
+        const xhr=new XMLHttpRequest();
+        xhr.open(options.method,URL);
+        //xhr.send(JSON.stringify(arrObjects));
+
+        xhr.addEventListener("readystatechange",(event)=>{
+            if(xhr.readyState == 4 && xhr.status == 200 ){
+                console.warn(event.target.responseText);
+                
+                let json=JSON.parse(event.target.responseText);
+                console.warn(json);
+
+            }else if(xhr.readyState== 4){
+
+            }else{
+                
+            }
+        });
+
+        fetch(URL,options).then((response)=>{
+            return (response.ok ? response.text() : Promise.reject(response));
+        }).then((data)=>{
+            console.error(data);
+        }).catch((err)=>{
+            console.log(err);
+        });
+        
+      
+    
+>>>>>>> graficas1
 
     } else {
 
@@ -203,6 +291,14 @@ function obtenerUnidadPorMonto() {
     sumaTotalPresupuesto = 0;
     const len = $filas.length;
 
+<<<<<<< HEAD
+=======
+
+    //alert("filas "+len);
+
+    //arrUnidadPorMonto.length=0;
+    //arrUnidadPorMonto.splice(0,arrUnidadPorMonto.length)
+>>>>>>> graficas1
     let indiceFila = 0;
 
     for (let index = 0; index < len; index++) {
@@ -213,6 +309,10 @@ function obtenerUnidadPorMonto() {
         let total = (arrUnidades[index] * arrMonto[index]);
         arrUnidadPorMonto.push(total);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> graficas1
         /* console.log(" ARAY UNIDADES "+arrUnidades);
          console.log(" ARAY UNIDADES "+arrMonto);
  
@@ -254,11 +354,19 @@ function obtenerMontoFila() {
     const $totalFila = document.querySelectorAll('.totalFila');
     //arrDescripcion.pop();
     arrMontoFila.pop();
+<<<<<<< HEAD
     $totalFila.forEach(element => {
         arrMontoFila.push(element.value);
     })
 
     console.log(arrMontoFila);
+=======
+    $totalFila.forEach(element=>{
+        arrMontoFila.push(element.value);
+    })
+   
+    console.log(arrMontoFila) ;
+>>>>>>> graficas1
 
 }
 
@@ -294,6 +402,11 @@ function obtenerDatosMontos() {
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> graficas1
 //CREANDO LA FILA 
 function crearFila() {
     const $fila = document.createElement("div");
@@ -347,10 +460,17 @@ function crearFila() {
 }
 
 
+<<<<<<< HEAD
 $categoriaDestino.addEventListener("change", () => {
     idCategoria = $categoriaDestino.value;
 
     //obtenerPresupuestoPorId(id);
+=======
+$categoriaDestino.addEventListener("change",()=>{
+    idCategoria=$categoriaDestino.value;
+    
+   //obtenerPresupuestoPorId(id);
+>>>>>>> graficas1
 });
 
 function validarFormulario() {
@@ -364,8 +484,12 @@ function validarFormulario() {
     numInputs++;
     //alert(numInputs);
 
+<<<<<<< HEAD
 
     for (let i = 1; i < numInputs; i++) {
+=======
+    for (var i = 1; i < numInputs; i++) {
+>>>>>>> graficas1
 
         indiceClase = 1;
         var item = elementosFormulario.item(i);
@@ -374,6 +498,7 @@ function validarFormulario() {
         obj[item.name] = item.value;
         newObjeto = JSON.stringify(obj);
         //console.log(newObjeto);
+<<<<<<< HEAD
         if (obj[item.name] == null || obj[item.name] === "" ) {
             $campoRequerido.forEach((el) => {
                 console.warn(i + " and " + indiceClase);
@@ -385,6 +510,18 @@ function validarFormulario() {
                     el.innerHTML = "Campo requerido";
                     respuesta = false;
                     numCamposVacios--;
+=======
+        if (obj[item.name] == null || obj[item.name] === "") {
+            $campoRequerido.forEach((el) => {
+                //console.warn(i + " and " + indiceClase);
+
+                if (i === indiceClase) {
+                    //console.warn(indiceClase);
+                    $campoRequerido.innerHTML = "valor necesaro";
+                    //console.error(newObjeto);
+                    el.innerHTML = "Campo requerido";
+                    respuesta = false;
+>>>>>>> graficas1
                 }
                 indiceClase++;
             });
@@ -396,12 +533,16 @@ function validarFormulario() {
                     $campoRequerido.innerHTML = "";
 
                     el.innerHTML = "";
+<<<<<<< HEAD
                     //alert(numCamposVacios);
                         
                     if(numCamposVacios===0){
                         
                         respuesta = true;
                     }
+=======
+                    respuesta = true;
+>>>>>>> graficas1
                 }
                 indiceClase++;
 

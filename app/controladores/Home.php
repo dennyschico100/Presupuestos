@@ -12,7 +12,7 @@ class Home extends Controlador{
         if(!$this->isLoggedIn() ) {
             
             if(isset($_SESSION['user_email_presupuestos'])){
-                echo "".$_SESSION['user_emailpresupuestos'];
+                //echo "".$_SESSION['user_emailpresupuestos'];
 
             }
                 

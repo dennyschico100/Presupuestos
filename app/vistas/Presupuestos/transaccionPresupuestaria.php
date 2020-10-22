@@ -1,4 +1,4 @@
-<?php  require APP_ROOT.'/vistas/inc/header.php' ?>
+<?php require APP_ROOT . '/vistas/inc/header.php' ?>
 <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/transaccion.css">
 
 <div style="border:0px solid green;" class="container-fluid">
@@ -56,8 +56,7 @@
 </div>
 
 <!--INICIO MODAL DEL ELIMINAR USUARIO -->
-<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -105,7 +104,7 @@
                                 <label>Tipo </label>
                                 <select class="form-control" id="tipoAsignacion" name="tipoAsignacion">
                                     <option selected value="">-- Selecciona el Tipo --</option>
-                                    <option value="1" >Global</option>
+                                    <option value="1">Global</option>
                                     <option value="2">Asignar a Area </option>
 
                                 </select>
@@ -120,7 +119,7 @@
                                 <label>Origen</label>
                                 <select class="form-control" id="origen" name="origen">
                                     <option selected value="">-Presupuesto origen-</option>
-                                                                      
+
                                 </select>
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
 
@@ -128,11 +127,10 @@
 
                         </div>
                         <div class="row">
-                            
+
                             <div class="col-md-6 form-group ">
                                 <label>Monto Dispobible</label>
-                                <input type="number" min="1"   name="montoDisponible" id="montoDisponible" class="form-control"
-                                    placeholder="$0" />
+                                <input type="number" min="1" name="montoDisponible" id="montoDisponible" class="form-control" placeholder="$0" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <br />
                             </div>
@@ -140,33 +138,32 @@
                                 <label>Destino</label>
                                 <select class="form-control" id="destino" name="destino">
                                     <option value="">Categoria destino -</option>
-                                    
+
 
                                 </select>
-                                
+
                                 <span class="text-danger" id="error-categorias">
-                                <span class="text-danger  campo-requerido"><strong></strong></span>
+                                    <span class="text-danger  campo-requerido"><strong></strong></span>
 
                             </div>
                         </div>
                         <div class="row">
-                           
+
                             <div class="col-md-6 form-group ">
                                 <label>Monto</label>
-                                <input type="text" name="montoAsignado" id="montoAsignado" class="form-control"
-                                    placeholder="00000000" />
+                                <input type="text" name="montoAsignado" id="montoAsignado" class="form-control" placeholder="00000000" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <strong>
 
-                                <span class="text-danger" id="error-monto">
+                                    <span class="text-danger" id="error-monto">
 
-                                </span>
+                                    </span>
                                 </strong>
                                 <br />
 
                             </div>
                         </div>
-                        
+
 
 
                         <!-- pattern="^[a-zA-Z_áéíóúñ\s]{0,30}$"/ -->
@@ -195,11 +192,9 @@
                     <div class="modal-footer">
 
                         <input type="hidden" name="password1" value="presupuestos012456789">
-                        <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left"
-                            value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
-                        <button type="button" onclick="  limpiar()" class="btn btn-danger"
-                            data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
+                        <button type="button" onclick="  limpiar()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
 
 
 
@@ -215,29 +210,32 @@
 
         </div>
         <div style="border:2px solid yellow;" class="col-md-6">
-        
-<div id="spinner" class=""><div></div><div></div><div></div><div></div></div>
 
-        <div id="r">
-                
+            <div id="spinner" class="">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div id="r">
+
+            </div>
         </div>
-        </div>
 
 
-</div>
+    </div>
 
 </div>
 <div>
 
-    <?php  require APP_ROOT.'/vistas/inc/footer.php' ?>
+    <?php require APP_ROOT . '/vistas/inc/footer.php' ?>
 
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-    <script src="
-  https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js
-    "></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
 
-    <script src="<?php echo URL_ROOT.'/public/js/transaccion.js';?>"></script>
+    <script src="<?php echo URL_ROOT . '/public/js/transaccion.js'; ?>"></script>
