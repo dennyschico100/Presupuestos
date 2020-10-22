@@ -2,7 +2,7 @@
 
 const main = document.getElementById("main");
 
-let url = "http://localhost/practicas/Presupuestos/presupuestos/obtenerTodos";
+let url = "http://localhost:8081/Presupuestos/presupuestos/obtenerTodos";
 
 const COLORES = ["#ef476f", "#fb8500", "#06d6a0", "#118ab2", "#f94144"];
 
@@ -37,7 +37,7 @@ async function obtenerPresupuestos() {
 }
 
 function mostrarPresupuestos(presupuesto) {
-    const urlDetail = 'http://localhost/practicas/Presupuestos/detallepresupuestocontroller/detail';
+    const urlDetail = 'http://localhost:8081/Presupuestos/detallepresupuestocontroller/detail';
     main.innerHTML = "";
     let index = 0;
     presupuesto.forEach((p) => {

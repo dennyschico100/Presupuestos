@@ -35,12 +35,12 @@ let arrDetalle = [];
 let arrUnidadPorMonto = [];
 const objetoPresupuesto = {};
 
-const URLCategoria = "http://localhost/practicas/Presupuestos/categorias";
+const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
 
 const $categoriaDestino = document.getElementById("destino");
 let idCategoria = 0;
 
-const URL = "http://localhost/practicas/Presupuestos/presupuestos/guardar";
+const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
 
 
 (() => {
