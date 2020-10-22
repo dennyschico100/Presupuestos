@@ -4,12 +4,16 @@
     margin: 0 auto;
     width: 100%;
 }
+.movie-info a{
+    text-decoration: none;
+    list-style: none;
+    color: #fff;
+}
 
 .ejecutado{
     position: absolute;
     border: 0px solid red;
     right: 5px;
-    
     top: 5px;
 }
 .div-montoInicial{

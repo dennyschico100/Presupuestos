@@ -55,7 +55,8 @@ function mostrarPresupuestos(presupuesto) {
             <div class="movie-info">
                 <a href='${urlDetail + '?id='+ p.ID_PRESUPUESTO}'>
                     <h3 class='text-black'>${p.DESCRIPCION} </h3><strong  class='ejecutado' >Ejecutado</strong>
-                        
+                    </a>
+                
                         <span class="">${p.PORCENTAJE_EJECUTADO}%</span>
                     <div class='div-montoInicial' ><h5>Monto Inicial</h5>
                         <span class=''>${p.MONTO_INICIAL}</span>
@@ -66,7 +67,7 @@ function mostrarPresupuestos(presupuesto) {
                     ${p.MONTO_INICIAL}
                         <h4>Monto Actual :</h4>$
                     ${p.MONTO_ACTUAL}
-                </a>
+                
             </div>
         `;
 

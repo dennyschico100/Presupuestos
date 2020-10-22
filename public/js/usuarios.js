@@ -27,6 +27,7 @@ const $btnCerrar = document.getElementById("btn-cerrar");
 
 
 var elements = document.getElementById("usuario_form").elements;
+let success=2;
 
 const eliminarModal=document.getElementById("eliminarModal");
 
@@ -297,6 +298,8 @@ $("#usuario_form").on("submit", function (e) {
                     usuarioModal.style.opacity = "0.5";
                     usuarioModal.style.zIndex = "100";
                     $mensajeRespuesta.innerHTML = `${respuesta.message}`;
+                    
+                    success=respuesta.success;
                     document.body.style.background = "#333";
                     
                     //mostrarDatos();
@@ -360,8 +363,14 @@ $("#usuario_form").on("submit", function (e) {
 
             divform.style.opacity = "0.5";
             divform.style.backgroundColor = "#333";
-
             
+            if(success==0){
+
+            }else{
+                
+                document.location.reload();
+                    
+            }
 
         } else {
 
@@ -447,13 +456,14 @@ btnEliminar.addEventListener("click", () => {
             
             eliminarModal.classList.add("bajar");
             const respuesta = JSON.parse(event.target.responseText);
+            console.error(respuesta);
             $mensajeRespuestaEliminar.innerHTML = `${respuesta.message}`;
-            setTimeout(()=>{
+            
+            if(respuesta.success==0){
+
+            }else{
                 
-                location.reload();
-
-            },3500);
-
+            }
             //console.log(event.target.responseText);
             id_usuario = 0;
         } else if (xhr.readyState === 4) {
