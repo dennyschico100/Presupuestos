@@ -109,6 +109,9 @@ function mostrarDatos() {
     var jqxhr = $.get(
         "http://localhost:8081/Presupuestos/usuarios/obtenerTodos",
         function (data, status) {
+            console.log(typeof data);
+            console.log(data);
+            
             const datos = JSON.parse(data);
             console.log(datos[0]);
             

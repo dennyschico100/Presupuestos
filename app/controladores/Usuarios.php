@@ -50,7 +50,8 @@ class Usuarios  extends Controlador{
             // Sanitize POST Data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
             
-            echo var_dump($this->dataUsuario);   
+            //echo var_dump($this->dataUsuario);   
+
 
             if($this->userActivado){
 
@@ -93,7 +94,7 @@ class Usuarios  extends Controlador{
                 
                         $this->usuarioModelo->registrarInicioSesion($userAuthenticated['usuario']['ID_USUARIO']);
                         $this->createUserSession($userAuthenticated);
-                        echo "<h1>despues de crear sesion</h1>";
+                        
                     }
 
                 } else {
@@ -202,7 +203,7 @@ class Usuarios  extends Controlador{
         if($this->isLoggedIn()){ 
             $this->vista("home/index");
         }else{
-            echo "otra vez";
+            
             $this->vista("usuarios/login");
         }
         

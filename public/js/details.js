@@ -10,7 +10,6 @@ function random_rgba() {
 getData();
 
 async function getData() {
-
     const response = await fetch(url);
     const data = await response.json();
     console.log(data.data);
@@ -18,6 +17,7 @@ async function getData() {
 }
 
 function asignData(data) {
+    
 
     var size = Object.keys(data).length;
     //console.log('datos: ' + size);

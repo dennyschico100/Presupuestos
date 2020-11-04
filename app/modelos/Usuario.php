@@ -684,15 +684,14 @@ class Usuario extends Conexion{
 					$sentencia=$this->conectar->prepare($consulta);
 					$fechaSesion=date("Y-m-d H:i:s");
 					
-					echo var_dump($fechaSesion);
 
-					echo $consulta;
 					$sentencia->bindValue(1,date("Y-m-d H:i:s"));
 					$sentencia->bindValue(2,$this->idUsuario);	
 									
 					if($sentencia->execute()){
 						//$msg['message'] = 'Usuario registrado correctamente !' ;
-						$returnData=$this->msg(1,201,'Se registro el cierre de  sesion');
+						//$returnData=$this->msg(1,201,'Se registro el cierre de  sesion');
+
 						//return true;	
 					}else{
 						//return false;	
