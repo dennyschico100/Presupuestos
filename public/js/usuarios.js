@@ -107,7 +107,7 @@ function mostrarDatos() {
                         className: "btn btn-secondary"
                     } */
     var jqxhr = $.get(
-        "http://localhost:8081/Presupuestos/usuarios/obtenerTodos",
+        "http://localhost/practicas/Presupuestos/usuarios/obtenerTodos",
         function (data, status) {
             console.log(typeof data);
             console.log(data);
@@ -247,12 +247,12 @@ $("#usuario_form").on("submit", function (e) {
 
     switch (tipoPeticion) {
         case "POST":
-            url = "http://localhost:8081/Presupuestos/usuarios/guardar";
+            url = "http://localhost/practicas/Presupuestos/usuarios/guardar";
 
             break;
 
         case "PUT":
-            url = "http://localhost:8081/Presupuestos/usuarios/modificar";
+            url = "http://localhost/practicas/Presupuestos/usuarios/modificar";
             break;
         default:
             break;
@@ -412,7 +412,7 @@ function mostrar(id) {
     idUsuario = id;
     //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
 
-    url = "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
+    url = "http://localhost/practicas/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
     const peticion = new XMLHttpRequest();
 
     peticion.open("GET", url);
@@ -448,7 +448,7 @@ btnEliminar.addEventListener("click", () => {
     const xhr = new XMLHttpRequest();
     
     
-    url = "http://localhost:8081/Presupuestos/usuarios/eliminar/" + idUsuario;
+    url = "http://localhost/practicas/Presupuestos/usuarios/eliminar/" + idUsuario;
     
     
     xhr.open("DELETE", url);

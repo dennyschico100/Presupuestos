@@ -36,10 +36,9 @@ class Presupuesto extends Conexion
 
 	public function listar()
 	{
-
 		try {
 			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";
-			$consulta = "SELECT P.ID_PRESUPUESTO, P.MONTO_INICIAL,P.MONTO_ACTUAL,P.PORCENTAJE_EJECUTADO, C.DESCRIPCION ,C.ID_CATEGORIA FROM presupuesto as P INNER JOIN categoria as c 
+			$consulta = "SELECT P.ID_PRESUPUESTO, P.MONTO_INICIAL,P.MONTO_ACTUAL,P.PORCENTAJE_EJECUTADO,P.NOMBRE_PRESUPUESTO, C.DESCRIPCION ,C.ID_CATEGORIA FROM presupuesto as P INNER JOIN categoria as c 
                         ON  P.ID_CATEGORIA= C.ID_CATEGORIA ";
 			$sentencia = $this->conectar->prepare($consulta);
 
@@ -81,7 +80,7 @@ class Presupuesto extends Conexion
 		try {
 			$this->id = (int)$id;
 
-			$consulta = " SELECT *FROM " . $this->tabla . " WHERE ID_CATEGORIA= ? ";
+			$consulta = " SELECT *FROM " . $this->tabla . " WHERE ID_PRESUPUESTO= ? ";
 			$sentencia = $this->conectar->prepare($consulta);
 
 			$sentencia->bindValue(1, $this->id);
@@ -100,49 +99,6 @@ class Presupuesto extends Conexion
 						'usuario' => $res[0]
 					];*/
 					echo json_encode($res[0]);
-				} else {
-					$res = null;
-					$returnData = $this->msg(0, 422, 'No se encontro ningun registro ocn ese ID ');
-				}
-			} else {
-
-				$msg['message'] = 'ERROR AL CONSULTAR DATOS ';
-
-				$returnData = $this->msg(0, 500, 'Error al consultar datos');
-				//return false;
-			}
-		} catch (PDOException $ex) {
-			//$msg['message'] = 'ERROR  ';
-			$returnData = $this->msg(0, 422, 'No se encontro ningun registro ocn ese ID ' . $ex->getMessage());
-		}
-
-		return $this->returnData;
-	}
-	public function buscarPresupuestoCategoria($id)
-	{
-
-		try {
-			$this->id = (int)$id;
-
-			$consulta = " SELECT *FROM " . $this->tabla . " WHERE ID_CATEGORIA= ? ";
-			$sentencia = $this->conectar->prepare($consulta);
-
-			$sentencia->bindValue(1, $this->id);
-
-
-			if ($res = $sentencia->execute()) {
-
-				//$rows=$sentencia->fetchColumn(); 
-
-				$res = $sentencia->fetchAll(\PDO::FETCH_ASSOC);
-				$rows = count($res);
-				if ($rows > 0) {
-					/*$this->returnData = [
-						'success' => 1,
-						'status'=> 202,
-						'usuario' => $res[0]
-					];*/
-					return  $res[0];
 				} else {
 					$res = null;
 					$returnData = $this->msg(0, 422, 'No se encontro ningun registro ocn ese ID ');
