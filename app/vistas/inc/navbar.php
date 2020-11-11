@@ -41,7 +41,7 @@
         switch($_rol){
            case 1:         
          ?>
-           <span>Presupuestos</span>
+                <span>Presupuestos</span>
             </a>
 
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -50,38 +50,58 @@
 
                     <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/listar">Presupuestos</a>
                     <a class="collapse-item" href="<?php  echo URL_ROOT;?>/presupuestos/transaccion">Asignacion</a>
-                    <a class="collapse-item" href="<?php  echo URL_ROOT;?>/presupuestos/registrar">Registrar presupuesto</a>
-                        
+                    <a class="collapse-item" href="<?php  echo URL_ROOT;?>/presupuestos/registrar">Registrar
+                        presupuesto</a>
+
                     <?php 
            break;  ?>
 
                     <?php case 2:  ?>
+
                     <span>Usuarios</span>
-            </a>
+                    </a>
 
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Opciones disponibles</h6>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones disponibles</h6>
 
-                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/usuarios/listar">LIsta Usuarios</a>
-                    <a class="collapse-item" href="<?php  echo URL_ROOT;?>/usuariosRoles/listar">Permisos</a>
+                            <a class="collapse-item" href="<?php echo URL_ROOT;?>/usuarios/listar">LIsta Usuarios</a>
+                            <a class="collapse-item" href="<?php  echo URL_ROOT;?>/usuariosRoles/listar">Permisos</a>
 
-                    <?php  
+                            <?php  
            break;
           ?>
 
-                    <?php 
-           case 3:
 
+                            <?php 
+           case 3: ?>
+                            <span>Jefe Presupuesto</span>
+                            </a>
+
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Opciones disponibles</h6>
+
+                                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/listar">Lista de
+                                        Presupuestos</a>
+                                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/peticiones">Lista
+                                        de peticiones</a>
+
+                                    <?php 
            break;
-           case 4:
+           ?>
 
-           default:
 
-           break;   }  ?>
-                </div>
+                                    <?php
+                                    case 4:
 
-            </div>
+                                    default:
+
+                                    break; } ?>
+                                </div>
+
+                            </div>
         </li>
 
         <!-- Nav Item - Utilities Collapse Menu 
@@ -259,7 +279,7 @@
                     </li> -->
 
                     <!-- Nav Item - Messages -->
-                    <li  style="display:none;" class="nav-item dropdown no-arrow mx-1">
+                    <li style="display:none;" class="nav-item dropdown no-arrow mx-1">
                         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-envelope fa-fw"></i>
@@ -338,7 +358,7 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<?php echo URL_ROOT;?>/usuarios/infoUsuario">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
@@ -363,10 +383,4 @@
                 </ul>
 
             </nav>
-            <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
-
-            <!-- /.container-fluid -->
-
         </div>

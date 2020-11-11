@@ -56,7 +56,8 @@
 </div>
 
 <!--INICIO MODAL DEL ELIMINAR USUARIO -->
-<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -130,7 +131,8 @@
 
                             <div class="col-md-6 form-group ">
                                 <label>Monto Dispobible</label>
-                                <input type="number" min="1" name="montoDisponible" id="montoDisponible" class="form-control" placeholder="$0" />
+                                <input type="number" min="1" name="montoDisponible" id="montoDisponible"
+                                    class="form-control" placeholder="$0" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <br />
                             </div>
@@ -151,7 +153,8 @@
 
                             <div class="col-md-6 form-group ">
                                 <label>Monto</label>
-                                <input type="text" name="montoAsignado" id="montoAsignado" class="form-control" placeholder="00000000" />
+                                <input type="text" name="montoAsignado" id="montoAsignado" class="form-control"
+                                    placeholder="00000000" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <strong>
 
@@ -192,9 +195,11 @@
                     <div class="modal-footer">
 
                         <input type="hidden" name="password1" value="presupuestos012456789">
-                        <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left"
+                            value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
-                        <button type="button" onclick="  limpiar()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
+                        <button type="button" onclick="  limpiar()" class="btn btn-danger" data-dismiss="modal"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
 
 
 

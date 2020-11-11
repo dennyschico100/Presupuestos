@@ -1,5 +1,6 @@
 <?php require APP_ROOT . '/vistas/inc/header.php' ?>
 <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/registroPresupuesto.css">
+<div id="main"></div>
 
 <div style="border:0px solid green;" class="container-fluid">
 
@@ -48,9 +49,36 @@
         </div>
     </div>
 </div>
+<div class="modal fade col-md-6 offset-md-3" id="box-ayuda">
 
+    <div class="modal-dialog" role="document">
+        <div id="modal-ventana-ayuda" class="modal-content">
+            <div class="col-md-12">
+                <div class="modal-header">
+                    <h5 class="modal-title text-justify" id="exampleModalLabel">Recueda que para hacer un calculo de
+                        precio por unidad debes de hacer siempre click en el boton Agregar!</h5>
+                    <button id="btn-cerrar" class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span class="text-white" aria-hidden="true">
+                            <h3 style="color:#000000">X</h3>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="container">
+                <button id="btnEntendido" class="btn btn-primary">Entendido</button>
+
+            </div>
+
+            <div id="mensaje-respuesta" class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
 <!--INICIO MODAL DEL ELIMINAR USUARIO -->
-<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -91,26 +119,35 @@
                         </div>
 
                     </div>
-                    <div class="col-md-2 form-group ">
+                    <div class="container">
+                        <div class="row">
+                        <div class="col-md-2 form-group ">
 
-                        <label>Destino</label>
-                        <select class="form-control" id="destino" name="origen">
-                            <option selected value="">-Asignar a -</option>
+                            <label>Destino</label>
+                            <select class="form-control" id="destino" name="origen">
+                                <option selected value="">-Asignar a -</option>
 
-                        </select>
-                        <span class="text-danger  campo-requerido"><strong></strong></span>
+                            </select>
+                            <span class="text-danger  campo-requerido"><strong></strong></span>
 
+                        </div>
+
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8 form-group">
+                            <label for="Descripcion">Descripcion</label>
+                            <input type="text" class="form-control" name="descripcion" id="descripcionPresupuesto">
+                            
+                            <span class="text-danger campo-requerido"><strong></strong></span>
+                        </div></div>
                     </div>
-                    <div class="col-md-10"></div>
-
-
 
                     <div id="tblPresupuesto" style="border:px solid aqua;" class="modal-body">
                         <div class="row">
 
                             <div class="col-md-4 form-group ">
                                 <label>Descripcion </label>
-                                <textarea name="descripcionGasto" class="form-control descripcionGasto" id="exampleFormControlTextarea1" rows="1"></textarea>
+                                <textarea name="descripcionGasto" class="form-control descripcionGasto"
+                                    id="exampleFormControlTextarea1" rows="1"></textarea>
 
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
 
@@ -121,13 +158,15 @@
                             </div>
                             <div class="col-md-2 form-group ">
                                 <label>Unidades</label>
-                                <input type="number" min="1" name="unidades" id="" class="form-control unidades" placeholder="$0" />
+                                <input type="number" min="1" name="unidades" id="" class="form-control unidades"
+                                    placeholder="$0" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <br />
                             </div>
                             <div class="col-md-2 form-group ">
                                 <label>Monto</label>
-                                <input type="number" min="1" name="montoAsignado" id="" class="montoAsignado form-control" placeholder="00000000" />
+                                <input type="number" min="1" name="montoAsignado" id=""
+                                    class="montoAsignado form-control" placeholder="00000000" />
                                 <span class="text-danger  campo-requerido"><strong></strong></span>
                                 <strong>
 
@@ -138,9 +177,9 @@
                                 <br />
 
                             </div>
-                            <div class="col-md-1"></div>
 
-                            <div class="col-md-2 form-group ">
+
+                            <div class="col-md-1 form-group ">
                                 <label>Total</label>
 
                                 <label class="totalFila form-control" for="">$</label>
@@ -154,7 +193,19 @@
                                 <br />
 
                             </div>
+                            <div id="divfila" class="col-md-1 form-group ">
+                                <label style="visibility:hidden;">Total</label>
 
+                                <a style="margin-left:-3px;padding:5px;"
+                                    class="text-white btnFila btn btn-success">Agregar</a>
+
+
+                                <br />
+
+                            </div>
+                            <div id="divTapar">
+
+                            </div>
                         </div>
 
 
@@ -192,9 +243,11 @@
                        
 
                         -->
-                        <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left"
+                            value="Add"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
-                        <button type="button" onclick="  limpiar()" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
+                        <button type="button" onclick="  limpiar()" class="btn btn-danger" data-dismiss="modal"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cerrar</button>
 
 
 
@@ -230,7 +283,7 @@
     </script>
     <?php $session_value = (isset($_SESSION['user_id_presupuestos'])) ? $_SESSION['user_id_presupuestos'] : ''; ?>
     <script type="text/javascript">
-        var IdUsuarioSesion = '<?php echo $session_value; ?>';
+    var IdUsuarioSesion = '<?php echo $session_value; ?>';
     </script>
-    
+
     <script src="<?php echo URL_ROOT . '/public/js/registroPresupuesto.js'; ?>"></script>

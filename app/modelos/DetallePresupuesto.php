@@ -157,7 +157,8 @@ class  DetallePresupuesto extends Conexion
 
 					if ($sentencia->execute()) {
 
-						$this->returnData = $this->msg(1, 201, 'Detalle de Presupuesto Guardado');
+						return true;
+						
 					} else {
 						$this->returnData = $this->msg(0, 500, 'No se ingresaron datos ');
 					}

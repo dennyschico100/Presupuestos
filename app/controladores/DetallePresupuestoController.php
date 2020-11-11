@@ -20,7 +20,7 @@ class DetallePresupuestoController extends Controlador
         $_SESSION['id'] = isset($_GET['id']) ? (int)$_GET['id'] : die();
         $this->vista('detalles/detalle');
         //header('Location:http://localhost/practicas/Presupuestos/detallepresupuestocontroller/getDetail');
-
+        
     }
     /**
      * end-point detalles

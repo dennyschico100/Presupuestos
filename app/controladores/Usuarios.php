@@ -43,80 +43,88 @@ class Usuarios  extends Controlador{
     }
 
     public function login(){    
-         
-         if ($_SERVER['REQUEST_METHOD']=='POST') {
-
-            // Process form
-            // Sanitize POST Data
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
-            //echo var_dump($this->dataUsuario);   
-
-
-            if($this->userActivado){
-
-                foreach($_POST as $key=>$value)
-                {            
-                    $this->dataUsuario [$key]=$this->sanitizar_campos($value);
-                                
-                }
-
-            }else{
-
-                foreach($_POST as $key=>$value)
-                {            
-                    $this->data [$key]=$this->sanitizar_campos($value);
-                                
-                } 
-            }
-            
-            //Make sure are empty
-            if ( empty($dataUsuario['email_err']) && empty($dataUsuario['password_err']) ) {
-                
-                //Convirtiedno $data en fomrato JSON PARA PODER ACCEDER  A SUS
-                //atributos  sin ningun problema , cuando son recividos en el modelo
-                $this->data=json_encode($this->data);
-                
-                
-                $userAuthenticated = $this->usuarioModelo->login($this->data);
-
-               
-                if ( $userAuthenticated['success'] === 1  ) {
-                    //echo "crear sesion";
-                    if($userAuthenticated['usuario']['ESTADO'] === "3" ){
-                        $this->cambiarPassword();
-                        //presupuestos012456789
-
-                    }else{
-                            
-                        // Crer session
-                        //$userAuthenticated['usuario']['ID_USUARIO']
-                
-                        $this->usuarioModelo->registrarInicioSesion($userAuthenticated['usuario']['ID_USUARIO']);
-                        $this->createUserSession($userAuthenticated);
+         if($this->isLoggedIn()){
+            $this->vista('home/index',$this->data);
                         
+         }else{
+            if ($_SERVER['REQUEST_METHOD']=='POST') {
+
+                // Process form
+                // Sanitize POST Data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                
+                //echo var_dump($this->dataUsuario);   
+    
+    
+                if($this->userActivado){
+    
+                    foreach($_POST as $key=>$value)
+                    {            
+                        $this->dataUsuario [$key]=$this->sanitizar_campos($value);
+                                    
                     }
+    
+                }else{
+    
+                    foreach($_POST as $key=>$value)
+                    {            
+                        $this->data [$key]=$this->sanitizar_campos($value);
+                                    
+                    } 
+                }
+                
+                //Make sure are empty
+                if ( empty($dataUsuario['email_err']) && empty($dataUsuario['password_err']) ) {
+                    
+                    //Convirtiedno $data en fomrato JSON PARA PODER ACCEDER  A SUS
+                    //atributos  sin ningun problema , cuando son recividos en el modelo
+                    $this->data=json_encode($this->data);
+                    
+                    
+                    $userAuthenticated = $this->usuarioModelo->login($this->data);
+    
+                   
+                    if ( $userAuthenticated['success'] === 1  ) {
+                        //echo "crear sesion";
+                        if($userAuthenticated['usuario']['ESTADO'] === "3" ){
+                            $this->cambiarPassword();
+                            //presupuestos012456789
+    
+                        }else{
+                                
+                            // Crer session
+                            //$userAuthenticated['usuario']['ID_USUARIO']
+                    
+                            $this->usuarioModelo->registrarInicioSesion($userAuthenticated['usuario']['ID_USUARIO']);
+                            $this->createUserSession($userAuthenticated);
+                            
+                        }
+    
+                    } else {
+                        //echo json_encode($userAuthenticated);
+    
+                        $this->data = [ 
+                            'errores' => 'Email o contraseña incorrecta',
+                        ];
+                        $this->vista('usuarios/login',$this->data);
 
+                    }
+    
                 } else {
-                    //echo json_encode($userAuthenticated);
-
-                    $this->data = [ 
-                        'errores' => 'Email o contraseña incorrecta',
-                    ];
+                    // Load view with errors
                     $this->vista('usuarios/login',$this->data);
                 }
-
             } else {
-                // Load view with errors
+                //$this->vista("usuarios/login");
+               
                 $this->vista('usuarios/login',$this->data);
             }
-        } else {
-            //$this->vista("usuarios/login");
-           
-            $this->vista('usuarios/login',$this->data);
-        }
+         }
+        
         
     }
+    
+
 
     public function cambiarPassword(){
         
@@ -185,8 +193,42 @@ class Usuarios  extends Controlador{
                            
                 return false;
             }          
+    }
+    }
 
+   
+    public function isLoggedInUsuario()
+    {
+        if (  isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
+                
+            return true;
+                       
+
+        }else{
+            return false;
+                
         } 
+    }
+
+    public function infoUsuario(){
+        
+        if(!$this->isLoggedInUsuario() ) {
+            
+            if(isset($_SESSION['user_email_presupuestos'])){
+                //echo "".$_SESSION['user_email'];
+
+            }
+                
+            $this->vista('usuarios/login');
+            
+         }else{
+            $data=[
+                "titulo"=>"Home",
+                "mensaje"=>"METODO INDEX DEL HOME "
+            ];
+            $this->vista('usuarios/infoUsuario');       
+         }
+          
     }
     
     

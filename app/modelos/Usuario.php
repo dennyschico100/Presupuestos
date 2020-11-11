@@ -692,7 +692,7 @@ class Usuario extends Conexion{
 						//$msg['message'] = 'Usuario registrado correctamente !' ;
 						//$returnData=$this->msg(1,201,'Se registro el cierre de  sesion');
 
-						//return true;	
+						return true;	
 					}else{
 						//return false;	
 						

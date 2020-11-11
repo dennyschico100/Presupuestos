@@ -21,25 +21,14 @@ const $btnGuardar = document.getElementById("btnGuardar");
 const $categoriaDestino = document.getElementById("destino");
 
 const $btnFila = document.querySelectorAll(".btnFila");
-const main = document.getElementById("main");
-const divFila = document.getElementById("divfila");
-const divTapar = document.getElementById("divTapar");
-const $boxAyuda = document.getElementById("box-ayuda");
-const $btnEntendido = document.getElementById("btnEntendido");
-const $txtDescripcion = document.getElementById("descripcionPresupuesto");
+
 let idCategoria = 0,
-  nombrePresupuesto,
-  descripcionPresupuesto,
   datetime = 0,
   sumaTotalPresupuesto = 0,
   numFilas = 0,
   numInputs = 4,
   numCamposVacios = 4,
-  contadorBtnFila = 1,
-  permitirAgregarFila = false,
-  areaSeleccionada = false,
-  descripcionAñadida = false;
-
+  contadorBtnFila = 1;
 (() => {
   var currentdate = new Date();
   datetime =
@@ -70,23 +59,23 @@ function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
-
 const clases = ["modal", "fade"];
 
 (() => {
   const $btnAdd = document.getElementById("btnAdd");
   $btnAdd.addEventListener("click", () => {
-    //validarFormulario()
-    if (permitirAgregarFila) {
+    if (validarFormulario()) {
       crearFila();
       numFilas += 4;
-      permitirAgregarFila = false;
+    } else {
     }
   });
 })();
 
 $btnGuardar.addEventListener("click", e => {
   e.preventDefault();
+  //validarFormulario()
+
   const objPresupuesto = {};
 
   if (validarFormulario()) {
@@ -95,16 +84,13 @@ $btnGuardar.addEventListener("click", e => {
     obtenerDatosMontos();
     obtenerUnidadPorMonto();
     objPresupuesto.ID_CATEGORIA = idCategoria;
-    objPresupuesto.NOMBRE_PRESUPUESTO = nombrePresupuesto;
-    objPresupuesto.DESCRIPCION_PRESUPUESTO = descripcionPresupuesto;
     objPresupuesto.MONTO_INICIAL = sumaTotalPresupuesto;
     objPresupuesto.MONTO_ACTUAL = sumaTotalPresupuesto;
     objPresupuesto.PORCENTAJE_EJECUTADO = 0;
     objPresupuesto.ESTADO = "enProceso";
     objPresupuesto.USUARIO_CREA = IdUsuarioSesion;
     objPresupuesto.FECHA_CREACION = datetime;
-    console.log("EL PRESUPUESOT")
-    console.log(objPresupuesto);
+    alert("montoactual :"+sumaTotalPresupuesto);
 
     sumaTotalPresupuesto = 0;
 
@@ -154,12 +140,26 @@ $btnGuardar.addEventListener("click", e => {
       }
     };
 
-    console.log(options.body);
+    const xhr = new XMLHttpRequest();
+    xhr.open(options.method, URL);
+    //xhr.send(JSON.stringify(arrObjects));
 
+    xhr.addEventListener("readystatechange", event => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        console.warn(event.target.responseText);
+
+        let json = JSON.parse(event.target.responseText);
+        console.warn(json);
+      } else if (xhr.readyState == 4) {
+      } else {
+      }
+    });
+    
+    console.log(options.body);
     let respuesta = "";
     fetch(URL, options)
       .then(response => {
-        return response.ok ? response.json() : Promise.reject(response);
+        return response.ok ? response.text() : Promise.reject(response);
       })
       .then(data => {
         respuesta = data;
@@ -209,7 +209,6 @@ async function obtenerCategorias() {
 obtenerCategorias();
 function mostrarCategorias(categoria) {
   const categoriaEl = document.getElementById("destino");
-
   categoria.forEach(c => {
     if (c.ID_CATEGORIA != 1) {
       let $option = document.createElement("option");
@@ -239,7 +238,7 @@ function mostrarUnidadPorMonto() {
  
          console.log("Vamos a operar"+(arrUnidades[index] +" x " +arrMonto[index]));
          console.log(arrUnidadPorMonto);*/
-
+    
     $montoFila.item(indiceFila).innerHTML = "$" + arrUnidadPorMonto[indiceFila];
     //console.log("indice fila "+indiceFila);
 
@@ -249,15 +248,17 @@ function mostrarUnidadPorMonto() {
     sumaTotalPresupuesto += el;
   });
 
+
   //MOSTRAR ESTO
   montoTotalPresupuesto.innerHTML = "$" + sumaTotalPresupuesto;
+
 
   console.log(arrUnidadPorMonto);
 
   //arrUnidadPorMonto.length=0;
 }
 
-function obtenerUnidadPorMonto() {
+async function obtenerUnidadPorMonto() {
   const $filas = document.querySelectorAll(".totalFila");
   //sumaTotalPresupuesto = 0;
 
@@ -267,9 +268,8 @@ function obtenerUnidadPorMonto() {
     let total = arrUnidades[index] * arrMonto[index];
     arrUnidadPorMonto.push(total);
   }
-}
 
-function mostrarDatosDescripcion() {}
+}
 
 function obtenerDatosDescripcion() {
   const $descripcionGasto = document.querySelectorAll(".descripcionGasto");
@@ -302,7 +302,7 @@ function obtenerDatosUnidades() {
     arrUnidades.push(parseInt(element.value));
   });
   //arrUnidades.pop();
-  //console.warn(arrUnidades);
+  console.warn(arrUnidades);
 }
 
 function obtenerDatosMontos() {
@@ -317,68 +317,22 @@ function obtenerDatosMontos() {
   console.warn(arrMonto);
 }
 
-$btnEntendido.addEventListener("click", () => {
-  if ($boxAyuda.classList.contains("show-box")) {
-    $boxAyuda.classList.remove("show-box");
-    $boxAyuda.classList.add(...clases);
-  }
-  resaltarbtnAgreagar();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  topFunction();
-
-  $boxAyuda.style.left = "20px";
-
-  if ($boxAyuda.classList.contains(...clases)) {
-    $boxAyuda.classList.remove(...clases);
-    $boxAyuda.classList.add("show-box");
-  } else {
-    $boxAyuda.classList.add(...clases);
-    $boxAyuda.classList.remove("show-box");
-  }
-  resaltarbtnAgreagar();
-
-  if ($categoriaDestino.value == -1) {
-    areaSeleccionada = false;
-  } else {
-    areaSeleccionada = true;
-  }
-});
-
-function resaltarbtnAgreagar() {
-  $boxAyuda.classList.add("show-box");
-
-  if (
-    divFila.classList.contains("resaltar-btn-agregar") &&
-    divTapar.classList.contains("tapar-div-btn")
-  ) {
-    divFila.classList.remove("resaltar-btn-agregar");
-
-    divTapar.classList.remove("tapar-div-btn");
-    main.classList.remove("ocultarMain");
-  } else {
-    divFila.classList.add("resaltar-btn-agregar");
-    divTapar.classList.add("tapar-div-btn");
-    main.classList.add("ocultarMain");
-  }
-}
-
 $(document).on("click", ".btnFila", function() {
   limpiarArreglos();
 
   if (validarFormulario()) {
-    mostrarDato();
-    permitirAgregarFila = true;
+        mostrarDato();
+    
+
   }
 });
-
-async function mostrarDato() {
-  obtenerDatosUnidades();
-  obtenerDatosMontos();
-
-  await obtenerUnidadPorMonto();
-  mostrarUnidadPorMonto();
+async function mostrarDato(){
+    obtenerDatosDescripcion();
+    obtenerDatosUnidades();
+    obtenerDatosMontos();
+    obtenerUnidadPorMonto();
+    await mostrarUnidadPorMonto();
+    
 }
 //CREANDO LA FILA
 function crearFila() {
@@ -428,8 +382,8 @@ function crearFila() {
                             <div class="col-md-1 form-group ">
                             <label style="visibility:hidden;" >Total</label>
                             
-                            <a style="margin-left:-3px;padding:5px;" class="text-white btnFila btn btn-success">Agregar</a>
-                                
+                             <button  class="btnFila btn btn-success" type="button">Agregar</button>         
+
                             <br />
 
                         </div>                  
@@ -438,27 +392,10 @@ function crearFila() {
   numInputs += 3;
 }
 
-$txtDescripcion.addEventListener("keyup", e => {
-  descripcionPresupuesto = e.target.value;
-  if (e.target.value == "") {
-    descripcionAñadida = false;
-  }
-});
-$categoriaDestino.addEventListener("change", e => {
+$categoriaDestino.addEventListener("change", () => {
   idCategoria = $categoriaDestino.value;
-  let item = $categoriaDestino[$categoriaDestino.selectedIndex].text;
-  nombrePresupuesto = item;
-  console.log(nombrePresupuesto);
-  areaSeleccionada = true;
-  //obtenerPresupuestoPorId(id);
-});
 
-$categoriaDestino.addEventListener("change", e => {
-  if (e.target.value == -1) {
-    areaSeleccionada = false;
-  } else {
-    areaSeleccionada = true;
-  }
+  //obtenerPresupuestoPorId(id);
 });
 
 function validarFormulario() {
@@ -469,11 +406,8 @@ function validarFormulario() {
   var obj = {};
   let newObjeto = {};
   let indiceClase = 1;
-
   numInputs++;
-
-  if (!areaSeleccionada) {
-  }
+  //alert(numInputs);
 
   for (var i = 1; i < numInputs; i++) {
     indiceClase = 1;
@@ -482,8 +416,7 @@ function validarFormulario() {
 
     obj[item.name] = item.value;
     newObjeto = JSON.stringify(obj);
-    console.log(newObjeto);
-
+    //console.log(newObjeto);
     if (obj[item.name] == null || obj[item.name] === "") {
       $campoRequerido.forEach(el => {
         //console.warn(i + " and " + indiceClase);
@@ -491,7 +424,6 @@ function validarFormulario() {
         if (i === indiceClase) {
           //console.warn(indiceClase);
           $campoRequerido.innerHTML = "valor necesaro";
-
           //console.error(newObjeto);
           el.innerHTML = "Campo requerido";
           respuesta = false;
@@ -504,15 +436,13 @@ function validarFormulario() {
           $campoRequerido.innerHTML = "";
 
           el.innerHTML = "";
-          //if(!resaltarbtnAgreagar){respuesta = false;}
-          !respuesta ? (respuesta = false) : (respuesta = true);
+          respuesta = true;
         }
         indiceClase++;
       });
     }
   }
-  indiceClase = 0;
   numInputs -= 1;
-  alert(respuesta);
+
   return respuesta;
 }

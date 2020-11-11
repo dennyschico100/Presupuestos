@@ -14,11 +14,12 @@ async function getData() {
     const data = await response.json();
     console.log(data.data);
     asignData(data.data);
+    
 }
 
 function asignData(data) {
     
-
+    console.log(data);
     var size = Object.keys(data).length;
     //console.log('datos: ' + size);
 
