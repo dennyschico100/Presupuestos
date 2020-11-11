@@ -60,7 +60,7 @@ async function setValuesOrigin(id) {
 }
 
 async function setValuesDestiny(id) {
-    originAmount.value = 0;
+    destinyAmount.value = 0;
     const data = await fetch(baseUrl + '/presupuestos/obtenerPresupuesto?id_presupuesto=' + id);
     const budgets = await data.json();
     console.log(budgets.MONTO_ACTUAL);
@@ -85,21 +85,25 @@ form.addEventListener('submit', function (e) {
             if (value) {
                 alert('listo ' + value);
 
-                /* formData.forEach(function (value, key) {
-                     items[key] = value;
-                 });
-                 
-                 const data = JSON.stringify(items);
-                 console.log(data);
-             
-                 fetch(baseUrl + '/transacciones/guardar', {
-                     method: 'POST',
-                     body: data
-                 })
-                 //limpiar los datos despues de enviarlos
-                 reset();
-                 console.clear();    
-                 */
+                formData.forEach(function (value, key) {
+                    items[key] = value;
+                });
+
+                const data = JSON.stringify(items);
+                console.log(data);
+
+                fetch(baseUrl + '/transacciones/guardar', {
+                    method: 'POST',
+                    body: data
+                }).then(
+                    res => res.text()
+                ).then(
+                    data => console.log(data)
+                );
+                //limpiar los datos despues de enviarlos
+                reset();
+                //console.clear();
+
 
             }
             else {
@@ -142,7 +146,7 @@ function selectorValidation(idOrigin, idDestiny, amount) {
         console.log('es false');
         return false;
     } else {
-        if (amountValidation(idOrigin.MONTO_INICIAL)) {
+        if (amountValidation(idOrigin.MONTO_ACTUAL)) {
             //recalcular aqui
             recalc(idOrigin, idDestiny, amount);
             return true;
@@ -184,7 +188,36 @@ function recalc(origin, destiny, amount) {
     console.log(destiny);
     console.log(amount);
 
-    
+    var newOrigin = { id: Number(origin.ID_PRESUPUESTO), monto: Number(origin.MONTO_ACTUAL) - amount };
+
+    const dataOrigen = JSON.stringify(newOrigin);
+    console.log(dataOrigen);
+
+    //actualizando el origen
+    fetch(baseUrl + '/transacciones/updateOrigin', {
+        method: 'POST',
+        body: dataOrigen
+    }).then(
+        res => res.text()
+    ).then(
+        data => console.log(data)
+    );
+
+
+    var newDestiny = { id: Number(destiny.ID_PRESUPUESTO), monto: Number(destiny.MONTO_ACTUAL) + amount };
+
+    const dataDestiny = JSON.stringify(newDestiny);
+    console.log(newDestiny);
+    //actualizando el origen
+    fetch(baseUrl + '/transacciones/updateDestiny', {
+        method: 'POST',
+        body: dataDestiny
+    }).then(
+        res => res.text()
+    ).then(
+        data => console.log(data)
+    );
+    console.log(Number(destiny.MONTO_ACTUAL) + amount);
 }
 
 
@@ -193,6 +226,8 @@ function reset() {
     $('#destiny').val('');
     $('#amount').val('');
     $('#description').val('');
+    originAmount.innerHTML = "0";
+    destinyAmount.innerHTML = "0";
 }
 
 function resetAmount() {

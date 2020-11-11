@@ -104,7 +104,7 @@ class Presupuestos extends Controlador
                 "titulo" => "Home",
                 "mensaje" => "METODO INDEX DEL HOME "
             ];
-            $this->vista('presupuestos/transaccionPresupuestaria');
+            $this->vista('Transacciones/createTransaction');
         }
     }
 

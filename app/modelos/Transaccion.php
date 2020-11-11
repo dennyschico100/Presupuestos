@@ -14,7 +14,7 @@ class Transaccion extends Conexion
 
 	public $returnData = [];
 	public $id;
-	public $idUser = 5;
+	public $idUser;
 	public $origin;
 	public $destiny;
 	public $desc;
@@ -91,6 +91,41 @@ class Transaccion extends Conexion
 			$returnData = $this->msg(0, 500, '' . $ex->getMessage());
 		}
 
-		return   (object) $returnData;
+		//return   (object) $returnData;
 	}
+
+	public function updateOrigin($origin){
+		try {
+			$sql = "UPDATE presupuesto SET MONTO_ACTUAL = :monto WHERE ID_PRESUPUESTO = :id";
+
+			$stmt = $this->conectar->prepare($sql);
+
+			$stmt->bindValue(":id", $origin->id);
+			$stmt->bindValue(":monto", $origin->monto);
+			
+		
+			$stmt->execute();
+		} catch (PDOException $ex) {
+			$returnData = $this->msg(0, 500, '' . $ex->getMessage());
+		}
+
+	}
+
+	public function updateDestiny($destiny){
+		try {
+			$sql = "UPDATE presupuesto SET MONTO_ACTUAL = :monto WHERE ID_PRESUPUESTO = :id";
+
+			$stmt = $this->conectar->prepare($sql);
+
+			$stmt->bindValue(":id", $destiny->id);
+			$stmt->bindValue(":monto", $destiny->monto);
+			
+		
+			$stmt->execute();
+		} catch (PDOException $ex) {
+			$returnData = $this->msg(0, 500, '' . $ex->getMessage());
+		}
+
+	}
+	
 }

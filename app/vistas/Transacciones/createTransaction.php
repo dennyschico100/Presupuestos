@@ -23,14 +23,16 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-center">
-                                <h4>Monto actual por area</h4>
+                                <h4>Monto actual por area:</h4>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 text-center">
-                                <h3 id="originAmount">0</h3>
+
+                                <h3 id="originAmount" >0</h3>
                             </div>
                             <div class="col-6 text-center">
+
                                 <h3 id="destinyAmount">0</h3>
                             </div>
                         </div>

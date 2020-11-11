@@ -63,64 +63,55 @@ class Transacciones  extends Controlador
     {
         $transfer = $this->TransaccionesModelo;
         $input = json_decode(file_get_contents("php://input"));
-        
+
         foreach ($input as $key => $value) {
             $this->data[$key] = $this->sanitizar_campos($value);
         }
         $datosTransfer = (object) $this->data;
-        
+
+        $transfer->idUser = (int) $_SESSION['user_id_presupuestos'];
         $transfer->origin = (int) $datosTransfer->origin;
         $transfer->destiny = (int) $datosTransfer->destiny;
         $transfer->amount = (float) $datosTransfer->amount;
         $transfer->desc = $datosTransfer->description;
 
-       // $transfer->guardar();
+        $transfer->guardar();
+       
+    }
 
+    public function updateOrigin()
+    {
+        $transfer = $this->TransaccionesModelo;
+        $input = json_decode(file_get_contents("php://input"));
+        $originData = array();
 
-        /*
+        foreach ($input as $key => $value) {
+            $this->data[$key] = $this->sanitizar_campos($value);
+        }
+        $datosTransfer = (object) $this->data;
 
-        $this->TransaccionesModelo->idUser = 5;
-        $this->TransaccionesModelo->origin = (int)$test->origin;
-        $this->TransaccionesModelo->destiny = (int)$test->destiny;
-        $this->TransaccionesModelo->amount = (int)$test->amount;
-        $this->TransaccionesModelo->description = $test->description;
+        if ($datosTransfer->monto != null && $datosTransfer->monto > 0) {
+           $transfer->updateOrigin($datosTransfer);
+        }else {
+            echo 'datos erroneos';
+        }
+    }
 
-        echo json_encode($this->TransaccionesModelo->cadena);
-        die();
-        $this->TransaccionesModelo->guardar();
+    public function updateDestiny()
+    {
+        $transfer = $this->TransaccionesModelo;
+        $input = json_decode(file_get_contents("php://input"));
 
+        foreach ($input as $key => $value) {
+            $this->data[$key] = $this->sanitizar_campos($value);
+        }
+        $datosTransfer = (object) $this->data;
 
-
-        //$this->usuarioModelo->();
-        if ($_SERVER['REQUEST_METHOD']=='POST') {
-            $input = json_decode(file_get_contents('php://input'));   
-           // Sanitize POST Data
-           //$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-           //var_dump($_POST);
-           foreach($input as $key=>$value)
-           {            
-               $this->data[$key]=$this->sanitizar_campos($value);    
-               
-           }             
-           //Make sure are empty
-           if ( true) {
-               //Convirtiedno $data en fomrato JSON PARA PODER ACCEDER  A SUS
-               //atributos  sin ningun problema , cuando son recividos en el modelo
-               //var_dump($this->);
-               $this->data=(object) $this->data;
-               $res= [];
-
-               $res= (object) $this->TransaccionesModelo->guardar($this->data);
-                       
-           } else {
-            
-               $this->vista('usuarios/login',$this->data);
-           }
-       } else {
-          
-           $this->vista('usuarios/login',$this->data);
-       }
-       */
+        if ($datosTransfer->monto != null && $datosTransfer->monto > 0) {
+            $transfer->updateOrigin($datosTransfer);
+        }else {
+            echo 'datos erroneos';
+        }
     }
 
     public function create()
