@@ -3,7 +3,7 @@
     // Database Params
     define('DB_HOST','localhost');
     define('DB_USER','root');
-    define('DB_PASS','Francsico100');
+    define('DB_PASS','');
     //define('DB_NAME','aulas4');
     //define('DB_PASS','');
 

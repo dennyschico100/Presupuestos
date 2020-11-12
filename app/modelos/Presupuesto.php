@@ -39,10 +39,9 @@ class Presupuesto extends Conexion
 
 	public function listar()
 	{
-
 		try {
 			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";
-			$consulta = "SELECT P.ID_PRESUPUESTO, P.MONTO_INICIAL,P.MONTO_ACTUAL,P.PORCENTAJE_EJECUTADO, C.DESCRIPCION ,C.ID_CATEGORIA FROM presupuesto as P INNER JOIN categoria as c 
+			$consulta = "SELECT P.ID_PRESUPUESTO, P.MONTO_INICIAL,P.MONTO_ACTUAL,P.PORCENTAJE_EJECUTADO,P.NOMBRE_PRESUPUESTO, C.DESCRIPCION ,C.ID_CATEGORIA FROM presupuesto as P INNER JOIN categoria as c 
                         ON  P.ID_CATEGORIA= C.ID_CATEGORIA ";
 			$sentencia = $this->conectar->prepare($consulta);
 
@@ -124,7 +123,7 @@ class Presupuesto extends Conexion
 		try {
 			$this->id = (int)$id;
 
-			$consulta = " SELECT *FROM " . $this->tabla . " WHERE ID_CATEGORIA= ? ";
+			$consulta = " SELECT *FROM " . $this->tabla . " WHERE ID_PRESUPUESTO= ? ";
 			$sentencia = $this->conectar->prepare($consulta);
 
 			$sentencia->bindValue(1, $this->id);
@@ -161,6 +160,7 @@ class Presupuesto extends Conexion
 
 		return $this->returnData;
 	}
+<<<<<<< HEAD
 	public function buscarPresupuestoId($id)
 	{
 
@@ -247,6 +247,8 @@ class Presupuesto extends Conexion
 
 		return $this->returnData;
 	}
+=======
+>>>>>>> nuevaRama
 
 	public function registrarPresupuesto($data)
 	{
@@ -321,6 +323,7 @@ class Presupuesto extends Conexion
 		return (object) $this->returnData;
 	}
 
+<<<<<<< HEAD
 	public function modificarEstado($data){
 		try{
 			
@@ -368,3 +371,7 @@ class Presupuesto extends Conexion
 			echo json_encode($returnData);
 	}
 }
+=======
+	
+}
+>>>>>>> nuevaRama

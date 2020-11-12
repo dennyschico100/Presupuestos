@@ -1,5 +1,5 @@
 
-const url = "http://localhost:8081/Presupuestos/detallepresupuestocontroller/getDetail";
+const url = "http://localhost/practicas/Presupuestos/detallepresupuestocontroller/getDetail";
 
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
