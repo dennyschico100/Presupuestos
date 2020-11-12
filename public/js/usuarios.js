@@ -96,7 +96,6 @@ function mostrarDatos() {
                         text: "excelHtml5",
                         className: "btn btn-secondary"
                     } */
-<<<<<<< HEAD
   var jqxhr = $.get(
     "http://localhost:8081/Presupuestos/usuarios/obtenerTodos",
     function(data, status) {
@@ -166,81 +165,6 @@ function mostrarDatos() {
     })
     .fail(function() {})
     .always(function() {});
-=======
-    var jqxhr = $.get(
-        "http://localhost/practicas/Presupuestos/usuarios/obtenerTodos",
-        function (data, status) {
-            console.log(typeof data);
-            console.log(data);
-            
-            const datos = JSON.parse(data);
-            console.log(datos[0]);
-            
-            $("#usuario_data").DataTable(
-                {
-                data: datos,
-                oPaginate: {
-                    sFirst: "Primero",
-
-                    sLast: "Último",
-
-                    sNext: "Siguiente",
-
-                    sPrevious: "Anterior"
-                },
-                aProcessing: true, //Activamos el procesamiento del datatables
-                aServerSide: true, //Paginación y filtrado realizados por el servidor
-                dom: "Bfrtip", //Definimos los elementos del control de tabla
-                buttons: [
-                    
-                ],
-
-                bDestroy: true,
-                responsive: true,
-                bInfo: true,
-                iDisplayLength: 10, //Por cada 10 registros hace una paginación
-                order: [[0, "desc"]],
-                columns: [
-                    {
-                        data: [0]
-                    },
-                    {
-                        data: [1]
-                    },
-                    {
-                        data: [2]
-                    },
-                    {
-                        data: [3]
-                    },
-                    {
-                        data: [4]
-                    },
-                    {
-                        data: [5]
-                    },
-                    {
-                        data: [6]
-                    },
-                    {
-                        data: [7]
-                    }
-                    ,
-                    {
-                        data: [8]
-                    }
-                ]
-            });
-
-            //m(data);
-        }
-    )
-        .done(function () {
-            //alert( "second success" );
-        })
-        .fail(function () { })
-        .always(function () { });
->>>>>>> nuevaRama
 }
 
 mostrarDatos();
@@ -281,7 +205,6 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 
-<<<<<<< HEAD
 $("#usuario_form").on("submit", function(e) {
   //const datosFormulario= $('#usuario_form').serialize();
   e.preventDefault();
@@ -382,53 +305,6 @@ $("#usuario_form").on("submit", function(e) {
       //$('#resultados_ajax').html(datos);
     } else if (xhr.readyState === 4) {
       msg = JSON.parse(event.target.responseText);
-=======
-
-$("#usuario_form").on("submit", function (e) {
-    //const datosFormulario= $('#usuario_form').serialize();
-    e.preventDefault();
-
-    //var formStr = new String(datosFormulario);
-
-    //var formDataParsed=JSON.stringify(datosFormulario);
-
-    //console.warn(typeof formDataParsed);
-    //var password1 = $("#password1").val();
-    //var password2 = $("#password2").val();
-
-    //si el password conincide entonces se envia el formulario
-    //if (password1 == password2) {
-
-    switch (tipoPeticion) {
-        case "POST":
-            url = "http://localhost/practicas/Presupuestos/usuarios/guardar";
-
-            break;
-
-        case "PUT":
-            url = "http://localhost/practicas/Presupuestos/usuarios/modificar";
-            break;
-        default:
-            break;
-    }
-
-    const xhr = new XMLHttpRequest();
-    xhr.open(tipoPeticion, url);
-
-    const frmUsuario = document.getElementById("usuario_form");
-    const FD = new FormData(frmUsuario);
-    const objetoUsuario = {};
-
-
-    FD.forEach(function (value, key) {
-        objetoUsuario[key] = value;
-    });
-
-    if (tipoPeticion === "PUT") {
-
-        objetoUsuario["idUsuario"] = parseInt(idUsuario);
-
->>>>>>> nuevaRama
     }
     //bootbox.alert(""+msg.message);
   });
@@ -510,35 +386,7 @@ function mostrar(id) {
     }
   });
 
-<<<<<<< HEAD
   peticion.send();
-=======
-    idUsuario = id;
-    //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
-
-    url = "http://localhost/practicas/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
-    const peticion = new XMLHttpRequest();
-
-    peticion.open("GET", url);
-
-    peticion.addEventListener("readystatechange", function (event) {
-        if (peticion.readyState === 4 && peticion.status == 200) {
-
-            const respuesta = JSON.parse(event.target.responseText);
-            $('#nombre').val(respuesta.NOMBRES);
-            $('#apellido').val(respuesta.APELLIDOS);
-            $('#email').val(respuesta.EMAIL);
-            $('#dui').val(respuesta.DUI);
-            $('#sexo').val(respuesta.SEXO);
-            $('#telefono').val(respuesta.TELEFONO);
-            console.log(respuesta);
-        } else if (peticion.readyState === 4) {
-            console.log("UN ERRRO");
-        }
-    });
-
-    peticion.send();
->>>>>>> nuevaRama
 
   tipoPeticion = "PUT";
   mostrarFormularo();
@@ -572,44 +420,8 @@ btnEliminar.addEventListener("click", () => {
     }
   });
 
-<<<<<<< HEAD
   xhr.send();
 });
-=======
-    const xhr = new XMLHttpRequest();
-    
-    
-    url = "http://localhost/practicas/Presupuestos/usuarios/eliminar/" + idUsuario;
-    
-    
-    xhr.open("DELETE", url);
-    xhr.addEventListener("readystatechange", (event) => {
-
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            $divBotones.style.display="none";
-            
-            eliminarModal.classList.add("bajar");
-            const respuesta = JSON.parse(event.target.responseText);
-            console.error(respuesta);
-            $mensajeRespuestaEliminar.innerHTML = `${respuesta.message}`;
-            
-            if(respuesta.success==0){
-
-            }else{
-                
-            }
-            //console.log(event.target.responseText);
-            id_usuario = 0;
-        } else if (xhr.readyState === 4) {
-            
-
-        }
-    })
-
-    xhr.send();
-})
-
->>>>>>> nuevaRama
 
 function eliminar(id) {
   idUsuario = id;
