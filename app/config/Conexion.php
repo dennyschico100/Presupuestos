@@ -3,8 +3,8 @@ class Conexion{
     protected $conn;
  	private $url="localhost";
 	private $user="root";
-	private $pass="";
-	//private $pass="Francisco100";
+	//private $pass="";
+	private $pass="Francisco100";
 	private $db="presupuestos";
 		
 	protected function abrirConexion(){

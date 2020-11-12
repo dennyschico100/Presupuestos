@@ -14,8 +14,8 @@
     // App Root
     define('APP_ROOT', dirname(dirname(__FILE__)));
     // URL Root
-    //define('URL_ROOT','http://localhost:8081/Presupuestos');
-    define('URL_ROOT','http://localhost/practicas/Presupuestos');
+    define('URL_ROOT','http://localhost:8081/Presupuestos');
+    //define('URL_ROOT','http://localhost/practicas/Presupuestos');
     // Site Name
     define('SITE_NAME', 'PRESUPUESTOS');
     // App Version
