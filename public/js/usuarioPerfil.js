@@ -1,3 +1,5 @@
+const HOST='http://localhost:8081/';
+
 var idUsuario = IdUsuarioSesion;
 const CLASES = ["modal", "fade"];
 const TIPO_PETICION = "PUT";
@@ -58,7 +60,7 @@ function obtenerInfoUsuario(id) {
   //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
 
   url =
-    "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" +
+    HOST+"Presupuestos/usuarios/obtenerUsuario/?id_usuario=" +
     id;
   const peticion = new XMLHttpRequest();
 
@@ -104,7 +106,7 @@ $("#usuario_form").on("submit", function(e) {
   //si el password conincide entonces se envia el formulario
   //if (password1 == password2) {
 
-  url = "http://localhost:8081/Presupuestos/usuarios/modificar";
+  url = HOST+"Presupuestos/usuarios/modificar";
 
   const xhr = new XMLHttpRequest();
   xhr.open(TIPO_PETICION, url);

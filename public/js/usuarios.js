@@ -1,5 +1,7 @@
 $(document).ready(function() {});
 
+const HOST='http://localhost:8081/';
+
 var url = "";
 var tipoPeticion = "POST";
 var idUsuario = 0;
@@ -97,7 +99,7 @@ function mostrarDatos() {
                         className: "btn btn-secondary"
                     } */
   var jqxhr = $.get(
-    "http://localhost:8081/Presupuestos/usuarios/obtenerTodos",
+    HOST+"Presupuestos/usuarios/obtenerTodos",
     function(data, status) {
       console.log(typeof data);
       console.log(data);
@@ -222,12 +224,12 @@ $("#usuario_form").on("submit", function(e) {
 
   switch (tipoPeticion) {
     case "POST":
-      url = "http://localhost:8081/Presupuestos/usuarios/guardar";
+      url = HOST+"Presupuestos/usuarios/guardar";
 
       break;
 
     case "PUT":
-      url = "http://localhost:8081/Presupuestos/usuarios/modificar";
+      url = HOST+"Presupuestos/usuarios/modificar";
       break;
     default:
       break;
@@ -365,7 +367,7 @@ function mostrar(id) {
   //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
 
   url =
-    "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" +
+    HOST+"Presupuestos/usuarios/obtenerUsuario/?id_usuario=" +
     id;
   const peticion = new XMLHttpRequest();
 
@@ -399,7 +401,7 @@ const btnEliminar = document.getElementById("btnEliminar");
 btnEliminar.addEventListener("click", () => {
   const xhr = new XMLHttpRequest();
 
-  url = "http://localhost:8081/Presupuestos/usuarios/eliminar/" + idUsuario;
+  url = HOST+"Presupuestos/usuarios/eliminar/" + idUsuario;
 
   xhr.open("DELETE", url);
   xhr.addEventListener("readystatechange", event => {

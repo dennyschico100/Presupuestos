@@ -1,8 +1,7 @@
 "use strict";
-
+const HOST='http://localhost:8081/';
 const main = document.getElementById("main");
-
-let url = "http://localhost:8081/Presupuestos/presupuestos/obtenerTodos";
+const  url = HOST+"Presupuestos/presupuestos/obtenerTodos";
 
 const COLORES = ["#ef476f", "#fb8500", "#06d6a0", "#118ab2", "#f94144"];
 
@@ -38,7 +37,7 @@ async function obtenerPresupuestos() {
 }
 
 function mostrarPresupuestos(presupuesto) {
-    const urlDetail = 'http://localhost:8081/Presupuestos/detallepresupuestocontroller/detail';
+    const urlDetail = HOST+'Presupuestos/detallepresupuestocontroller/detail';
     main.innerHTML = "";
     let index = 0;
     presupuesto.forEach((p) => {
@@ -179,7 +178,6 @@ function topFunction() {
     const $addButton = document.getElementById("add_button");
     $addButton.addEventListener("click", () => {
 
-
         mostrarFormulario();
         //document.getElementsByClassName('modal-backdrop').style.backgroundColor="";
 
@@ -210,7 +208,7 @@ $btnCerrarVentanaModal.addEventListener("click", () => {
 $("#roles_form").on("submit", function (e) {
     e.preventDefault();
 
-    url = "http://localhost:8081/Presupuestos/usuariosRoles/modificar";
+    url = HOST+"Presupuestos/usuariosRoles/modificar";
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url);

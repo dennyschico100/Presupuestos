@@ -1,4 +1,5 @@
 "use strict";
+const HOST='http://localhost:8081/';
 
 const elementosFormulario = document.getElementById("asignaciones_form")
   .elements;
@@ -11,8 +12,8 @@ const arrUnidades = [],
   arrDetalle = [],
   arrUnidadPorMonto = [];
 const objetoPresupuesto = {};
-const URL = "http://localhost:8081/Presupuestos/presupuestos/guardar";
-const URLCategoria = "http://localhost:8081/Presupuestos/categorias";
+const URL = HOST+"Presupuestos/presupuestos/guardar";
+const URLCategoria = HOST+"Presupuestos/categorias";
 const $popUpError = document.getElementById("box-error");
 const $btnCerrar = document.getElementById("btn-cerrar");
 const $mensajeRespuesta = document.getElementById("mensaje-respuesta");

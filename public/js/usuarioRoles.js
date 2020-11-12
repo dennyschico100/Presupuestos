@@ -1,7 +1,9 @@
+const HOST='http://localhost:8081/';
+
 function mostrarDatos() {
 
     var jqxhr = $.get(
-        "http://localhost:8081/Presupuestos/usuariosRoles/obtenerTodos",
+        HOST+"Presupuestos/usuariosRoles/obtenerTodos",
         function (data, status) {
             const datos = JSON.parse(data);
             console.log(datos[0]);
@@ -94,9 +96,9 @@ var idUsuario = 0;
 function mostrar(id) {
 
     idUsuario = id;
-    //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
+    
 
-    url = "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
+    url = HOST+"Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
     const peticion = new XMLHttpRequest();
 
     peticion.open("GET", url);
@@ -260,7 +262,7 @@ $btnCerrarVentanaModal.addEventListener("click", () => {
 $("#roles_form").on("submit", function (e) {
     e.preventDefault();
 
-    url = "http://localhost:8081/Presupuestos/usuariosRoles/modificar";
+    url = HOST+"Presupuestos/usuariosRoles/modificar";
 
     const xhr = new XMLHttpRequest();
     xhr.open(tipoPeticion, url);
