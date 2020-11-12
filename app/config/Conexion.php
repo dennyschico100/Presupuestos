@@ -1,6 +1,7 @@
 <?php
 class Conexion{
-    protected $conn;
+	protected $conn;
+	
  	private $url="localhost";
 	private $user="root";
 	//private $pass="";
