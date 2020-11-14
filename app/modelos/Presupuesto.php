@@ -20,6 +20,7 @@ class Presupuesto extends Conexion
 	public $montoInicial = 0;
 	public $montoActual = 0;
 	public $montoEstado = 0;
+	public $estado='';
 	public $porcentajeEjecutado = 0;
 	public $usuarioCrea = 0;
 
@@ -76,6 +77,8 @@ class Presupuesto extends Conexion
 
 		//return json_encode($returnData);	
 	}
+
+
 	public function listarEnProceso()
 	{
 
@@ -160,6 +163,7 @@ class Presupuesto extends Conexion
 
 		return $this->returnData;
 	}
+
 	public function buscarPresupuestoId($id)
 	{
 
@@ -318,6 +322,63 @@ class Presupuesto extends Conexion
 		//echo json_encode( $this->returnData);
 
 		return (object) $this->returnData;
+	}
+
+	public function modificarEstado($data){
+		try{
+
+			
+			//parent::set_names();
+			$consulta="UPDATE  ".$this->tabla."  SET ESTADO=? where ID_PRESUPUESTO = ? ";
+			
+
+			if( isset($data->ID_PRESUPUESTO) && isset($data->ESTADO) )
+			{				
+				
+				if(!empty(trim($data->ID_PRESUPUESTO))  &&  !empty(trim($data->ESTADO))     )
+				{
+					
+				$this->idPresupuesto=$data->ID_PRESUPUESTO;
+				$this->estado= $data->ESTADO;
+
+				
+
+				//$this->cargo= test_input($data->nombre)
+				//$this->estado= $data->estado;
+				$sentencia=$this->conectar->prepare($consulta);
+
+				
+				$sentencia->bindValue(1,$this->estado);	
+				$sentencia->bindValue(2,$this->idPresupuesto);
+				
+					
+
+					if($sentencia->execute()){
+						//$msg['message'] = 'Usuario registrado correctamente !' ;
+						$returnData=$this->msg(1,201,'Estado Modificado correctamente');
+								
+					}
+					else{
+						$returnData=$this->msg(0,500,'No se pudo modificar los datos ');
+						
+					}
+				
+				
+				
+				}else{
+					$returnData=$this->msg(0,422,'Valores nulos detectados,  completa todo le formulario ');
+				}
+
+            }else{
+				$returnData=$this->msg(0,422,'Complete todos los campos '); 
+				
+			}
+			
+			}catch(PDOException $ex){
+				$returnData=$this->msg(0,500,''.$ex->getMessage());
+			}
+
+			echo json_encode($returnData);
 	}
 
 	

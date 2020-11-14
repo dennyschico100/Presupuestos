@@ -25,6 +25,7 @@ const btnClose = document.getElementById("btnClose");
 const $btnCerrar = document.getElementById("btn-cerrar");
 
 
+
 var elements = document.getElementById("usuario_form").elements;
 let success = 2;
 
@@ -75,8 +76,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function mostrarFormularo() {
-  alert("mostar formulario");
   
+
   if (usuarioModal.classList.contains("hide-form")) {
     divform.classList.add("div-form-show");
     usuarioModal.style.zIndex = "9999";

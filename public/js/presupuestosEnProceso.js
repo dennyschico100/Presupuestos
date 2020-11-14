@@ -17,11 +17,12 @@ async function obtenerPresupuestosEnProceso() {
     const res = await fetch(URL + "/presupuestos/obtenerTodosEnProceso");
 
     const data = await res.json();
-    if (!res.ok) throw { statustext: res.message };
+    if (!res.ok ) throw { statustext: res.message };
 
     mostrarDatos(data);
   } catch (error) {
     const message = error.statustext || "Ocurrio un error";
+
     
   }
 }
@@ -51,7 +52,7 @@ async function modificarEstado() {
     const res = await fetch(URL + "/presupuestos/cambiarEstado",options);
 
     const data = await res.json();
-    
+    console.log(data)
     
     $mensajeRespuesta.innerHTML = `${data.message}`;
     if (!res.ok) throw { statustext: res.message };

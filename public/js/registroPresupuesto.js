@@ -1,5 +1,5 @@
 "use strict";
-const HOST='http://localhost:8081/';
+const HOST = "http://localhost:8081/";
 
 const elementosFormulario = document.getElementById("asignaciones_form")
   .elements;
@@ -10,10 +10,14 @@ const arrUnidades = [],
   arrMontoFila = [],
   arrObjects = [],
   arrDetalle = [],
-  arrUnidadPorMonto = [];
+  arrUnidadPorMonto = [],
+  presupuestos = [],
+  categorias = [];
+
 const objetoPresupuesto = {};
-const URL = HOST+"Presupuestos/presupuestos/guardar";
-const URLCategoria = HOST+"Presupuestos/categorias";
+
+const URL = HOST + "Presupuestos/presupuestos/guardar";
+const URLCategoria = HOST + "Presupuestos/categorias";
 const $popUpError = document.getElementById("box-error");
 const $btnCerrar = document.getElementById("btn-cerrar");
 const $mensajeRespuesta = document.getElementById("mensaje-respuesta");
@@ -104,7 +108,7 @@ $btnGuardar.addEventListener("click", e => {
     objPresupuesto.ESTADO = "enProceso";
     objPresupuesto.USUARIO_CREA = IdUsuarioSesion;
     objPresupuesto.FECHA_CREACION = datetime;
-    console.log("EL PRESUPUESOT")
+    console.log("EL PRESUPUESOT");
     console.log(objPresupuesto);
 
     sumaTotalPresupuesto = 0;
@@ -200,15 +204,37 @@ function limpiarArreglos() {
 
 function mostrarMontoTotalFila() {}
 
-async function obtenerCategorias() {
+const obtenerCategorias = async () => {
   const resp = await fetch(`${URLCategoria}/obtenerTodos`);
+  if (resp.status !== 200) {
+    throw new Error("No se pudo obtener las categorias");
+  }
+
   const respData = await resp.json();
-  console.log(respData);
   mostrarCategorias(respData);
-}
+  
+};
+
+const obtenerPresupuestos = async () => {
+
+  const res = await fetch(HOST + "/Presupuestos/presupuestos/obtenerTodos");
+
+  if (res.status !== 200) {
+    throw new Error("No se pudo obtener los presupuestos");
+  }
+  const data = await res.json();
+  /*data.forEach(el=>{
+    console.log(el)
+  })*/
+  //const message = error.statustext || "Ocurrio un error";
+};
 
 obtenerCategorias();
+
+//obtenerPresupuestos();
+
 function mostrarCategorias(categoria) {
+
   const categoriaEl = document.getElementById("destino");
 
   categoria.forEach(c => {
@@ -220,6 +246,8 @@ function mostrarCategorias(categoria) {
     }
   });
 }
+
+mostrarCategorias(categorias);
 
 function mostrarUnidadPorMonto() {
   const $filas = document.querySelectorAll(".totalFila");

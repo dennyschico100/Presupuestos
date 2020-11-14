@@ -38,9 +38,10 @@
 
 
                 <?php   $_rol=$_SESSION['user_rol_presupuestos']; 
-        switch($_rol){
-           case 1:         
-         ?>
+                    switch($_rol){
+
+                    case 1:         
+                ?>
                 <span>Presupuestos</span>
             </a>
 
@@ -87,6 +88,11 @@
                                         Presupuestos</a>
                                     <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/peticiones">Lista
                                         de peticiones</a>
+
+                                    <a class="collapse-item"
+                                        href="<?php echo URL_ROOT;?>/transacciones/listarTransacciones">Lista
+                                        de peticiones</a>
+
 
                                     <?php 
            break;

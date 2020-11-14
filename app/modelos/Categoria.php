@@ -26,7 +26,10 @@ class Categoria extends Conexion {
     public function listar(){
 		
 		try{
+		
 			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";
+			//$consulta = "SELECT C.ID_CATEGORIA, C.DESCRIPCION FROM categoria as C INNER JOIN presupuesto as c 
+			//ON  C.ID_CATEGORIA = P.ID_CATEGORIA ";
             $consulta="SELECT *from CATEGORIA ";
             
 			$sentencia=$this->conectar->prepare($consulta);
@@ -40,7 +43,7 @@ class Categoria extends Conexion {
 
 					//var_dump($res);		
 					echo json_encode( $res);
-
+                     
 					//$returnData=$this->msg(1,202,'DA');
 					
 				}else{ 

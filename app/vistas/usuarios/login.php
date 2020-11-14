@@ -21,9 +21,9 @@
                                 <form class="user" id="frm-login" method="post"
                                     action="<?php  echo URL_ROOT?>/usuarios/login">
                                     <div id="div-error" class="error-contenedor">
-                                        <?php echo "Today is " . date("Y-m-d H:i:s") . "<br>";
+                                        <?php echo "Hoy es " . date("Y-m-d H:i:s") . "<br>";
                                             if(!empty($data['errores']) ) { ; ?>
-
+                                        
                                         <div class="alert alert-danger">
                                             <strong>
 

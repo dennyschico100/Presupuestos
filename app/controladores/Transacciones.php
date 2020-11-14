@@ -41,7 +41,7 @@ class Transacciones  extends Controlador
     {
         if (isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
 
-            if ($_SESSION['user_rol_presupuestos'] == 1) {
+            if ($_SESSION['user_rol_presupuestos'] !== 1) {
 
                 return true;
             } else {
@@ -54,11 +54,98 @@ class Transacciones  extends Controlador
 
     public function obtenerTodos()
     {
+        $resultado=$this->TransaccionesModelo->listar();
+        $data= array();
+        
+        foreach($resultado as $row){
+           $sub_array = array();
+           
+           $est='';
+           $atr='';
 
-
-        //$resultado=$this->PresupuestosModelo->listar();
+           $sub_array[]=$row['ID_TRANSACCION'];
+           $sub_array[]=$row['ID_USUARIO'];
+           $sub_array[]=$row['MONTO'];
+           $sub_array[]=$row['ID_PRESUPUESTO_ORIGEN'];
+           $sub_array[]=$row['ID_PRESUPUESTO_DESTINO'];
+           $sub_array[]=$row['DESCRIPCION'];
+           $sub_array[]=$row['ESTADO'];
+           $sub_array[]=$row['FECHA_CREACION'];
+           
+    
+           $sub_array[]="<button type='button' name='estado' id='' class='btn btn-success btn-md update' onClick='obtenerTransaccionPorId(".$row["ID_TRANSACCION"].")' ><i class='fas fa-pen'></i></button>";
+           
+           
+           $data[]=$sub_array;
+           
+        }
+        
+      $response['status_code_header'] = 'HTTP/1.1 200 OK';
+      //$response['body']=json_encode($resultado);
+      $response['body']=json_encode($data );
+      
+      echo json_encode($data);
+        
 
     }
+    public function cambiarEstado(){
+
+        
+        if ($_SERVER['REQUEST_METHOD']=='PUT') {
+             
+            $input = json_decode(file_get_contents('php://input'));   
+           // Sanitize POST Data
+           //$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+           foreach($input as $key=>$value)
+           {            
+               $this->data[$key]=$this->sanitizar_campos($value);    
+           }             
+           
+           if ( $this->isLoggedIn()) {
+               //Convirtiedno $data en fomrato JSON PARA PODER ACCEDER  A SUS
+               //atributos  sin ningun problema , cuando son recividos en el modelo
+               $this->data=(object) $this->data;
+               $this->TransaccionesModelo->modificarEstado($this->data);
+               //echo json_encode($userAuthenticated);
+               
+           } else {
+               // Load view with errors
+               $this->vista('usuarios/login',$this->data);
+           }
+       } else {
+           //$this->vista("usuarios/login");
+          
+           $this->vista('usuarios/login',$this->data);
+       }
+
+
+    }
+
+    public function obtenerTransaccionPorId()
+    {
+
+        //?id_usuario=1
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+            //$idUsuario=$_POST["REQUEST_METHOD"];
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_NUMBER_INT);
+            if (!empty($_GET["id_transaccion"])) {
+
+                $this->idPresupuesto = $_GET["id_transaccion"];
+
+                $this->TransaccionesModelo->buscarTransaccionId($this->idPresupuesto);
+            } else {
+            }
+        }
+    }
+
+    public function listarTransacciones()
+    {
+        $this->vista('Transacciones/listar');
+            
+    }
+
     public function guardar()
     {
         $transfer = $this->TransaccionesModelo;
