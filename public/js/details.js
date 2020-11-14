@@ -1,30 +1,74 @@
 
-const url = "http://localhost/practicas/Presupuestos/detallepresupuestocontroller/getDetail";
+const HOST = 'http://localhost/practicas/';
+const url = HOST + "Presupuestos/detallepresupuestocontroller/getDetail";
+
+var urlActual = window.location;
+var parameters = new URL(urlActual);
+var id = parameters.searchParams.get('id');
+
 
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
-    return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) +  ')';
+    return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
 }
 
 
-getData();
+getData(id);
 
-async function getData() {
+async function getData(id) {
+    //getting details
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data.data);
-    asignData(data.data);
+
+    //getting name
+    const budget = await fetch(HOST + 'Presupuestos/presupuestos/obtenerPresupuesto?id_presupuesto=' + id);
+    const info = await budget.json();
+
+    //getting category   
+    const category = await fetch(HOST + 'Presupuestos/Categorias/show?id=' + info.ID_CATEGORIA);
+    const cat = await category.json();
+
+
+    asignData(data.data, info, cat);
+    fillTable(data.data);
 }
 
-function asignData(data) {
-    
+function fillTable(info) {
+    console.log('llenando la tabla');
+    console.log(info);
+    const tableRow = document.getElementById('tableBody');
+
+    info.forEach(e => {
+
+        tableRow.innerHTML += ` <tr>
+                <td>${e.id}</td>
+                <td>${e.nombre}</td>
+                <td>${e.unidades}</td>
+                <td>${"$ " + e.monto}</td>
+                <td>${"$ " + e.monto_total}</td>
+            </tr>`
+
+
+    });
+
+}
+
+function asignData(data, info, category) {
 
     var size = Object.keys(data).length;
-    //console.log('datos: ' + size);
-
     const xLabels = [];
     const yValues = [];
     const colors = [];
+    const label = info.NOMBRE_PRESUPUESTO;
+
+    document.getElementById('title').innerHTML = info.NOMBRE_PRESUPUESTO;
+    document.getElementById('description').innerHTML = info.DESCRIPCION_PRESUPUESTO;
+    document.getElementById('progress').innerHTML = info.PORCENTAJE_EJECUTADO + "%";
+    document.getElementById('initialAmount').innerHTML = "$ " + info.MONTO_INICIAL;
+    document.getElementById('actualAmount').innerHTML = "$ " + info.MONTO_ACTUAL;
+    document.getElementById('status').innerHTML = info.ESTADO;
+    document.getElementById('category').innerHTML = category.DESCRIPCION;
+
 
     data.forEach(function (data) {
         xLabels.push(data.nombre);
@@ -35,9 +79,6 @@ function asignData(data) {
         colors.push(random_rgba());
     }
 
-    //console.log(xLabels);
-    //console.log(yValues);
-    //console.log(colors[0]);
 
     var ctx = document.getElementById('graphic').getContext('2d');
     var chart = myChart = new Chart(ctx, {
@@ -45,7 +86,7 @@ function asignData(data) {
         data: {
             labels: xLabels,
             datasets: [{
-                label: 'Proyectos pendientes',
+                label: label,
                 data: yValues,
                 backgroundColor: colors
             }]
@@ -62,5 +103,4 @@ function asignData(data) {
         }
     });
 }
-
 

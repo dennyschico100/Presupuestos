@@ -53,8 +53,18 @@ class Categorias extends Controlador{
           $resultado=$this->CategoriaModelo->listar();
 
     }
+
+    public function show(){
+        if ($_SERVER['REQUEST_METHOD'] == "GET") {
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_NUMBER_INT);
+
+            if (!empty($_GET['id'])) {
+
+                $this->idCategoria = $_GET['id'];
+                $this->CategoriaModelo->buscarCategoria($this->idCategoria);
+            }
+        }
+    }
   
 
 }
-
-?>
