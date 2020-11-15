@@ -208,106 +208,51 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 
-$("#usuario_form").on("submit", function(e) {
-  //const datosFormulario= $('#usuario_form').serialize();
-  e.preventDefault();
 
-  //var formStr = new String(datosFormulario);
+$("#usuario_form").on("submit", function (e) {
+    //const datosFormulario= $('#usuario_form').serialize();
+    e.preventDefault();
 
-  //var formDataParsed=JSON.stringify(datosFormulario);
+    //var formStr = new String(datosFormulario);
 
-  //console.warn(typeof formDataParsed);
-  //var password1 = $("#password1").val();
-  //var password2 = $("#password2").val();
+    //var formDataParsed=JSON.stringify(datosFormulario);
 
-  //si el password conincide entonces se envia el formulario
-  //if (password1 == password2) {
+    //console.warn(typeof formDataParsed);
+    //var password1 = $("#password1").val();
+    //var password2 = $("#password2").val();
 
-  switch (tipoPeticion) {
-    case "POST":
-      url = HOST+"Presupuestos/usuarios/guardar";
+    //si el password conincide entonces se envia el formulario
+    //if (password1 == password2) {
 
-      break;
+    switch (tipoPeticion) {
+        case "POST":
+            url = "http://localhost:8081/Presupuestos/usuarios/guardar";
 
-    case "PUT":
-      url = HOST+"Presupuestos/usuarios/modificar";
-      break;
-    default:
-      break;
-  }
+            break;
 
-  const xhr = new XMLHttpRequest();
-  xhr.open(tipoPeticion, url);
+        case "PUT":
+            url = "http://localhost:8081/Presupuestos/usuarios/modificar";
+            break;
+        default:
+            break;
+    }
 
-  const frmUsuario = document.getElementById("usuario_form");
-  const FD = new FormData(frmUsuario);
-  const objetoUsuario = {};
+    const xhr = new XMLHttpRequest();
+    xhr.open(tipoPeticion, url);
 
-  FD.forEach(function(value, key) {
-    objetoUsuario[key] = value;
-  });
+    const frmUsuario = document.getElementById("usuario_form");
+    const FD = new FormData(frmUsuario);
+    const objetoUsuario = {};
 
-  if (tipoPeticion === "PUT") {
-    objetoUsuario["idUsuario"] = parseInt(idUsuario);
-  }
 
-  const jsonUsuario = JSON.stringify(objetoUsuario);
-  console.log(jsonUsuario);
+    FD.forEach(function (value, key) {
+        objetoUsuario[key] = value;
+    });
 
-  xhr.setRequestHeader("Content-Type", "application/json");
-  const msg = "";
-  xhr.addEventListener("readystatechange", function(event) {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      //msg=JSON.parse(event.target.responseText);
+    if (tipoPeticion === "PUT") {
 
-      console.log(event.target.responseText);
-      const respuesta = JSON.parse(event.target.responseText);
-      const status = respuesta.status;
+        objetoUsuario["idUsuario"] = parseInt(idUsuario);
 
-      if (xhr.status === 200) {
-        if (
-          $popUpError.classList.contains("modal") &&
-          $popUpError.classList.contains("fade")
-        ) {
-          $popUpError.classList.remove(...clases);
-          //usuarioModal.style.backgroundColor="#333";
-          $popUpError.classList.add("show-box");
-          divform.style.opacity = "1";
-          divform.style.backgroundColor = "#333";
-          usuarioModal.style.opacity = "0.5";
-          usuarioModal.style.zIndex = "100";
-          $mensajeRespuesta.innerHTML = `${respuesta.message}`;
-
-          success = respuesta.success;
-          document.body.style.background = "#333";
-
-          //mostrarDatos();
-          topFunction();
-          console.error(respuesta);
-
-          if (status == 201) {
-            limpiar();
-            limpiarMensajEsErrores();
-            cerrarFormulario();
-            topFunction();
-
-            $("#usuario_data")
-              .DataTable()
-              .ajax.reload();
-          }
-        } else {
-          $popUpError.classList.add(...clases);
-          $popUpError.classList.add("show-box");
-        }
-      } else {
-        $("#usuarioModal").modal("hide");
-
-        $("#usuario_form")[0].reset();
-      }
-      //jQuery.noConflict();
-      //$('#resultados_ajax').html(datos);
-    } else if (xhr.readyState === 4) {
-      msg = JSON.parse(event.target.responseText);
     }
     //bootbox.alert(""+msg.message);
   });
@@ -389,7 +334,31 @@ function mostrar(id) {
     }
   });
 
-  peticion.send();
+    idUsuario = id;
+    //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
+
+    url = "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
+    const peticion = new XMLHttpRequest();
+
+    peticion.open("GET", url);
+
+    peticion.addEventListener("readystatechange", function (event) {
+        if (peticion.readyState === 4 && peticion.status == 200) {
+
+            const respuesta = JSON.parse(event.target.responseText);
+            $('#nombre').val(respuesta.NOMBRES);
+            $('#apellido').val(respuesta.APELLIDOS);
+            $('#email').val(respuesta.EMAIL);
+            $('#dui').val(respuesta.DUI);
+            $('#sexo').val(respuesta.SEXO);
+            $('#telefono').val(respuesta.TELEFONO);
+            console.log(respuesta);
+        } else if (peticion.readyState === 4) {
+            console.log("UN ERRRO");
+        }
+    });
+
+    peticion.send();
 
   tipoPeticion = "PUT";
   mostrarFormularo();

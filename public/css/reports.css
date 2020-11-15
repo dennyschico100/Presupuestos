@@ -1,0 +1,98 @@
+/*reportes*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.logo img{
+    
+    width: 260px;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 5px 25px;
+}
+
+.col{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+header{
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #111;
+}
+
+.active{
+    display: none;
+}
+
+.containers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+section{
+    width: 100%;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+   padding-left: 148px;
+}
+
+
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 25px;
+}
+
+table td, table th {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+table thead{
+    background-color: #646B60;
+}
+  table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #646B60;
+    color: white;
+  }
+
+  .btn{
+      height: 35px;
+      width: 160px;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bolder;
+      border: none;
+  }
+
+.btn-success{
+    background: #D94629;
+}

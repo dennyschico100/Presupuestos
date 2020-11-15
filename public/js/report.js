@@ -7,11 +7,20 @@ var parameters = new URL(urlActual);
 var id = parameters.searchParams.get('id');
 
 
+
+
+
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
 }
 
+function toggleMenu() {
+
+    var menu = document.querySelector('.detalles');
+    menu.classList.toggle('active');
+
+}
 
 getData(id);
 
@@ -58,12 +67,6 @@ function fillTable(info) {
 
 function asignData(data, info, category) {
 
-    var size = Object.keys(data).length;
-    const xLabels = [];
-    const yValues = [];
-    const colors = [];
-    const label = info.NOMBRE_PRESUPUESTO;
-
     document.getElementById('title').innerHTML = info.NOMBRE_PRESUPUESTO;
     document.getElementById('description').innerHTML = info.DESCRIPCION_PRESUPUESTO;
     document.getElementById('progress').innerHTML = info.PORCENTAJE_EJECUTADO + "%";
@@ -73,40 +76,28 @@ function asignData(data, info, category) {
     document.getElementById('category').innerHTML = category.DESCRIPCION;
 
 
-    data.forEach(function (data) {
-        xLabels.push(data.nombre);
-        yValues.push(data.monto_total);
-    });
-
-    for (let index = 0; index < size; index++) {
-        colors.push(random_rgba());
-    }
-
-
-    var ctx = document.getElementById('graphic').getContext('2d');
-    var chart = myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: xLabels,
-            datasets: [{
-                label: label,
-                data: yValues,
-                backgroundColor: colors
-            }]
-        },
-
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
 }
 
+/**
+ * pdf name 
+ */
+var namePdf = "report"+new Date().getDate()+new Date().getMonth()+new Date().getFullYear()+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds();
+
+window.onload = function () {
+    document.getElementById("cmd").addEventListener("click", () => {
+        const pdf = this.document.getElementById("target");
+        var options = {
+            margin: 1,
+            filename: namePdf,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'cm', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().from(pdf).set(options).save();
+    })
+}
+
+/*
 $(document).ready(function () {
     var elements = {
         "#editor": function (element, renderer) {
@@ -117,9 +108,9 @@ $(document).ready(function () {
     $("#cmd").click(function () {
         var doc = new jsPDF();
 
-        doc.fromHTML($("#target").html(),15 ,15,{
+        doc.addHTML($("#target").html(), 15, 15, {
             "width": 170,
-            "elementHandlers":elements
+            "elementHandlers": elements
         });
 
         doc.save("test.pdf");
@@ -127,32 +118,4 @@ $(document).ready(function () {
     });
 });
 
-
-/*
-document.addEventListener("DOMContentLoaded", () => {
-    const button = document.querySelector("#generatePdf");
-    button.addEventListener("click", () => {
-        const element2pdf = document.body;
-        html2pdf()
-        .set({
-            margin:1,
-            filename: 'test1.pdf',
-            image:{
-                type:'jpeg',
-                quality:0.98
-            },
-            html2canvas:{
-                scale:3,
-                letterRendering:true,
-            },
-            jsPDF:{
-                unit:"in",
-                format: "a3",
-                orientation:'portrait'
-            }
-        })
-        .from(element2pdf)
-        .save()
-        .catch(err => console.log(err))
-    });
-});*/
+*/

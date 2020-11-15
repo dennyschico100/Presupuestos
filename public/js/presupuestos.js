@@ -1,7 +1,8 @@
 "use strict";
 const HOST='http://localhost:8081/';
 const main = document.getElementById("main");
-const  url = HOST+"Presupuestos/presupuestos/obtenerTodos";
+
+let url = "http://localhost:8081/Presupuestos/presupuestos/obtenerTodos";
 
 const COLORES = ["#ef476f", "#fb8500", "#06d6a0", "#118ab2", "#f94144"];
 

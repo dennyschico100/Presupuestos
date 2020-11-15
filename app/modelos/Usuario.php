@@ -712,7 +712,9 @@ class Usuario extends Conexion{
 				$returnData=$this->msg(0,500,''.$ex->getMessage());
 			}
 
-			echo json_encode($returnData);
+			
+			//echo json_encode($thia->returnData);
+
 
 	}
 		
