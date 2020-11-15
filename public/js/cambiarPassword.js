@@ -104,7 +104,7 @@ enviar.addEventListener('click', function (e) {
         email_error.classList.add("email-error");
         pass_error.innerHTML = "";
         email_validated = true;
-        alert(email_validated);
+        
     }
 
     console.warn(confirmarContra.length);

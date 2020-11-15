@@ -83,12 +83,16 @@
                                 data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
                                     <h6 class="collapse-header">Opciones disponibles</h6>
-
+                                    
                                     <a class="collapse-item"
                                         href="<?php echo URL_ROOT;?>/presupuestos/listar">Presupuestos aprobados</a>
                                     <a class="collapse-item"
                                         href="<?php echo URL_ROOT;?>/presupuestos/peticiones">Solicitud de presupuestos
                                     </a>
+                                    <a class="collapse-item"
+                                        href="<?php echo URL_ROOT;?>/transacciones/listarTransacciones">Solicitud de transaccion
+                                    </a>
+
 
 
                                     <?php 
