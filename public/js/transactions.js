@@ -1,7 +1,7 @@
 'use strict'
 console.log('crear transacciones');
 
-const baseUrl = 'http://localhost/practicas/Presupuestos';
+const baseUrl = 'http://localhost:8081/Presupuestos';
 
 var originSelector = document.getElementById('origin');
 var destinySelector = document.getElementById('destiny');

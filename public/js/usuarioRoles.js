@@ -1,7 +1,7 @@
 function mostrarDatos() {
 
     var jqxhr = $.get(
-        "http://localhost/practicas/Presupuestos/usuariosRoles/obtenerTodos",
+        "http://localhost:8081/Presupuestos/usuariosRoles/obtenerTodos",
         function (data, status) {
             const datos = JSON.parse(data);
             console.log(datos[0]);

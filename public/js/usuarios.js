@@ -247,12 +247,12 @@ $("#usuario_form").on("submit", function (e) {
 
     switch (tipoPeticion) {
         case "POST":
-            url = "http://localhost/practicas/Presupuestos/usuarios/guardar";
+            url = "http://localhost:8081/Presupuestos/usuarios/guardar";
 
             break;
 
         case "PUT":
-            url = "http://localhost/practicas/Presupuestos/usuarios/modificar";
+            url = "http://localhost:8081/Presupuestos/usuarios/modificar";
             break;
         default:
             break;
@@ -412,7 +412,7 @@ function mostrar(id) {
     idUsuario = id;
     //let url='http://localhost:8081/plantilla/ajax/Usuario/?id='+id_usuario;
 
-    url = "http://localhost/practicas/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
+    url = "http://localhost:8081/Presupuestos/usuarios/obtenerUsuario/?id_usuario=" + id;
     const peticion = new XMLHttpRequest();
 
     peticion.open("GET", url);

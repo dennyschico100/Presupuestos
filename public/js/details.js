@@ -1,5 +1,5 @@
 
-const HOST = 'http://localhost/practicas/';
+const HOST = 'http://localhost:8081/';
 const url = HOST + "Presupuestos/detallepresupuestocontroller/getDetail";
 
 var urlActual = window.location;
