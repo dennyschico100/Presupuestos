@@ -10,6 +10,7 @@ const $btnCerrar = document.getElementById("btn-cerrar");
 
 const $btnGuardar = document.getElementById("btnGuardar");
 const $estado = document.getElementById("ESTADO");
+
 let objPresupuesto = {};
 
 async function obtenerPresupuestosEnProceso() {
@@ -32,7 +33,7 @@ $estado.addEventListener("change", e => {
 });
 
 obtenerPresupuestosEnProceso();
-$btnGuardar.addEventListener("click", () => {});
+
 
 $btnGuardar.addEventListener("click", e => {
   e.preventDefault();

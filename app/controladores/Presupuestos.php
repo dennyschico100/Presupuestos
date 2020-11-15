@@ -34,7 +34,7 @@ class Presupuestos extends Controlador
             $this->vista("usuarios/login");
         }
     }
-
+    
 
 
     public function sanitizar_campos($data)

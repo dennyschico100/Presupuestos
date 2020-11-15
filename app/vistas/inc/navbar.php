@@ -84,26 +84,39 @@
                                 <div class="bg-white py-2 collapse-inner rounded">
                                     <h6 class="collapse-header">Opciones disponibles</h6>
 
-                                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/listar">Lista de
-                                        Presupuestos</a>
-                                    <a class="collapse-item" href="<?php echo URL_ROOT;?>/presupuestos/peticiones">Lista
-                                        de peticiones</a>
-
                                     <a class="collapse-item"
-                                        href="<?php echo URL_ROOT;?>/transacciones/listarTransacciones">Lista
-                                        de peticiones</a>
+                                        href="<?php echo URL_ROOT;?>/presupuestos/listar">Presupuestos aprobados</a>
+                                    <a class="collapse-item"
+                                        href="<?php echo URL_ROOT;?>/presupuestos/peticiones">Solicitud de presupuestos
+                                    </a>
 
 
                                     <?php 
            break;
            ?>
 
-
                                     <?php
-                                    case 4:
+                                    case 4:?>
+                                          <span>Tesorero</span>
+                            </a>
 
-                                    default:
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Opciones disponibles</h6>
 
+                                    <a class="collapse-item"
+                                        href="<?php echo URL_ROOT;?>/presupuestos/listar">Presupuestos aprobados</a>
+                                    <a class="collapse-item"
+                                        href="<?php echo URL_ROOT;?>/presupuestos/peticiones">Solicitud de presupuestos
+                                    </a>
+
+                                    <a style="width:auto" class="collapse-item"
+                                        href="<?php echo URL_ROOT;?>/gastos/registrar">Registrar un gasto</a>
+
+
+                                
+                                    <?php
                                     break; } ?>
                                 </div>
 

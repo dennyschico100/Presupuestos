@@ -43,7 +43,7 @@ class Presupuesto extends Conexion
 		try {
 			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";
 			$consulta = "SELECT P.ID_PRESUPUESTO, P.MONTO_INICIAL,P.MONTO_ACTUAL,P.PORCENTAJE_EJECUTADO,P.NOMBRE_PRESUPUESTO, C.DESCRIPCION ,C.ID_CATEGORIA FROM presupuesto as P INNER JOIN categoria as c 
-                        ON  P.ID_CATEGORIA= C.ID_CATEGORIA ";
+                        ON  P.ID_CATEGORIA= C.ID_CATEGORIA  &&  P.ESTADO ='aprobado' ";
 			$sentencia = $this->conectar->prepare($consulta);
 
 			if ($sentencia->execute()) {
