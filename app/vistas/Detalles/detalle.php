@@ -7,8 +7,15 @@ require APP_ROOT . '/vistas/inc/header.php' ?>
 <!-- 
         graficando
     -->
-<section class="col-md-10 offset-1  content overflow-hidden">
-    <h2><b>Detalles</b></h2>
+<section id="target" class="col-md-10 offset-1  content overflow-hidden">
+    <div class="row">
+        <div class="col">
+            <h2><b>Detalles</b></h2>
+        </div>
+        <div class="col">
+            <a href="<?= URL_ROOT . '/ReportController/show?id='.$_GET['id'] ?>"><button type="button" id="cmd2" class="btn btn-success" value="">Generar PDF</button></a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <h6>Nombre del proyecto:</h6>

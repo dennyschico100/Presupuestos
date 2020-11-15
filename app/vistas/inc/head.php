@@ -3,8 +3,10 @@
   
   <link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet">
    
+
+   
   <!-- Custom styles for this template-->
-  
+  <script src="html2pdf.bundle.min.js"></script>
   <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/sb-admin-2.min.css">
 
   <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/sb-admin-2.min.css">
