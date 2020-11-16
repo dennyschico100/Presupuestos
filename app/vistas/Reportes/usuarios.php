@@ -46,55 +46,19 @@
 
             <div class="row">
                 <div class="col">
-                    <h4>Nombre del proyecto:</h4>
+                    
+                
 
                 </div>
-                <div class="col">
-                    <p id="title" class="text-dark"></p>
-                </div>
-                <div class="col">
-                    <h4>Estado: </h4>
-                </div>
-                <div class="col">
-                    <p id="status" class="text-dark"></p>
-                </div>
+                
             </div>
             <div class="row">
-                <div class="col">
-                    <h4>Descripcion:</h4>
-
-                </div>
-                <div class="col">
-                    <p id="description" class="text-dark text-justify"></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <h4>Categoria:</h4>
-                </div>
-                <div class="col">
-                    <p id="category" class="text-dark"></p>
-                </div>
-                <div class="col">
-                    <h4>Ejecucion:</h4>
-
-                </div>
-                <div class="col">
-                    <p id="progress" class="text-dark"></p>
-                </div>
+                
             </div>
             
             
             <div class="row">
-                <div class="col">
-                    <h4>Monto Inicial:</h4>
-                </div>
-                <div class="col">
-                    <p id="initialAmount" class="text-dark"></p>
-                </div>
-                <div class="col">
-                    <h4>Monto Actual:</h4>
-                </div>
+               
                 <div class="col">
                     <p id="actualAmount" class="text-dark"></p>
                 </div>
@@ -108,11 +72,13 @@
                     <table id="tableDetails" class="table">
                         <thead class="thead-dark">
                             <tr>
-                                <th >Identificador</th>
-                                <th>Item</th>
-                                <th>Unidades</th>
-                                <th>Precio Unitario</th>
-                                <th>Total</th>
+                            <th>ID</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Teléfono</th>
+                                    <th width="">Correo</th>
+                                    <th width="">Fecha Ingreso</th>
+                                    <th width="">Estado</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -126,7 +92,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 
 
-    <script src="<?php echo URL_ROOT . '/public/js/report.js'; ?>"></script>
+    <script src="<?php echo URL_ROOT . '/public/js/reportUsuarios.js'; ?>"></script>
 </body>
 
 </html>

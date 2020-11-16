@@ -570,6 +570,46 @@ class Usuario extends Conexion{
 
 		//return json_encode($returnData);	
 	}
+	public function listarReporte(){
+		
+		try{
+			//$consulta="SELECT *FROM PRODUCTOS  WHERE NOMBRE_PRODUCTO LIKE '%a' ";
+			$consulta="SELECT * FROM  usuarios ";
+			$sentencia=$this->conectar->prepare($consulta);
+			
+			if($sentencia->execute()){
+				$res=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+			    $rows=count($res);
+				
+				if($rows > 0 ){
+
+					//var_dump($res);		
+					echo json_encode($res);
+
+					//$returnData=$this->msg(1,202,'DA');
+					
+				}else{ 
+					$returnData=$this->msg(1,204,'No se encontro ningun dato');
+					
+				}
+
+			}else{
+				$returnData=$this->msg(0,500,'Ocurrio un error al consltar datos ');
+				
+				//$msg['message']='Ocurrio un error al consltar datos';
+				
+			}
+
+			//$res=$sentencia->fetchAll();
+			
+		}catch(PDOException $ex ){
+			$returnData=$this->msg(0,500,'Ocurrio un error :'.$ex->getMessage());
+					
+			//$msg['message']="Error al listar usuraios ";
+		}
+
+		//return json_encode($returnData);	
+	}
 	
 	public function buscarUsuario($id){
 		

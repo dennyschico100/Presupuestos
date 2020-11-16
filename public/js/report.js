@@ -8,8 +8,6 @@ var id = parameters.searchParams.get('id');
 
 
 
-
-
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ')';
@@ -28,7 +26,7 @@ async function getData(id) {
     //getting details
     const response = await fetch(url);
     const data = await response.json();
-
+  
     //getting name
     const budget = await fetch(HOST + 'Presupuestos/presupuestos/obtenerPresupuesto?id_presupuesto=' + id);
     const info = await budget.json();
@@ -53,11 +51,15 @@ function fillTable(info) {
     info.forEach(e => {
 
         tableRow.innerHTML += ` <tr>
-                <td>${e.id}</td>
-                <td>${e.nombre}</td>
-                <td>${e.unidades}</td>
-                <td>${"$ " + e.monto}</td>
-                <td>${"$ " + e.monto_total}</td>
+                        
+                <td class='v1' >${e.id}</td>
+                <td class='v1'>${e.nombre}</td>
+                <td class='v1'>${e.unidades}</td>
+                <td class='v1'>${"$ " + e.monto}</td>
+                <td class='v1'>${"$ " + e.monto_total}</td>
+                <td class='v1'></td>
+
+                
             </tr>`
 
 

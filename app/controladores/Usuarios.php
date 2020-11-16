@@ -323,10 +323,33 @@ class Usuarios  extends Controlador{
         }
 
     }
-    
+    public function listarTodos(){
+        
+        if(!$this->isLoggedIn() ) {
+            
+            if(isset($_SESSION['user_email_presupuestos'])){
+                //echo "".$_SESSION['user_email'];
+
+            }
+                
+            $this->vista('usuarios/login');
+            
+            
+         }else{
+            $data=[
+                "titulo"=>"Home",
+                "mensaje"=>"METODO INDEX DEL HOME "
+            ];
+            $resultado=$this->usuarioModelo->listarReporte();
+          
+         }
+        
+        
+    }
     public function obtenerTodos(){
         
         $resultado=$this->usuarioModelo->listar();
+
       
         $data= array();
   

@@ -21,6 +21,13 @@
                                     class="fa fa-plus" aria-hidden="true"></i> Nuevo Usuario</button></h1>
                         <div class="box-tools pull-right">
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="<?= URL_ROOT . '/ReportController/reporteUsuarios' ?>"><button
+                                        type="button" id="cmd2" class="btn btn-success" value="">Generar
+                                        PDF</button></a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->
@@ -89,23 +96,24 @@
 </div>
 
 <!--INICIO MODAL DEL ELIMINAR USUARIO -->
-<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+<div class="modal fade  " id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Aviso Importante</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Aviso Importante</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div id="mensaje-respuesta-eliminar" class="modal-body"> Estas a punto de eliminar este registro .</div>
+            <div id="div-botones" class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary text-white" id="btnEliminar">Eliminar</a>
+            </div>
         </div>
-        <div  id="mensaje-respuesta-eliminar"  class="modal-body"> Estas  a punto de eliminar este registro .</div>
-        <div  id="div-botones" class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary text-white"  id="btnEliminar"  >Eliminar</a>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <!-- FIN MODAL DEL ELIMINAR USUARIO-->
 <!--FORMULARIO USUARIO VENTANA MODAL-->
@@ -183,11 +191,11 @@
 
                     <div class="col-md-6 form-group ">
 
-    
+
                         <label>Cargo</label>
                         <select class="form-control" id="cargo" name="rol">
                             <option value="">-- Selecciona cargo --</option>
-                            
+
                             <option value="1">Analista presupesto</option>
                             <option value="3">Jefe Presupuesto</option>
                             <option value="4" selected>Tesorero</option>
@@ -235,7 +243,7 @@
 
                 <div class="modal-footer">
 
-                    <input type="hidden" name="password1"  value="presupuestos012456789">
+                    <input type="hidden" name="password1" value="presupuestos012456789">
                     <button type="submit" name="action" id="btnGuardar" class="btn btn-success pull-left" value="Add"><i
                             class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
