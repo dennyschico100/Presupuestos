@@ -76,8 +76,7 @@ function asignData(data, info, category) {
     document.getElementById('actualAmount').innerHTML = "$ " + info.MONTO_ACTUAL;
     document.getElementById('status').innerHTML = info.ESTADO;
     document.getElementById('category').innerHTML = category.DESCRIPCION;
-
-
+    
 }
 
 /**

@@ -1,4 +1,5 @@
 <?php  require APP_ROOT.'/vistas/inc/header.php' ?>
+
 <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/usuarioListar.css">
 
 <div style="border:0px solid green;" class="container-fluid">
