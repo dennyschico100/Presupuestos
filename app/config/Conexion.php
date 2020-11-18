@@ -6,7 +6,7 @@ class Conexion{
 	
  	private $url="localhost";
 	private $user="root";
-	private $pass="Francisco100";
+	private $pass="";
 	private $db="presupuestos";
 		
 	protected function abrirConexion(){
