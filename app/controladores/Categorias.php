@@ -88,7 +88,39 @@ class Categorias extends Controlador
         $dataCategory = (object) $this->data;
 
         $categories->name = $dataCategory->name;
-       $categories->store();
-       
+
+        $categories->store();
+    }
+
+    public function update()
+    {
+
+        $categories = $this->CategoriaModelo;
+
+        $input = json_decode(file_get_contents("php://input"));
+
+        foreach ($input as $key => $value) {
+            $this->data[$key] = $this->sanitizar_campos($value);
+        }
+
+        $dataCategory = (object) $this->data;
+
+        $categories->id = $dataCategory->id;
+        $categories->name = $dataCategory->name;
+        $categories->update();
+    }
+
+    public function delete()
+    {
+        if($_SERVER['REQUEST_METHOD'] == "DELETE"){
+            $_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_NUMBER_INT);
+
+            if (!empty($_GET['id'])) {
+
+                $this->idCategoria = $_GET['id'];
+                $this->CategoriaModelo->delete($this->idCategoria);
+            }
+        }
+        
     }
 }

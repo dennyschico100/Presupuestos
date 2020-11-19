@@ -11,6 +11,7 @@ class Categoria extends Conexion
 
 	private $conectar;
 	private $tabla = "categoria";
+	public $id;
 	public $name;
 	public $returnData = [];
 
@@ -119,6 +120,38 @@ class Categoria extends Conexion
 
 			$stmt->bindValue(1, $this->name);
 			$stmt->bindValue(2, date("Y-m-d"));
+
+			$stmt->execute();
+		} catch (PDOException $ex) {
+			$returnData = $this->msg(0, 500, '' . $ex->getMessage());
+		}
+	}
+
+	public function update()
+	{
+
+		try {
+			$sql = "UPDATE " . $this->tabla . " SET DESCRIPCION = ? WHERE ID_CATEGORIA = ?";
+
+			$stmt = $this->conectar->prepare($sql);
+			$stmt->bindValue(1, $this->name);
+			$stmt->bindValue(2, $this->id);
+
+			$stmt->execute();
+		} catch (PDOException $ex) {
+			$returnData = $this->msg(0, 500, '' . $ex->getMessage());
+		}
+	}
+
+
+	public function delete($id)
+	{
+
+		try {
+			$sql = "DELETE FROM " . $this->tabla . " WHERE ID_CATEGORIA = ?";
+
+			$stmt = $this->conectar->prepare($sql);
+			$stmt->bindValue(1, $id);
 
 			$stmt->execute();
 		} catch (PDOException $ex) {
