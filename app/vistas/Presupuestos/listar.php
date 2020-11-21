@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require APP_ROOT . '/vistas/inc/header.php' ?>
 
@@ -222,7 +222,7 @@ require APP_ROOT . '/vistas/inc/header.php' ?>
 
 <div>
 
-    <?php require APP_ROOT . '/vistas/inc/footer.php' ?>
+
 
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>

@@ -68,6 +68,7 @@
 
                             <a class="collapse-item" href="<?php echo URL_ROOT;?>/usuarios/listar">LIsta Usuarios</a>
                             <a class="collapse-item" href="<?php  echo URL_ROOT;?>/usuariosRoles/listar">Permisos</a>
+                            <a class="collapse-item" href="<?php  echo URL_ROOT;?>/Categorias/listar">Categorias</a>
 
                             <?php  
            break;

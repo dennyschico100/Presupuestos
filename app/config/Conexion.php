@@ -2,6 +2,8 @@
 class Conexion{
 	protected $conn;
 	
+
+	
  	private $url="localhost";
 	private $user="root";
 	private $pass="Francisco100";

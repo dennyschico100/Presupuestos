@@ -97,26 +97,3 @@ window.onload = function () {
         html2pdf().from(pdf).set(options).save();
     })
 }
-
-/*
-$(document).ready(function () {
-    var elements = {
-        "#editor": function (element, renderer) {
-            return true;
-        }
-    };
-
-    $("#cmd").click(function () {
-        var doc = new jsPDF();
-
-        doc.addHTML($("#target").html(), 15, 15, {
-            "width": 170,
-            "elementHandlers": elements
-        });
-
-        doc.save("test.pdf");
-
-    });
-});
-
-*/
