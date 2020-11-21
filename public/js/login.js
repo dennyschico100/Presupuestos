@@ -1,6 +1,10 @@
 const togglePassword = document.querySelector('#togglePassword');
 const password = document.querySelector('.password');
 
+const primera=(n1,n2)=>{return (n1*n2);}
+console.log(primera(2,3));
+
+
 togglePassword.addEventListener('click', function (e) {
     // toggle the type attribute
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
