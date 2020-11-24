@@ -542,6 +542,6 @@ function validarFormulario() {
   }
   indiceClase = 0;
   numInputs -= 1;
-  alert(respuesta);
+  
   return respuesta;
 }

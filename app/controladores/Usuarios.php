@@ -184,15 +184,18 @@ class Usuarios  extends Controlador{
 
     public function isLoggedIn()
     {
-        if (  isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) && isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
+        if (  isset($_SESSION['user_rol_presupuestos']) && isset($_SESSION['user_id_presupuestos']) &&
+         isset($_SESSION['user_nombres_presupuestos']) && isset($_SESSION['user_email_presupuestos'])) {
                 
-            if($_SESSION['user_rol_presupuestos'] == 2 ){
+            if($_SESSION['user_rol_presupuestos'] == 2 || $_SESSION['user_rol_presupuestos'] == 1 || $_SESSION['user_rol_presupuestos'] == 3 || $_SESSION['user_rol_presupuestos'] == 4  ){
                 return true;
                 
             }else{
                            
                 return false;
             }          
+    }else{
+
     }
     }
 

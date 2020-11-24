@@ -1,4 +1,5 @@
 <?php require APP_ROOT . '/vistas/inc/header.php' ?>
+
 <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/registroPresupuesto.css">
 <div id="main"></div>
 

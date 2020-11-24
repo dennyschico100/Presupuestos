@@ -1,6 +1,5 @@
-<?php
 
-require APP_ROOT . '/vistas/inc/header.php' ?>
+<?php require APP_ROOT . '/vistas/inc/header.php' ?>
 
 <link rel="stylesheet" href="<?php echo URL_ROOT; ?>/public/css/presupuestos.css">
 

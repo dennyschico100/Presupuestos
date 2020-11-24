@@ -176,13 +176,7 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 (() => {
-    const $addButton = document.getElementById("add_button");
-    $addButton.addEventListener("click", () => {
-
-        mostrarFormulario();
-        //document.getElementsByClassName('modal-backdrop').style.backgroundColor="";
-
-    });
+    
 })();
 
 $btnCerrarVentanaModal.addEventListener("click", () => {
