@@ -7,6 +7,7 @@
     //define('DB_NAME','aulas4');
     //define('DB_PASS','');
 
+    
     define('DB_NAME','presupuestos');
     define('DB_CHARSET','utf8');
     
